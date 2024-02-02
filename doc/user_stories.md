@@ -1,0 +1,17 @@
+- User 1: Bob
+    - Bob is a job seeker.
+    - Bob needs to analyze score of his resume, match opening jobs with his experience, see recommendations, track application status.
+    - Bob wants to be up-todate and get notification on jobs that match his profile.
+    - Bob values accuracy.
+    - Bob prefers visuals and simple interface.
+- User 2: Alice
+    - Alice is a hiring manager.
+    - Alice wants to check if job posts reach matching candidates, job post's reach/engagement.
+    - Alice prefers simple interface with report summary on the dashboard. 
+    - Alice doesn't need technical skills but she has knowledge of the company's domain.
+- User 3: Jane
+    - Jane is the technician of the web application.
+    - Jane needs access to back-end. 
+    - Jane wants to update the model, codebase, test the app, 
+    - Jane needs to monitor the app and ensures all features work properly.
+    - Jane has high-tech skills, and Jane wants fast and efficient interface. 
