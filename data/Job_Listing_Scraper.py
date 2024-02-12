@@ -13,7 +13,7 @@ def write_to_csv(data, job_title_input, pages):
 	
 
 def main(job_title_input, pages):
-	scraped_data =  scrape_indeed_job_listings(job_title_input, pages) # + scrape_linkedin_job_listings(job_title_input, pages)
+	scraped_data =  scrape_indeed_job_listings(job_title_input, pages) + scrape_linkedin_job_listings(job_title_input, pages)
 	write_to_csv(scraped_data, job_title_input, pages)
 
 
