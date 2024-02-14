@@ -1,5 +1,5 @@
 import streamlit as st
-from opentowork.pages import job_recommendation
+from pages import job_recommendation
 
 def app():
     # Set page title and icon
