@@ -4,6 +4,25 @@ import random
 import time
 from datetime import datetime
 
+def clean_posting_date(text):
+	c = []
+	upper_count = 0
+	#add a space after the first word
+	for char in text:
+		if char.isupper(): 
+			upper_count += 1
+			if upper_count == 2: c.append(' '+char)
+			else: c.append(char)
+		else: 
+			c.append(char)
+	joined_text = ''.join(c)
+	#check if the first and second words are the same
+	words = joined_text.split()
+	if words[0] == words[1] and len(words) >= 2:
+		cleaned_text = ' '.join(words[1:])
+	else: cleaned_text = ' '.join(words)
+	return cleaned_text
+
 # pages: how many pages to scrape
 # job_title_input: the job title you want to scrape
 def scrape_indeed_job_listings(job_title_input, pages):
@@ -33,7 +52,7 @@ def scrape_indeed_job_listings(job_title_input, pages):
 				job_title = job.find("span", id=lambda x: x and x.startswith('jobTitle')).text.strip()
 				job_company = job.find(attrs={'data-testid':'company-name'}).text.strip()
 				job_location = job.find(attrs={'data-testid':'text-location'}).text.strip()
-				posted_date = job.find(attrs={'data-testid':'myJobsStateDate'}).text.strip()
+				posted_date = clean_posting_date(job.find(attrs={'data-testid':'myJobsStateDate'}).text.strip())
 				apply_link = 'https://indeed.com' + job.find("a", class_=lambda x: x and x.startswith('jcs-JobTitle'))["href"]
 
 				# navigate to the job posting page to scrape job description
