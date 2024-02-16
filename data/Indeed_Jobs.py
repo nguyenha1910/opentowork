@@ -1,89 +1,95 @@
-from selenium import webdriver
-from bs4 import BeautifulSoup
-import random
-import time
-from datetime import datetime
+import streamlit as st
+from streamlit_tags import st_tags
+from pages import job_recommendation
+from pathlib import Path
+import os
+import yaml
+import PyPDF4
+import fitz  # PyMuPDF library
+#from sentence_transformers import (SentenceTransformer, util)
+import numpy as np
+from numpy.linalg import norm
+from statistics import mean
+import spacy
+import pandas as pd
+import sys
 
-def clean_posting_date(text):
-	c = []
-	upper_count = 0
-	#add a space after the first word
-	for char in text:
-		if char.isupper(): 
-			upper_count += 1
-			if upper_count == 2: c.append(' '+char)
-			else: c.append(char)
-		else: 
-			c.append(char)
-	joined_text = ''.join(c)
-	#check if the first and second words are the same
-	words = joined_text.split()
-	if words[0] == words[1] and len(words) >= 2:
-		cleaned_text = ' '.join(words[1:])
-	else: cleaned_text = ' '.join(words)
-	return cleaned_text
+nlp = spacy.load("en_core_web_lg") # python -m spacy download en_core_web_lg
 
-# pages: how many pages to scrape
-# job_title_input: the job title you want to scrape
-def scrape_indeed_job_listings(job_title_input, pages):
-	job_listings_per_page = 15
-	jobs = [] # stores data listing data
+# get this once the user upload their resume using streamlit button
+# can make upload button and probably will be able to get the path from that
+config = yaml.safe_load(open("YOUR_CONFIG_FILE.yml"))
+for key, value in config.items():
+    if isinstance(value, str):
+        config[key] = Path(value)
+        if 'dir' in key:
+            config[key].mkdir(parents=True, exist_ok=True)
 
-	for i in range(pages):
-		start_index = i * job_listings_per_page
-		url = f"https://www.indeed.com/jobs?q={job_title_input}&l=United+States&start={start_index}"
-		print(f"Scraping from this url: {url}")
-		
-		driver = webdriver.Chrome()
-		driver.get(url)
+def app():
+    # Set page title and icon
+    st.set_page_config(
+        page_title="OpenToWork",
+        page_icon="🟢",
+    )
+    st.title("Open To Work")    
 
-		# scroll to the bottom of the page using JavaScript
-		print(f"Scrolling to bottom of page {i+1}")
-		driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+    # Navigation bar
+    nav_options = ['Home', 'Job Recommendation', 'Profile']
+    selection = st.sidebar.radio("Navigation", nav_options)
 
-		# Wait for a random amount of time before scrolling to the next page
-		time.sleep(random.choice(list(range(3, 7))))
-		
-		# Scrape the job postings
-		soup = BeautifulSoup(driver.page_source, "html.parser")
-		job_listings = soup.find_all("div", class_=lambda x: x and x.startswith('cardOutline tapItem dd-privacy-allow result job'))
-		try:
-			for job in job_listings:
-				job_title = job.find("span", id=lambda x: x and x.startswith('jobTitle')).text.strip()
-				job_company = job.find(attrs={'data-testid':'company-name'}).text.strip()
-				job_location = job.find(attrs={'data-testid':'text-location'}).text.strip()
-				posted_date = clean_posting_date(job.find(attrs={'data-testid':'myJobsStateDate'}).text.strip())
-				apply_link = 'https://indeed.com' + job.find("a", class_=lambda x: x and x.startswith('jcs-JobTitle'))["href"]
+    # Depending on the selection, display different content in the main area
+    if selection == 'Job Recommendation':
+        job_recommendation.app()
 
-				# navigate to the job posting page to scrape job description
-				driver.get(apply_link)
-	
-				# sleeping randomly
-				time.sleep(random.choice(list(range(5, 11))))
-	
-				try:
-					description_soup = BeautifulSoup(driver.page_source, "html.parser")
-					job_description = description_soup.find("div", id='jobDescriptionText').text.strip().replace('\n', '')
+    uploaded_file = st.file_uploader(label="Upload your resume", type="pdf")
+    if uploaded_file:
+        save_path = Path(config['pdf_dir'], uploaded_file.name)
+        with open(save_path, mode='wb') as w:
+            w.write(uploaded_file.getvalue())
+        
+        # read the pdf file - PyMuPDF, our final choice
+        with fitz.open(save_path) as pdf_resume:
+            extracted_resume_content_PyMuPDF = ""
+            for page_number in range(pdf_resume.page_count):
+                page = pdf_resume[page_number]
+                extracted_resume_content_PyMuPDF += page.get_text()
 
-				# handle the AttributeError exception that may occur if the element is not found
-				except AttributeError:
-					job_description = None # job_description is None if not found
-					print("AttributeError occurred while retrieving job description.")
+        # needs to have this file downloaded
+        skills = "jz_skill_patterns.jsonl" 
+        # https://medium.com/@vikrantptl06/resume-parsing-using-spacy-af24376ec008
+        # https://github.com/kingabzpro/jobzilla_ai/blob/main/jz_skill_patterns.jsonl
 
-				# add data to the jobs list
-				jobs.append({"title": job_title,
-							"company": job_company,
-							"location": job_location,
-							"posted date": posted_date,
-				            "link": apply_link,
-							"description": job_description,
-							"scraped date": str(datetime.now())})
+        ruler = nlp.add_pipe("entity_ruler", before = "ner")
+        ruler.from_disk(skills)
+        doc = nlp(extracted_resume_content_PyMuPDF)
 
-		# catch exception that occurs in the scrapping process
-		except Exception as e:
-			print(f"An error occurred while scraping jobs: {str(e)}")
-	
-	# close the Selenium web driver
-	driver.quit()
+        skills = [ent.text for ent in doc.ents if ent.label_ == "SKILL"]
 
-	return jobs
+        dict = {}
+        skills = []
+
+        for ent in doc.ents:
+            #print(ent.label_)
+            if "SKILL" in ent.label_:
+                skills.append(ent.text)
+
+        # remove duplicates (capitalization)
+        lowercase_skills = [s.lower() for s in skills]
+        unique_skills = list(set(lowercase_skills))
+
+# print statement that checks the content
+#print("extracted_resume_content_PyPDF4:", extracted_resume_content_PyMuPDF)        skills = ['Python', 'SQL', 'Machine Learning', 'Data Analysis']
+
+        if unique_skills:
+            keywords = st_tags(
+                            label='### Skills:',
+                            text='Press enter to add more',
+                            value=unique_skills,
+                            )
+            
+        if st.button('See which jobs are a good fit for you'):
+            job_recommendation.app()
+
+        
+
+app()
