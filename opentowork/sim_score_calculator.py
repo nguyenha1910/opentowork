@@ -7,6 +7,8 @@ from statistics import mean
 import spacy
 import pandas as pd
 import sys
+import os
+from datetime import datetime
 
 nlp = spacy.load("en_core_web_lg") # python -m spacy download en_core_web_lg
 
@@ -62,8 +64,26 @@ unique_skills = list(set(lowercase_skills))
 # List of skills
 #print("Extracted Skills:", unique_skills)
 
-# indeed job posting used as an example
-job_posting= pd.read_csv("job_listings_data analyst_10_pages.csv")
+
+
+
+
+
+# find all scraped job posting csv files
+csv_dir = os.path.join(os.path.dirname(__file__), '..', 'data')
+csv_files = [file for file in os.listdir(csv_dir) if file.startswith('job_listings') and file.endswith('.csv')]
+csv_files_paths = [os.path.join(csv_dir, file) for file in csv_files]
+
+# find latest scraped csv file
+latest_csv_file = max(csv_files_paths, key=os.path.getmtime)
+print("latest_csv_file:", latest_csv_file)
+
+latest_scraped_dt = datetime.fromtimestamp(os.path.getmtime(latest_csv_file))
+print("latest_scraped_dt:", latest_scraped_dt)
+
+
+
+
 model = SentenceTransformer("sentence-transformers/all-MiniLM-L12-v2") # LLM model used for embedding calculation
 
 # we can only include job description or make a new column including job title and other info or extract keyword from job description
