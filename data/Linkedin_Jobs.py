@@ -34,7 +34,7 @@ def scrape_linkedin_job_listings(job_title_input, pages):
 				job_title = job.find("h3", class_="base-search-card__title").text.strip()
 				job_company = job.find("h4", class_="base-search-card__subtitle").text.strip()
 				job_location = job.find("span", class_="job-search-card__location").text.strip()
-				posted_date = job.find("time", class_="job-search-card__listdate").text.strip()
+				posted_date = job.find("time", class_=lambda x: x and x.startswith("job-search-card__listdate")).text.strip()
 				apply_link = job.find("a", class_="base-card__full-link")["href"]
 
 				# navigate to the job posting page to scrape job description
