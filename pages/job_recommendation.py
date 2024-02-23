@@ -2,8 +2,12 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import yaml
+from opentowork import sim_score_calculator_new
+from opentowork import skill_extraction
 
 config = yaml.safe_load(open("config.yml"))
+# does not work when I did Data Scientist.csv?????????????????????????
+job_posting= pd.read_csv("job_listings_data analyst_10_pages.csv")
 
 @st.cache_data
 def load_data(path):
@@ -11,7 +15,7 @@ def load_data(path):
     return df
 
 def job_item(data):
-    score = np.random.randint(0, 100)
+    score = sim_score_calculator_new(job_posting, skills)
     container = st.container(border=True)
     c1, c2 = container.columns([5, 1])
     c1.subheader(data['title'])
