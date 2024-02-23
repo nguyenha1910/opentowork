@@ -18,9 +18,11 @@ def skill_extraction(path):
     skills = "jz_skill_patterns.jsonl" 
     # https://medium.com/@vikrantptl06/resume-parsing-using-spacy-af24376ec008
     # https://github.com/kingabzpro/jobzilla_ai/blob/main/jz_skill_patterns.jsonl
-
-    ruler = nlp.add_pipe("entity_ruler", before = "ner")
-    ruler.from_disk(skills)
+    print(nlp.pipe_names)
+    print('is it working?????????????????????????')
+    if "entity_ruler" not in nlp.pipe_names:
+        ruler = nlp.add_pipe("entity_ruler", before = "ner")
+        ruler.from_disk(skills)
     doc = nlp(extracted_resume_content_PyMuPDF)
 
     skills = [ent.text for ent in doc.ents if ent.label_ == "SKILL"]
