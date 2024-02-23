@@ -18,8 +18,7 @@ def skill_extraction(path):
     skills = "jz_skill_patterns.jsonl" 
     # https://medium.com/@vikrantptl06/resume-parsing-using-spacy-af24376ec008
     # https://github.com/kingabzpro/jobzilla_ai/blob/main/jz_skill_patterns.jsonl
-    print(nlp.pipe_names)
-    print('is it working?????????????????????????')
+
     if "entity_ruler" not in nlp.pipe_names:
         ruler = nlp.add_pipe("entity_ruler", before = "ner")
         ruler.from_disk(skills)
