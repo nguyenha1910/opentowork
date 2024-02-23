@@ -3,6 +3,7 @@ from streamlit_tags import st_tags
 from pages import job_recommendation
 from pathlib import Path
 import yaml
+from opentowork import skill_extraction
 
 config = yaml.safe_load(open("config.yml"))
 for key, value in config.items():
@@ -27,7 +28,8 @@ def app():
             w.write(uploaded_file.getvalue())
 
         # TODO: Analyze the PDF to extract skills
-        skills = ['Python', 'SQL', 'Machine Learning', 'Data Analysis']
+        #skills = ['Python', 'SQL', 'Machine Learning', 'Data Analysis']
+        skills = skill_extraction(save_path)
 
         if skills:
             keywords = st_tags(
