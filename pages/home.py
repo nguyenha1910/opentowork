@@ -3,8 +3,13 @@ from streamlit_tags import st_tags
 from pages import job_recommendation
 from pathlib import Path
 import yaml
+import pandas as pd
+from opentowork import skill_extraction
+from opentowork import sim_calculator
 
 config = yaml.safe_load(open("config.yml"))
+job_posting= pd.read_csv("job_listings_data analyst_10_pages.csv")
+
 for key, value in config.items():
     if isinstance(value, str):
         config[key] = Path(value)
@@ -27,7 +32,7 @@ def app():
             w.write(uploaded_file.getvalue())
 
         # TODO: Analyze the PDF to extract skills
-        skills = ['Python', 'SQL', 'Machine Learning', 'Data Analysis']
+        skills = skill_extraction(save_path)
 
         if skills:
             keywords = st_tags(
@@ -36,6 +41,6 @@ def app():
                             value=skills,
                             )
             
-            job_recommendation.app()
+            job_recommendation.app(skills)
 
 app()
