@@ -10,7 +10,15 @@ class TestSkillExtraction(unittest.TestCase):
     """
     A class containing unit tests for the skill_extraction function.
     """
-    def test_valid_pdf(self):
+    def test_invalid_file(self):
+        """
+        Test the skill_extraction function with an invalid file.
+        """
+        path = "pdfs/random_ds_resume.docx"
+        with self.assertRaises(ValueError):
+            skill_extraction(path)
+
+    def test_one_shot(self):
         """
         Test the skill_extraction function with a valid PDF file.
         """
