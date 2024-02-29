@@ -15,7 +15,7 @@ def skill_extraction(path):
     #print("extracted_resume_content_PyPDF4:", extracted_resume_content_PyMuPDF)
 
     # needs to have this file downloaded
-    skills = "jz_skill_patterns.jsonl" 
+    skills = "raw/jz_skill_patterns.jsonl" 
     # https://medium.com/@vikrantptl06/resume-parsing-using-spacy-af24376ec008
     # https://github.com/kingabzpro/jobzilla_ai/blob/main/jz_skill_patterns.jsonl
 

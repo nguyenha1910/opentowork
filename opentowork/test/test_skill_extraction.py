@@ -4,7 +4,7 @@ skill_extraction function in the opentowork module.
 """
 
 import unittest
-from opentowork.skill_extraction import skill_extraction
+from opentowork import skill_extraction
 
 class TestSkillExtraction(unittest.TestCase):
     """
@@ -14,7 +14,7 @@ class TestSkillExtraction(unittest.TestCase):
         """
         Test the skill_extraction function with a valid PDF file.
         """
-        path = "pdf/random_ds_resume.pdf"
+        path = "pdfs/random_ds_resume.pdf"
         skills = skill_extraction(path)
         expected = ['neo4j', 'sqlite', 'engineering', 'finance', 
                     'monitoring', 'design', 'python', 'algorithms', 
