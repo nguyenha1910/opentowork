@@ -1,4 +1,1 @@
-data_dir: 'raw/'
 pdf_dir: 'pdfs/'
-csv_dir: 'csvs/'
-data_path: 'raw/job_listings_Data Scientist.csv'
