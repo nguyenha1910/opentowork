@@ -14,7 +14,7 @@ dependencies:
   - streamlit
   - pyyaml
   - pip:
-    - beautifulsoup
+    - beautifulsoup4
     - pymupdf
     - sentence-transformers==2.2.2
     - streamlit_tags
