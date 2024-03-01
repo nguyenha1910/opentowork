@@ -85,34 +85,33 @@ jobs:
       # If there are any other steps in order for your tests to
       # run successfully, you can add those steps here!
 
-      #!!!!!!!!!!!commented out for now lmao!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-      # # Next step: run pylint. Anything less than 10/10 will fail.
-      # - name: Lint with pylint
-      #   run: |
-      #     pylint opentowork/*.py
+      # Next step: run pylint. Anything less than 10/10 will fail.
+      - name: Lint with pylint
+        run: |
+          pylint opentowork/*.py
 
-      # # Next step: run the unit tests with code coverage.
-      # - name: Unit tests
-      #   run: |
-      #     cd opentowork
-      #     coverage run -m unittest discover
-      #     coverage report
-      #     coverage lcov
+      # Next step: run the unit tests with code coverage.
+      - name: Unit tests
+        run: |
+          cd opentowork
+          coverage run -m unittest discover
+          coverage report
+          coverage lcov
 
-      # # Lastly: report code coverage to Coveralls.
-      # - name: Report code coverage to Coveralls
-      #   uses: coverallsapp/github-action@master
-      #   with:
-      #     github-token: ${{ secrets.GITHUB_TOKEN }}
-      #     base-path: opentowork
-      #     path-to-lcov: opentowork/coverage.lcov
-      #     # The following two options are needed for "parallel"
-      #     # runs - ie if you have a matrix of python versions.
-      #     # This holds off on reporting code coverage to
-      #     # coveralls until all runs are done. If you don't have
-      #     # a matrix, this isn't needed.
-      #     flag-name: run ${{ join(matrix.*, ' - ') }}
-      #     parallel: true
+      # Lastly: report code coverage to Coveralls.
+      - name: Report code coverage to Coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          base-path: opentowork
+          path-to-lcov: opentowork/coverage.lcov
+          # The following two options are needed for "parallel"
+          # runs - ie if you have a matrix of python versions.
+          # This holds off on reporting code coverage to
+          # coveralls until all runs are done. If you don't have
+          # a matrix, this isn't needed.
+          flag-name: run ${{ join(matrix.*, ' - ') }}
+          parallel: true
 
   # After all the parallel matrix runs for build_test are done
   # for the various python versions, we run this job to send the
@@ -123,12 +122,12 @@ jobs:
     needs: build_test
     if: ${{ always() }}
     runs-on: ubuntu-latest
-    # steps:
-    # - name: Coveralls Finished
-    #   uses: coverallsapp/github-action@master
-    #   with:
-    #     github-token: ${{ secrets.GITHUB_TOKEN }}
-    #     parallel-finished: true
-    #     # This says finish the parallel runs that we did above
-    #     # and send to Coveralls.
-    #     carryforward: "run-3.7,run-3.8,run-3.9,run-3.10"
+    steps:
+    - name: Coveralls Finished
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        parallel-finished: true
+        # This says finish the parallel runs that we did above
+        # and send to Coveralls.
+        carryforward: "run-3.7,run-3.8,run-3.9,run-3.10"
