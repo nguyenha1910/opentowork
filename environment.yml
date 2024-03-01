@@ -3,7 +3,6 @@ channels:
   #- conda-forge
   - defaults
 dependencies:
-  - sentence-transformers==2.2.2
   - pandas
   - numpy
   - pylint
@@ -11,12 +10,13 @@ dependencies:
   - build
   - python=3
   - spacy
-  - PyMuPDF
   - selenium
-  - beautifulsoup
   - streamlit
-  - streamlit_tags
   - pyyaml
-  #- pip:
+  - pip:
+    - beautifulsoup
+    - pymupdf
+    - sentence-transformers==2.2.2
+    - streamlit_tags
 
 prefix: C:\Users\user\anaconda3\envs\opentowork
