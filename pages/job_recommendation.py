@@ -1,9 +1,8 @@
 import streamlit as st
 import pandas as pd
-import numpy as np
 import yaml
 from opentowork import sim_calculator
-from opentowork import skill_extraction
+#from opentowork import skill_extraction
 
 config = yaml.safe_load(open("config.yml"))
 # Need to check with different file like job_listings_Data Scientist.csv

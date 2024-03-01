@@ -1,11 +1,11 @@
-import streamlit as st
-from streamlit_tags import st_tags
-from pages import job_recommendation
 from pathlib import Path
 import yaml
 import pandas as pd
+
+import streamlit as st
+from streamlit_tags import st_tags
+from pages import job_recommendation
 from opentowork import skill_extraction
-from opentowork import sim_calculator
 
 config = yaml.safe_load(open("config.yml"))
 job_posting= pd.read_csv("job_listings_data analyst_10_pages.csv")
@@ -31,9 +31,7 @@ def app():
         with open(save_path, mode='wb') as w:
             w.write(uploaded_file.getvalue())
 
-        # TODO: Analyze the PDF to extract skills
         skills = skill_extraction(save_path)
-
         if skills:
             keywords = st_tags(
                             label='### Skills:',
@@ -42,5 +40,4 @@ def app():
                             )
             
             job_recommendation.app(skills)
-
 app()
