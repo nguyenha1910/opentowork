@@ -18,5 +18,6 @@ dependencies:
     - sentence-transformers==2.2.2
     - streamlit_tags
     - selenium==4.17.2
+    - -r requirements.txt
 
 prefix: C:\Users\user\anaconda3\envs\opentowork
