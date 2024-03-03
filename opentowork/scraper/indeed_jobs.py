@@ -62,10 +62,11 @@ def scrape_listings(job_listings, driver):
 # pages: how many pages to scrape
 # job_title_input: the job title you want to scrape
 def indeed_job_listings(job_title_input, pages):
+    job_listings_per_page = 15
     jobs = [] # stores data listing data
 
     for i in range(pages):
-        start_index = i * 15
+        start_index = i * job_listings_per_page
         url = f"https://www.indeed.com/jobs?q={job_title_input}&l=United+States&start={start_index}"
         print(f"Scraping from this url: {url}")
 
