@@ -1,8 +1,8 @@
 import csv
 import os
 from datetime import datetime
-from opentowork.scraper.indeed_jobs import indeed_job_listings
-from opentowork.scraper.linkedin_jobs import linkedin_job_listings
+from .indeed_jobs import indeed_job_listings
+from .linkedin_jobs import linkedin_job_listings
 
 def write_to_csv(data, job_title_input, pages):
     scrape_dt = datetime.now().strftime("%Y%m%d_%H%M%S")

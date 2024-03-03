@@ -4,7 +4,7 @@ import random
 from selenium import webdriver
 from bs4 import BeautifulSoup
 
-def scrape_listings(job_listings, driver):
+def scrape_linkedin_listings(job_listings, driver):
     listings = []
     for job in job_listings:
         job_title = job.find("h3", class_="base-search-card__title").text.strip()
@@ -61,12 +61,12 @@ def linkedin_job_listings(job_title_input, pages):
                                                     "base-card--link base-search-card "
                                                     "base-search-card--link job-search-card"))
         try:
-            job_info = scrape_listings(job_listings, driver)
+            job_info = scrape_linkedin_listings(job_listings, driver)
             # add data to the jobs list
             jobs = jobs + job_info
         # catch exception that occurs in the scraping process
         except Exception as exception:
-            print(f"An error occurred while scraping jobs: {str(exception)}")
+            print(f"An error occurred while scraping jobs from LinkedIn: {str(exception)}")
     # close the Selenium web driver
     driver.quit()
     return jobs

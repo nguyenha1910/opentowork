@@ -5,6 +5,8 @@ from selenium import webdriver
 from bs4 import BeautifulSoup
 
 def clean_date(text):
+    if isinstance(text, str) is not True:
+        raise TypeError("Date input is not a string")
     characters = []
     upper_count = 0
     #add a space after the first word
@@ -27,7 +29,7 @@ def clean_date(text):
     return cleaned_text
 
 
-def scrape_listings(job_listings, driver):
+def scrape_indeed_listings(job_listings, driver):
     listings = []
     for job in job_listings:
         job_title = job.find("span", id=lambda x: x and
@@ -62,6 +64,11 @@ def scrape_listings(job_listings, driver):
 # pages: how many pages to scrape
 # job_title_input: the job title you want to scrape
 def indeed_job_listings(job_title_input, pages):
+    if isinstance(job_title_input, str) is not True:
+        raise TypeError("Job title input is not a string")
+    if isinstance(pages, int) is not True:
+        raise TypeError("Pages input is not an int")
+
     job_listings_per_page = 15
     jobs = [] # stores data listing data
 
@@ -85,12 +92,12 @@ def indeed_job_listings(job_title_input, pages):
         job_listings = soup.find_all("div", class_=lambda x: x and
                                     x.startswith('cardOutline tapItem dd-privacy-allow result job'))
         try:
-            job_info = scrape_listings(job_listings, driver)
+            job_info = scrape_indeed_listings(job_listings, driver)
             # add data to the jobs list
             jobs = jobs + job_info
         # catch exception that occurs in the scraping process
         except Exception as exception:
-            print(f"An error occurred while scraping jobs: {str(exception)}")
+            print(f"An error occurred while scraping jobs from Indeed: {str(exception)}")
 
     # close the Selenium web driver
     driver.quit()
