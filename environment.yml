@@ -10,7 +10,7 @@ dependencies:
   - build
   - python=3
   - spacy
-  - selenium
+  - selenium==4.17.2
   - streamlit
   - pyyaml
   - pip:
