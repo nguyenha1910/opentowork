@@ -1,0 +1,36 @@
+# !! based off example code, can change later
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+# The "project" section contains metadata about the project
+[project]
+name = "opentowork"
+version = "0.0.1"
+authors = [
+  { name="Janice Kim" },
+  { name="Nguyen Ha" },
+  { name="Kelly Wang" },
+  { name="Elaine ZHang" },
+]
+#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! check this
+description = "bob wants a job"
+readme = "README.md"
+requires-python = ">=3"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dynamic = ["dependencies"]
+
+# In conjunction with the "dynamic" option above in the "project"
+# section, this tells the build system to add any dependencies
+# specified in requirements.txt.
+[tool.setuptools.dynamic]
+dependencies = {file = ["requirements.txt"]}
+
+# Where can someone find out more about your project?
+[project.urls]
+Homepage = "https://github.com/nguyenha1910/opentowork"
+Issues = "https://github.com/nguyenha1910/opentowork/issues"

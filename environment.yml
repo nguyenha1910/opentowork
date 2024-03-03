@@ -1,0 +1,22 @@
+name: opentowork
+channels:
+  #- conda-forge
+  - defaults
+dependencies:
+  - pandas
+  - numpy
+  - pylint
+  - pip
+  - build
+  - python=3
+  - spacy
+  - selenium
+  - streamlit
+  - pyyaml
+  - pip:
+    - beautifulsoup4
+    - pymupdf
+    - sentence-transformers==2.2.2
+    - streamlit_tags
+
+prefix: C:\Users\user\anaconda3\envs\opentowork
