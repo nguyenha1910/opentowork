@@ -1,1 +1,2 @@
 pdf_dir: 'pdfs/'
+pattern_path: 'raw/jz_skill_patterns.jsonl'
