@@ -8,7 +8,6 @@ from opentowork import skill_extraction
 from opentowork import sim_calculator
 
 config = yaml.safe_load(open("config.yml"))
-job_posting= pd.read_csv("job_listings_data analyst_10_pages.csv")
 
 for key, value in config.items():
     if isinstance(value, str):
@@ -33,6 +32,7 @@ def app():
 
         # TODO: Analyze the PDF to extract skills
         skills = skill_extraction(save_path)
+        skills = sorted(skills)
 
         if skills:
             keywords = st_tags(
@@ -40,7 +40,13 @@ def app():
                             text='Press enter to add more',
                             value=skills,
                             )
-            
-            job_recommendation.app(skills)
+        else:
+            keywords = st_tags(
+                            label='### Skills:',
+                            text='Press enter to add more',
+                            value=[],
+                            )
+
+        job_recommendation.app(skills)
 
 app()

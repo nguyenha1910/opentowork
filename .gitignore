@@ -1,6 +1,6 @@
 # Data folder
 raw/
-config.yml
+pdfs/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
