@@ -30,6 +30,8 @@ class TestScraper(unittest.TestCase):
         final_files = set(os.listdir('csvs/'))
         new_files = final_files - self.initial_files
         print("tearing down...")
+        for file in new_files:
+            os.remove('csvs/'+file)
         self.assertGreater(len(new_files), 0, "No new file created")
         self.assertEqual(len(new_files), 1, "Too many files created")
 
