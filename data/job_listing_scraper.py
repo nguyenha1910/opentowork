@@ -1,8 +1,8 @@
 import csv
 import os
 from datetime import datetime
-from Indeed_Jobs import scrape_indeed_job_listings
-from Linkedin_Jobs import scrape_linkedin_job_listings
+from indeed_jobs import indeed_job_listings
+from linkedin_jobs import linkedin_job_listings
 
 def write_to_csv(data, job_title_input, pages):
     scrape_dt = str(datetime.now())
@@ -28,8 +28,8 @@ def main():
         #scraped_data = scraped_data 
         #+ scrape_indeed_job_listings(job_title, pages) 
         #+ scrape_linkedin_job_listings(job_title, pages)
-        scraped_data.extend(scrape_indeed_job_listings(job_title, pages))
-        scraped_data.extend(scrape_linkedin_job_listings(job_title, pages))
+        scraped_data.extend(indeed_job_listings(job_title, pages))
+        scraped_data.extend(linkedin_job_listings(job_title, pages))
 
     write_to_csv(scraped_data, job_title_input, pages)
 
