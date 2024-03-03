@@ -19,7 +19,7 @@ def write_to_csv(data, job_title_input, pages):
         writer.writerows(data)
 
 def main():
-    job_title_input = ['data analyst', 'data scientist', 'data engineer']
+    job_title_input = ['data analyst']#, 'data scientist', 'data engineer']
     pages = 1
 
     scraped_data = []
