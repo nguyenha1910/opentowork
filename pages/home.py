@@ -50,7 +50,7 @@ def app():
                             )
 
         if st.button('Update Job Posting Data'):
-            subprocess.run(["python", "data/Job_Listing_Scraper.py"])
+            subprocess.run(["python", "data/job_listing_scraper.py"])
 
         job_recommendation.app(skills)
 
