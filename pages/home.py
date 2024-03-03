@@ -6,6 +6,8 @@ import yaml
 import pandas as pd
 from opentowork import skill_extraction
 from opentowork import sim_calculator
+import subprocess
+
 
 config = yaml.safe_load(open("config.yml"))
 
@@ -46,6 +48,9 @@ def app():
                             text='Press enter to add more',
                             value=[],
                             )
+
+        if st.button('Update Job Posting Data'):
+            subprocess.run(["python", "data/Job_Listing_Scraper.py"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
         job_recommendation.app(skills)
 
