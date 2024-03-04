@@ -28,9 +28,6 @@ def skill_extraction(path):
             page = pdf_resume[page_number]
             extracted_resume_content_PyMuPDF += page.get_text()
 
-    # print statement that checks the content
-    # print("extracted_resume_content_PyPDF4:", extracted_resume_content_PyMuPDF)
-
     # needs to have this file downloaded
     skills = "jz_skill_patterns.jsonl" 
     # https://medium.com/@vikrantptl06/resume-parsing-using-spacy-af24376ec008
