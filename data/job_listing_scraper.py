@@ -9,7 +9,10 @@ def write_to_csv(data, job_title_input, pages):
     directory = "csvs"
     if not os.path.exists(directory):
         os.makedirs(directory)
-    csv_file = os.path.join(directory, f"job_listings_{job_title_input}_{pages}_pages_scraped_{scrape_dt}.csv")
+
+    job_title_str = '_'.join(job_title_input).replace(' ', '_')
+
+    csv_file = os.path.join(directory, f"job_listings_{job_title_str}_{pages}_pages_scraped_{scrape_dt}.csv")
     colnames = ["title", "company", "location", "posted date", 
                 "link", "description", "scraped date"]
 
