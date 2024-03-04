@@ -1,14 +1,27 @@
+"""
+module of PyMuPdf library for pdf format resume parsing
+spacy module for entity assignment and extraction of skill set from a user's resume
+"""
 import fitz  # PyMuPDF library
 import spacy
-import pandas as pd
 import os
 
 nlp = spacy.load("en_core_web_lg") # python -m spacy download en_core_web_lg
 
 def skill_extraction_resume(path):
+    """
+    parse the resum in a pdf format and extract a unique list of skill set
+    that will be compared to job description
+    Args:
+        path (string): source path for uploaded resume file
+
+    Returns:
+        list of string : returns the list of string consists of unique skils
+    """
+    
     if os.path.splitext(path)[1].lower() != ".pdf":
         raise ValueError("Invalid file format. Only PDF files are supported.")
-
+  
     with fitz.open(path) as pdf_resume:
         extracted_resume_content_PyMuPDF = ""
         for page_number in range(pdf_resume.page_count):
@@ -25,8 +38,6 @@ def skill_extraction_resume(path):
     doc = nlp(extracted_resume_content_PyMuPDF)
     skills = [ent.text for ent in doc.ents if ent.label_ == "SKILL"]
 
-    dict = {}
-    skills = []
     for ent in doc.ents:
         if "SKILL" in ent.label_:
             skills.append(ent.text)
@@ -58,8 +69,3 @@ def skill_extraction_job_description(description_row):
     lowercase_skills = [s.lower() for s in skills]
     unique_skills = list(set(lowercase_skills))
     return unique_skills
-
-if __name__ == "__main__":
-    path = "pdfs/random_ds_resume.pdf"
-    skills = skill_extraction(path)
-    print(skills)

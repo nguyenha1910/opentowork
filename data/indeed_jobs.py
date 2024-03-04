@@ -28,6 +28,7 @@ def clean_date(text):
 
 
 def scrape_listings(job_listings, driver):
+    listings = []
     for job in job_listings:
         job_title = job.find("span", id=lambda x: x and
                                 x.startswith('jobTitle')).text.strip()
@@ -41,15 +42,22 @@ def scrape_listings(job_listings, driver):
         driver.get(apply_link)
         # sleeping randomly
         time.sleep(random.choice(list(range(5, 11))))
-    try:
-        description_soup = BeautifulSoup(driver.page_source, "html.parser")
-        job_description = description_soup.find("div", id='jobDescriptionText').text
-        job_description = job_description.strip().replace('\n', '')
-    # handle the AttributeError exception that may occur if the element is not found
-    except AttributeError:
-        job_description = None # job_description is None if not found
-        print("AttributeError occurred while retrieving job description.")
-    return (job_title, job_company, job_location, posted_date, apply_link, job_description)
+        try:
+            description_soup = BeautifulSoup(driver.page_source, "html.parser")
+            job_description = description_soup.find("div", id='jobDescriptionText').text
+            job_description = job_description.strip().replace('\n', '')
+        # handle the AttributeError exception that may occur if the element is not found
+        except AttributeError:
+            job_description = None # job_description is None if not found
+            print("AttributeError occurred while retrieving job description.")
+        listings.append({"title": job_title,
+                    "company": job_company,
+                    "location": job_location,
+                    "posted date": posted_date,
+                    "link": apply_link,
+                    "description": job_description,
+                    "scraped date": str(datetime.now())})
+    return listings
 
 # pages: how many pages to scrape
 # job_title_input: the job title you want to scrape
@@ -77,16 +85,8 @@ def indeed_job_listings(job_title_input, pages):
                                     x.startswith('cardOutline tapItem dd-privacy-allow result job'))
         try:
             job_info = scrape_listings(job_listings, driver)
-
             # add data to the jobs list
-            jobs.append({"title": job_info[0],
-                        "company": job_info[1],
-                        "location": job_info[2],
-                        "posted date": job_info[3],
-                        "link": job_info[4],
-                        "description": job_info[5],
-                        "scraped date": str(datetime.now())})
-
+            jobs = jobs + job_info
         # catch exception that occurs in the scraping process
         except Exception as exception:
             print(f"An error occurred while scraping jobs: {str(exception)}")

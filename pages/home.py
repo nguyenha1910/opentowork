@@ -1,12 +1,12 @@
+from pathlib import Path
+import subprocess
+import yaml
 import streamlit as st
 from streamlit_tags import st_tags
 from pages import job_recommendation
-from pathlib import Path
-import yaml
 import pandas as pd
 from opentowork import skill_extraction_resume
 from opentowork import sim_calculator
-import subprocess
 
 
 config = yaml.safe_load(open("config.yml"))

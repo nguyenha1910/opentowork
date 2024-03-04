@@ -5,6 +5,7 @@ from selenium import webdriver
 from bs4 import BeautifulSoup
 
 def scrape_listings(job_listings, driver):
+    listings = []
     for job in job_listings:
         job_title = job.find("h3", class_="base-search-card__title").text.strip()
         job_company = job.find("h4", class_="base-search-card__subtitle").text.strip()
@@ -16,15 +17,22 @@ def scrape_listings(job_listings, driver):
         driver.get(apply_link)
         # sleeping randomly
         time.sleep(random.choice(list(range(5, 11))))
-    try:
-        description_soup = BeautifulSoup(driver.page_source, "html.parser")
-        raw = description_soup.find("div", class_="description__text description__text--rich").text
-        job_description = raw.strip()
-    # handle the AttributeError exception that may occur if the element is not found
-    except AttributeError:
-        job_description = None # job_description is None if not found
-        print("AttributeError occurred while retrieving job description.")
-    return (job_title, job_company, job_location, posted_date, apply_link, job_description)
+        try:
+            description_soup = BeautifulSoup(driver.page_source, "html.parser")
+            raw = description_soup.find("div", class_="description__text description__text--rich").text
+            job_description = raw.strip()
+        # handle the AttributeError exception that may occur if the element is not found
+        except AttributeError:
+            job_description = None # job_description is None if not found
+            print("AttributeError occurred while retrieving job description.")
+        listings.append({"title": job_title,
+                    "company": job_company,
+                    "location": job_location,
+                    "posted date": posted_date,
+                    "link": apply_link,
+                    "description": job_description,
+                    "scraped date": str(datetime.now())})
+    return listings
 
 # pages: how many pages to scrape
 # job_title_input: the job title you want to scrape
@@ -54,15 +62,8 @@ def linkedin_job_listings(job_title_input, pages):
                                                     "base-search-card--link job-search-card"))
         try:
             job_info = scrape_listings(job_listings, driver)
-
             # add data to the jobs list
-            jobs.append({"title": job_info[0],
-                        "company": job_info[1],
-                        "location": job_info[2],
-                        "posted date": job_info[3],
-                        "link": job_info[4],
-                        "description": job_info[5],
-                        "scraped date": str(datetime.now())})
+            jobs = jobs + job_info
         # catch exception that occurs in the scraping process
         except Exception as exception:
             print(f"An error occurred while scraping jobs: {str(exception)}")
