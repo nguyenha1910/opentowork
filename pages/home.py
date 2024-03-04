@@ -1,7 +1,6 @@
 from pathlib import Path
+import subprocess
 import yaml
-import pandas as pd
-
 import streamlit as st
 from streamlit_tags import st_tags
 from pages import job_recommendation
@@ -32,12 +31,17 @@ def app():
             w.write(uploaded_file.getvalue())
 
         skills = skill_extraction(save_path)
-        if skills:
-            keywords = st_tags(
-                            label='### Skills:',
-                            text='Press enter to add more',
-                            value=skills,
-                            )
-            
-            job_recommendation.app(skills)
+        skills = sorted(skills)
+
+        st_tags(
+            label='### Skills:',
+            text='Press enter to add more',
+            value=skills,
+        )
+
+        if st.button('Update Job Posting Data'):
+            subprocess.run(["python", "data/job_listing_scraper.py"])
+
+        job_recommendation.app(skills)
+
 app()

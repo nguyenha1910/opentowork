@@ -4,6 +4,7 @@ spacy module for entity assignment and extraction of skill set from a user's res
 """
 import fitz  # PyMuPDF library
 import spacy
+import os
 
 nlp = spacy.load("en_core_web_lg") # python -m spacy download en_core_web_lg
 
@@ -41,8 +42,6 @@ def skill_extraction(path):
     doc = nlp(extracted_resume_content_PyMuPDF)
 
     skills = [ent.text for ent in doc.ents if ent.label_ == "SKILL"]
-    skills = []
-
     for ent in doc.ents:
         if "SKILL" in ent.label_:
             skills.append(ent.text)
