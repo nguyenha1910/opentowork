@@ -10,7 +10,6 @@ dependencies:
   - build
   - python=3
   - spacy
-  - selenium==4.17.2
   - streamlit
   - pyyaml
   - pip:
@@ -18,5 +17,7 @@ dependencies:
     - pymupdf
     - sentence-transformers==2.2.2
     - streamlit_tags
+    - selenium==4.17.2
+    - -r requirements.txt
 
 prefix: C:\Users\user\anaconda3\envs\opentowork
