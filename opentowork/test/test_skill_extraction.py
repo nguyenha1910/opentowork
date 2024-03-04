@@ -2,16 +2,15 @@
 This module contains unit tests for the 
 skill_extraction function in the opentowork module.
 """
-
+import os
 import unittest
 import yaml
 from opentowork.skill_extraction import skill_extraction_resume
 from opentowork.skill_extraction import skill_extraction_job_description
-import os
 
 print(f"\nCurrent directory: {os.getcwd()}\n")
 
-with open("config.yml", "r") as config_file:
+with open("config.yml", "r", encoding='UTF-8') as config_file:
     config = yaml.safe_load(config_file)
 
 class TestSkillExtractionResume(unittest.TestCase):
@@ -32,7 +31,7 @@ class TestSkillExtractionResume(unittest.TestCase):
         """
         path = "pdfs/random_ds_resume.pdf"
         skills = skill_extraction_resume(path)
-        expected = ['neo4j', 'sqlite', 'engineering', 'finance', 
+        expected = ['neo4j', 'sqlite', 'engineering', 'finance',
                     'monitoring', 'design', 'python', 'algorithms', 
                     'google', 'multivariate analysis', 'tensorflow', 
                     'tableau', 'r', 'd3.js', 'machine learning', 
@@ -56,7 +55,7 @@ class TestSkillExtractionResume(unittest.TestCase):
             self.assertTrue(os.path.isfile(path))
         else:
             with self.assertRaises(FileNotFoundError):
-                with open(path, "r"):
+                with open(path, "r", encoding='UTF-8'):
                     pass
 
 class TestSkillJobDescription(unittest.TestCase):
@@ -120,7 +119,7 @@ class TestSkillJobDescription(unittest.TestCase):
     and Azure Synapse. EducationBachelor's degree in Computer Science, 
     Information Technology, or related field, or equivalent working experience"""
         skills = skill_extraction_job_description(job_description)
-        expected = ['big data', 'scalability', 'design', 'azure', 
+        expected = ['big data', 'scalability', 'design', 'azure',
                     'data quality', 'kafka', 'data structures', 
                     'machine learning', 'java', 'database', 
                     'data validation', 'computer science', 'languages', 
@@ -141,8 +140,8 @@ class TestSkillJobDescription(unittest.TestCase):
             self.assertTrue(os.path.isfile(path))
         else:
             with self.assertRaises(FileNotFoundError):
-                with open(path, "r"):
+                with open(path, "r", encoding='UTF-8'):
                     pass
-        
+
 if __name__ == "__main__":
     unittest.main()
