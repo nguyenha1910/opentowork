@@ -17,6 +17,10 @@ def skill_extraction(path):
     Returns:
         list of string : returns the list of string consists of unique skils
     """
+    
+    if os.path.splitext(path)[1].lower() != ".pdf":
+        raise ValueError("Invalid file format. Only PDF files are supported.")
+    
     with fitz.open(path) as pdf_resume:
         extracted_resume_content_PyMuPDF = ""
         for page_number in range(pdf_resume.page_count):
