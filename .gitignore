@@ -1,5 +1,5 @@
 # Data folder
-raw/
+# raw/ commenting out because json necessary
 pdfs/
 
 # Byte-compiled / optimized / DLL files
