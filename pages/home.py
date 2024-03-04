@@ -23,7 +23,7 @@ def app():
         page_title="OpenToWork",
         page_icon="🟢",
     )
-    st.title("Open To Work")    
+    st.title("Open To Work")
 
     uploaded_file = st.file_uploader(label="Upload your resume", type="pdf")
 
@@ -49,7 +49,7 @@ def app():
                             )
 
         if st.button('Update Job Posting Data'):
-            subprocess.run(["python", "data/job_listing_scraper.py"])
+            subprocess.run(["python", "opentowork/scraper/job_listing_scraper.py"])
 
         job_recommendation.app(skills_resume)
 

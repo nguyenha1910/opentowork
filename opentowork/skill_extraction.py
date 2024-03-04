@@ -10,7 +10,7 @@ nlp = spacy.load("en_core_web_lg") # python -m spacy download en_core_web_lg
 
 def skill_extraction_resume(path):
     """
-    parse the resum in a pdf format and extract a unique list of skill set
+    parse the resume in a pdf format and extract a unique list of skill set
     that will be compared to job description
     Args:
         path (string): source path for uploaded resume file
@@ -18,10 +18,10 @@ def skill_extraction_resume(path):
     Returns:
         list of string : returns the list of string consists of unique skils
     """
-    
+
     if os.path.splitext(path)[1].lower() != ".pdf":
         raise ValueError("Invalid file format. Only PDF files are supported.")
-  
+
     with fitz.open(path) as pdf_resume:
         extracted_resume_content_PyMuPDF = ""
         for page_number in range(pdf_resume.page_count):
@@ -29,7 +29,7 @@ def skill_extraction_resume(path):
             extracted_resume_content_PyMuPDF += page.get_text()
 
     # need to have this file downloaded
-    skills = "raw/jz_skill_patterns.jsonl" 
+    skills = "raw/jz_skill_patterns.jsonl"
     # https://github.com/kingabzpro/jobzilla_ai/blob/main/jz_skill_patterns.jsonl
 
     if "entity_ruler" not in nlp.pipe_names:
@@ -49,7 +49,7 @@ def skill_extraction_resume(path):
 
 def skill_extraction_job_description(description_row):
     # need to have this file downloaded
-    skills = "raw/jz_skill_patterns.jsonl" 
+    skills = "raw/jz_skill_patterns.jsonl"
     # https://github.com/kingabzpro/jobzilla_ai/blob/main/jz_skill_patterns.jsonl
 
     if "entity_ruler" not in nlp.pipe_names:
