@@ -1,13 +1,11 @@
+from pathlib import Path
+import subprocess
+import yaml
 import streamlit as st
 from streamlit_tags import st_tags
 from pages import job_recommendation
-from pathlib import Path
-import yaml
-import pandas as pd
 from opentowork import skill_extraction
-from opentowork import sim_calculator
 import subprocess
-
 
 config = yaml.safe_load(open("config.yml"))
 
@@ -32,22 +30,14 @@ def app():
         with open(save_path, mode='wb') as w:
             w.write(uploaded_file.getvalue())
 
-        # TODO: Analyze the PDF to extract skills
         skills = skill_extraction(save_path)
         skills = sorted(skills)
-
-        if skills:
-            keywords = st_tags(
-                            label='### Skills:',
-                            text='Press enter to add more',
-                            value=skills,
-                            )
-        else:
-            keywords = st_tags(
-                            label='### Skills:',
-                            text='Press enter to add more',
-                            value=[],
-                            )
+        
+        st_tags(
+            label='### Skills:',
+            text='Press enter to add more',
+            value=skills,
+        )
 
         if st.button('Update Job Posting Data'):
             subprocess.run(["python", "data/job_listing_scraper.py"])
