@@ -4,7 +4,7 @@ from pages import job_recommendation
 from pathlib import Path
 import yaml
 import pandas as pd
-from opentowork import skill_extraction
+from opentowork import skill_extraction_resume
 from opentowork import sim_calculator
 import subprocess
 
@@ -33,14 +33,13 @@ def app():
             w.write(uploaded_file.getvalue())
 
         # TODO: Analyze the PDF to extract skills
-        skills = skill_extraction(save_path)
-        skills = sorted(skills)
+        skills_resume = skill_extraction_resume(save_path)
 
-        if skills:
+        if skills_resume:
             keywords = st_tags(
                             label='### Skills:',
                             text='Press enter to add more',
-                            value=skills,
+                            value=skills_resume,
                             )
         else:
             keywords = st_tags(
@@ -52,6 +51,6 @@ def app():
         if st.button('Update Job Posting Data'):
             subprocess.run(["python", "data/job_listing_scraper.py"])
 
-        job_recommendation.app(skills)
+        job_recommendation.app(skills_resume)
 
 app()

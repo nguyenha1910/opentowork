@@ -5,7 +5,7 @@ import os
 
 nlp = spacy.load("en_core_web_lg") # python -m spacy download en_core_web_lg
 
-def skill_extraction(path):
+def skill_extraction_resume(path):
     if os.path.splitext(path)[1].lower() != ".pdf":
         raise ValueError("Invalid file format. Only PDF files are supported.")
 
@@ -15,7 +15,7 @@ def skill_extraction(path):
             page = pdf_resume[page_number]
             extracted_resume_content_PyMuPDF += page.get_text()
 
-    # needs to have this file downloaded
+    # need to have this file downloaded
     skills = "raw/jz_skill_patterns.jsonl" 
     # https://github.com/kingabzpro/jobzilla_ai/blob/main/jz_skill_patterns.jsonl
 
@@ -28,7 +28,29 @@ def skill_extraction(path):
     dict = {}
     skills = []
     for ent in doc.ents:
-        #print(ent.label_)
+        if "SKILL" in ent.label_:
+            skills.append(ent.text)
+
+    # remove duplicates (capitalization)
+    lowercase_skills = [s.lower() for s in skills]
+    unique_skills = list(set(lowercase_skills))
+    return unique_skills
+
+def skill_extraction_job_description(description_row):
+    # need to have this file downloaded
+    skills = "raw/jz_skill_patterns.jsonl" 
+    # https://github.com/kingabzpro/jobzilla_ai/blob/main/jz_skill_patterns.jsonl
+
+    if "entity_ruler" not in nlp.pipe_names:
+        ruler = nlp.add_pipe("entity_ruler", before = "ner")
+        ruler.from_disk(skills)
+
+    doc = nlp(description_row)
+    skills = [ent.text for ent in doc.ents if ent.label_ == "SKILL"]
+
+    dict = {}
+    skills = []
+    for ent in doc.ents:
         if "SKILL" in ent.label_:
             skills.append(ent.text)
 
