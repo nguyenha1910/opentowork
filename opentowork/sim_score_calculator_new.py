@@ -2,11 +2,7 @@
 Sentence transfomer module that class the LLM model and
 utilizes pytorch for cosine similairty calculation.
 """
-from sentence_transformers import (SentenceTransformer, util)
-import numpy as np
-from numpy.linalg import norm
-from statistics import mean
-import pandas as pd
+from sentence_transformers import SentenceTransformer, util
 
 def sim_calculator(job_posting_skills, resume_skills):
     """
@@ -21,7 +17,7 @@ def sim_calculator(job_posting_skills, resume_skills):
     Returns:
         float : absolute value of similarity score calculated between two inputs
     """
-    
+
     model = SentenceTransformer("sentence-transformers/all-MiniLM-L12-v2")
     job_embedding = model.encode([job_posting_skills])
     skill_embedding = model.encode(resume_skills)
