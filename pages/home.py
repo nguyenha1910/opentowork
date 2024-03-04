@@ -5,9 +5,9 @@ import streamlit as st
 from streamlit_tags import st_tags
 from pages import job_recommendation
 from opentowork import skill_extraction
+import subprocess
 
 config = yaml.safe_load(open("config.yml"))
-job_posting= pd.read_csv("job_listings_data analyst_10_pages.csv")
 
 for key, value in config.items():
     if isinstance(value, str):
@@ -32,7 +32,7 @@ def app():
 
         skills = skill_extraction(save_path)
         skills = sorted(skills)
-
+        
         st_tags(
             label='### Skills:',
             text='Press enter to add more',

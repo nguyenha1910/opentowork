@@ -1,6 +1,6 @@
 # Data folder
-raw/
-config.yml
+# raw/ commenting out because json necessary
+pdfs/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
