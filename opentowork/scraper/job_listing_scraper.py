@@ -5,12 +5,15 @@ from indeed_jobs import indeed_job_listings
 from linkedin_jobs import linkedin_job_listings
 
 def write_to_csv(data, job_title_input, pages):
-    scrape_dt = str(datetime.now())
+    scrape_dt = datetime.now().strftime("%Y%m%d_%H%M%S")
     directory = "csvs"
     if not os.path.exists(directory):
         os.makedirs(directory)
-    csv_file = os.path.join(directory, f"job_listings_{job_title_input}_{pages}_pages_scraped_{scrape_dt}.csv")
-    colnames = ["title", "company", "location", "posted date", 
+
+    job_title_str = '_'.join(job_title_input).replace(' ', '_')
+
+    csv_file = os.path.join(directory, f"job_listings_{job_title_str}_{pages}_pages_scraped_{scrape_dt}.csv")
+    colnames = ["title", "company", "location", "posted date",
                 "link", "description", "scraped date"]
 
     with open(csv_file, "w", newline="", encoding="utf-8") as file:
@@ -19,15 +22,12 @@ def write_to_csv(data, job_title_input, pages):
         writer.writerows(data)
 
 def main():
-    job_title_input = ['data analyst']#, 'data scientist', 'data engineer']
+    job_title_input = ['data analyst']#, 'data scientist', 'data engineer'] commented out for testing
     pages = 1
 
     scraped_data = []
 
     for job_title in job_title_input:
-        #scraped_data = scraped_data 
-        #+ scrape_indeed_job_listings(job_title, pages) 
-        #+ scrape_linkedin_job_listings(job_title, pages)
         scraped_data.extend(indeed_job_listings(job_title, pages))
         scraped_data.extend(linkedin_job_listings(job_title, pages))
 
