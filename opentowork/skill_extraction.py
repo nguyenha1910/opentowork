@@ -8,7 +8,7 @@ import os
 
 nlp = spacy.load("en_core_web_lg") # python -m spacy download en_core_web_lg
 
-def skill_extraction(path):
+def skill_extraction_resume(path):
     """
     parse the resum in a pdf format and extract a unique list of skill set
     that will be compared to job description
@@ -28,7 +28,7 @@ def skill_extraction(path):
             page = pdf_resume[page_number]
             extracted_resume_content_PyMuPDF += page.get_text()
 
-    # needs to have this file downloaded
+    # need to have this file downloaded
     skills = "raw/jz_skill_patterns.jsonl" 
     # https://github.com/kingabzpro/jobzilla_ai/blob/main/jz_skill_patterns.jsonl
 
@@ -38,6 +38,29 @@ def skill_extraction(path):
     doc = nlp(extracted_resume_content_PyMuPDF)
     skills = [ent.text for ent in doc.ents if ent.label_ == "SKILL"]
 
+    for ent in doc.ents:
+        if "SKILL" in ent.label_:
+            skills.append(ent.text)
+
+    # remove duplicates (capitalization)
+    lowercase_skills = [s.lower() for s in skills]
+    unique_skills = list(set(lowercase_skills))
+    return unique_skills
+
+def skill_extraction_job_description(description_row):
+    # need to have this file downloaded
+    skills = "raw/jz_skill_patterns.jsonl" 
+    # https://github.com/kingabzpro/jobzilla_ai/blob/main/jz_skill_patterns.jsonl
+
+    if "entity_ruler" not in nlp.pipe_names:
+        ruler = nlp.add_pipe("entity_ruler", before = "ner")
+        ruler.from_disk(skills)
+
+    doc = nlp(description_row)
+    skills = [ent.text for ent in doc.ents if ent.label_ == "SKILL"]
+
+    dict = {}
+    skills = []
     for ent in doc.ents:
         if "SKILL" in ent.label_:
             skills.append(ent.text)
