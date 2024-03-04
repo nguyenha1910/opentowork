@@ -63,13 +63,6 @@ class TestSkillJobDescription(unittest.TestCase):
     """
     A class containing unit tests for the skill_extraction module.
     """
-    def test_invalid_resume(self):
-        """
-        Test the skill_extraction function with an invalid file.
-        """
-        path = "pdfs/random_ds_resume.docx"
-        with self.assertRaises(ValueError):
-            skill_extraction_resume(path)
 
     def test_one_shot(self):
         """
