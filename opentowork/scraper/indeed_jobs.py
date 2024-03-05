@@ -1,3 +1,7 @@
+"""
+Module retrieves job information from indeed.com using Selenium and BeautifulSoup.
+Returns a list of job information stores as dictionaries.
+"""
 from datetime import datetime
 import time
 import random
@@ -5,6 +9,14 @@ from selenium import webdriver
 from bs4 import BeautifulSoup
 
 def clean_date(text):
+    """
+    Function cleans the date text retrieved from indeed.com. Adds space between
+    first two words and removes repeated words.
+    Args:
+        text (string): posting date text scraped from indeed.com posting
+    Returns:
+        cleaned_text (string): posting date with clean formatting
+    """
     if isinstance(text, str) is not True:
         raise TypeError("Date input is not a string")
     characters = []
@@ -30,6 +42,18 @@ def clean_date(text):
 
 
 def scrape_indeed_listings(job_listings, driver):
+    """
+    Function takes soup from BeautifulSoup and strips out the job title, company
+    location, posted date, and link. It then gets the job description from the link.
+    Inputs in the .find() functions are specific to indeed.com
+    Args:
+        job_listings (beautifulsoup): generated from soup.find_all() looking for a
+        specific class
+        driver (Chrome webdriver): Chrome webdriver from selenium
+    Returns:
+        listings (list): list of job info, each job is its own dictionary with the
+        job attribute as a key and scraped detail as value
+    """
     listings = []
     for job in job_listings:
         job_title = job.find("span", id=lambda x: x and
@@ -62,6 +86,20 @@ def scrape_indeed_listings(job_listings, driver):
     return listings
 
 def indeed_job_listings(job_title_input, pages):
+    """
+    Function initializes the scraping process by going to the indeed.com search for the
+    inputed job title and number of pages. It calls the scrape_indeed_listings function
+    for the number of pages inputted and returns one list with all the job listings.
+    Uses selenium and BeautifulSoup.
+    Args:
+        job_title_input (string): job title to search for
+        pages (int): number of pages to scrape
+    Returns:
+        jobs (list): list of job details, each job is its own dictionary, generated
+        from scrape_indeed_listings
+    Exceptions:
+        TypeError for inputs (if job_title_input is not string, if pages is not int)
+    """
     if isinstance(job_title_input, str) is not True:
         raise TypeError("Job title input is not a string")
     if isinstance(pages, int) is not True:

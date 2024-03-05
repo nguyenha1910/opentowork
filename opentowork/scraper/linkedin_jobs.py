@@ -1,3 +1,7 @@
+"""
+Module retrieves job information from linkedin.com using Selenium and BeautifulSoup.
+Returns a list of job information stores as dictionaries.
+"""
 from datetime import datetime
 import time
 import random
@@ -5,6 +9,18 @@ from selenium import webdriver
 from bs4 import BeautifulSoup
 
 def scrape_linkedin_listings(job_listings, driver):
+    """
+    Function takes soup from BeautifulSoup and strips out the job title, company
+    location, posted date, and link. It then gets the job description from the link.
+    Inputs in the .find() functions are specific to linkedin.com
+    Args:
+        job_listings (beautifulsoup): generated from soup.find_all() looking for a
+        specific class
+        driver (Chrome webdriver): Chrome webdriver from selenium
+    Returns:
+        listings (list): list of job info, each job is its own dictionary with the
+        job attribute as a key and scraped detail as value
+    """
     listings = []
     for job in job_listings:
         job_title = job.find("h3", class_="base-search-card__title").text.strip()
@@ -19,7 +35,8 @@ def scrape_linkedin_listings(job_listings, driver):
         time.sleep(random.choice(list(range(5, 11))))
         try:
             description_soup = BeautifulSoup(driver.page_source, "html.parser")
-            raw = description_soup.find("div", class_="description__text description__text--rich").text
+            raw = description_soup.find("div",
+                                        class_="description__text description__text--rich").text
             job_description = raw.strip()
         # handle the AttributeError exception that may occur if the element is not found
         except AttributeError:
@@ -35,6 +52,20 @@ def scrape_linkedin_listings(job_listings, driver):
     return listings
 
 def linkedin_job_listings(job_title_input, pages):
+    """
+    Function initializes the scraping process by going to the linkedin.com search for the
+    inputed job title and number of pages. It calls the scrape_indeed_listings function
+    for the number of pages inputted and returns one list with all the job listings.
+    Uses selenium and BeautifulSoup.
+    Args:
+        job_title_input (string): job title to search for
+        pages (int): number of pages to scrape
+    Returns:
+        jobs (list): list of job details, each job is its own dictionary, generated
+        from scrape_indeed_listings
+    Exceptions:
+        TypeError for inputs (if job_title_input is not string, if pages is not int)
+    """
     if isinstance(job_title_input, str) is not True:
         raise TypeError("Job title input is not a string")
     if isinstance(pages, int) is not True:
@@ -45,7 +76,7 @@ def linkedin_job_listings(job_title_input, pages):
     for i in range(pages):
         start_index = i * job_listings_per_page
         base_url = "https://www.linkedin.com/jobs/search/?keywords="
-        url = base_url + f"{job_title_input}&location=United%20States&start={start_index}"
+        url = base_url + f"{job_title_input}&start={start_index}"
         print(f"Scraping from this url: {url}")
 
         driver = webdriver.Chrome()
