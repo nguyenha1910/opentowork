@@ -24,14 +24,23 @@ class TestScraper(unittest.TestCase):
     """
     def setUp(self):
         print("setting up...")
-        self.initial_files = set(os.listdir('csvs/'))
+        directory = 'csvs/'
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+        self.initial_files = set(os.listdir(directory))
 
     def tearDown(self):
-        final_files = set(os.listdir('csvs/'))
+        directory = 'csvs/'
+        final_files = set(os.listdir(directory))
         new_files = final_files - self.initial_files
         print("tearing down...")
+        #clean up files/directories made during testing
         for file in new_files:
-            os.remove('csvs/'+file)
+            os.remove(directory + file)
+        if len(self.initial_files) == 0:
+            os.rmdir(directory)
+        else:
+            pass
         self.assertGreater(len(new_files), 0, "No new file created")
         self.assertEqual(len(new_files), 1, "Too many files created")
 
