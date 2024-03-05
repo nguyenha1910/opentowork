@@ -5,6 +5,8 @@ from selenium import webdriver
 from bs4 import BeautifulSoup
 
 def clean_date(text):
+    if isinstance(text, str) is not True:
+        raise TypeError("Date input is not a string")
     characters = []
     upper_count = 0
     #add a space after the first word
@@ -27,7 +29,7 @@ def clean_date(text):
     return cleaned_text
 
 
-def scrape_listings(job_listings, driver):
+def scrape_indeed_listings(job_listings, driver):
     listings = []
     for job in job_listings:
         job_title = job.find("span", id=lambda x: x and
@@ -59,37 +61,38 @@ def scrape_listings(job_listings, driver):
                     "scraped date": str(datetime.now())})
     return listings
 
-# pages: how many pages to scrape
-# job_title_input: the job title you want to scrape
 def indeed_job_listings(job_title_input, pages):
-    jobs = [] # stores data listing data
+    if isinstance(job_title_input, str) is not True:
+        raise TypeError("Job title input is not a string")
+    if isinstance(pages, int) is not True:
+        raise TypeError("Pages input is not an int")
+
+    job_listings_per_page = 15
+    jobs = []
 
     for i in range(pages):
-        start_index = i * 15
+        start_index = i * job_listings_per_page
         url = f"https://www.indeed.com/jobs?q={job_title_input}&l=United+States&start={start_index}"
         print(f"Scraping from this url: {url}")
 
         driver = webdriver.Chrome()
         driver.get(url)
-
         # scroll to the bottom of the page using JavaScript
         print(f"Scrolling to bottom of page {i+1}")
         driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-
         # Wait for a random amount of time before scrolling to the next page
         time.sleep(random.choice(list(range(3, 7))))
-
         # Scrape the job postings
         soup = BeautifulSoup(driver.page_source, "html.parser")
         job_listings = soup.find_all("div", class_=lambda x: x and
                                     x.startswith('cardOutline tapItem dd-privacy-allow result job'))
         try:
-            job_info = scrape_listings(job_listings, driver)
+            job_info = scrape_indeed_listings(job_listings, driver)
             # add data to the jobs list
             jobs = jobs + job_info
         # catch exception that occurs in the scraping process
         except Exception as exception:
-            print(f"An error occurred while scraping jobs: {str(exception)}")
+            print(f"An error occurred while scraping jobs from Indeed: {str(exception)}")
 
     # close the Selenium web driver
     driver.quit()
