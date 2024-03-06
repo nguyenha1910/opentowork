@@ -11,13 +11,17 @@ def get_latest_csv_file():
     latest_csv_file = max(csv_files_paths, key=os.path.getmtime)
     return latest_csv_file
 
-def job_item(data, skills_jd, skills_resume):
+def job_item(data, skills_jd, skills_resume, jd_content, resume_content):
     # score = data['score']
-    skills_resume = sorted(skills_resume)
-    skills_jd = sorted(skills_jd)
-    score = sim_calculator(skills_jd, skills_resume)
-    #print("skills_jd", skills_jd)
-    #print("skills_resume", skills_resume)
+    #skills_resume = sorted(skills_resume)
+    #skills_jd = sorted(skills_jd)
+    score = sim_calculator(jd_content, resume_content)
+
+    job_skills_set = set(skills_jd)
+    resume_skills_set = set(skills_resume)
+    intersection = job_skills_set.intersection(resume_skills_set)
+    skills_present_in_resume = len(intersection)
+    total_skills_required = len(job_skills_set)
 
     print("score", score)
     container = st.container(border=True)
@@ -27,15 +31,17 @@ def job_item(data, skills_jd, skills_resume):
     c1.caption(data['location'])
     c2.link_button("Apply", data['link'])
     c2.progress(score, text=f"{int(score*100)}%")
+    c2.write(f"{skills_present_in_resume} of {total_skills_required} skills are present in your resume.")
     return container
 
-def app(skills_resume):
+def app(skills_resume, resume_content):
     data_path = get_latest_csv_file()
     data = pd.read_csv(data_path)
     for _, row in data.iterrows():
         if not pd.isna(row['description']):
             skills_jd = skill_extraction_job_description(row['description'])
-            job_item(row, skills_jd, skills_resume)
+            jd_content = row['description']
+            job_item(row, skills_jd, skills_resume, jd_content, resume_content)
         else:
             continue
             

@@ -35,7 +35,7 @@ def app():
         save_path = Path(config['pdf_dir'], uploaded_file.name)
         with open(save_path, mode='wb') as resume_file:
             resume_file.write(uploaded_file.getvalue())
-        skills_resume = skill_extraction_resume(save_path)
+        skills_resume, resume_content = skill_extraction_resume(save_path)
 
         st_tags(
             label='### Skills:',
@@ -47,6 +47,6 @@ def app():
             subprocess.run(["python", "-m", "opentowork.scraper.job_listing_scraper"],check=True)
             #subprocess.run(["python", "opentowork/scraper/job_listing_scraper.py"],check=True)
 
-        job_recommendation.app(skills_resume)
+        job_recommendation.app(skills_resume, resume_content)
 
 app()
