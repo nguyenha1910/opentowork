@@ -1,6 +1,14 @@
 """
 This module contains unit tests for the job_listing_scraper module
 in the opentowork/scraper module.
+Classes:
+    TestScraper - unit tests for job_listing_scraper module
+Functions:
+    count_csv_rows - helper function for counting rows in csv
+    setUp - helper function for logging initial files before scraping
+    tearDown - helper function for logging added files and cleaning up directory
+    test_scraper_smoke - smoke test for job_listing_scraper
+    test_scraper_check_csv_type - checks output is csv for job_listing_scraper
 """
 import os
 import unittest
@@ -48,25 +56,26 @@ class TestScraper(unittest.TestCase):
         """
         Test that a file is created upon calling the function.
         """
-        job_listing_scraper.main()
+        job_listing_scraper.main(total_job_count = 6)
 
     def test_scraper_check_csv_type(self):
         """
         Test that the created file is a csv file.
         """
-        job_listing_scraper.main()
+        job_listing_scraper.main(total_job_count = 6)
         final_files = set(os.listdir('csvs/'))
         new_file = (final_files - self.initial_files).pop()
         self.assertTrue(new_file.endswith('.csv'))
 
-    def test_scraper_check_file_has_data(self):
-        """
-        Test that the created file is not empty.
-        """
-        job_listing_scraper.main()
-        final_files = set(os.listdir('csvs/'))
-        new_file = (final_files - self.initial_files).pop()
-        self.assertGreater(count_csv_rows('csvs/'+new_file), 1, "Generated file is empty")
+    # commented out to allow for empty files -> if empty then tell user on frontend
+    # def test_scraper_check_file_has_data(self):
+    #     """
+    #     Test that the created file is not empty.
+    #     """
+    #     job_listing_scraper.main()
+    #     final_files = set(os.listdir('csvs/'))
+    #     new_file = (final_files - self.initial_files).pop()
+    #     self.assertGreater(count_csv_rows('csvs/'+new_file), 1, "Generated file is empty")
 
 if __name__ == '__main__':
     unittest.main()
