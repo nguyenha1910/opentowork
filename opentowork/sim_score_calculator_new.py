@@ -18,8 +18,6 @@ def sim_calculator(job_posting, resume):
     Returns:
         float : absolute value of similarity score calculated between two inputs
     """
-    #print("job_posting:", job_posting)
-    #print("resume", resume)
     model = SentenceTransformer("sentence-transformers/all-MiniLM-L12-v2")
     job_embedding = model.encode([job_posting])
     resume_embedding = model.encode([resume])
