@@ -6,7 +6,7 @@ import subprocess
 import yaml
 import streamlit as st
 from streamlit_tags import st_tags
-from pages import job_recommendation
+import job_recommendation
 from opentowork import skill_extraction_resume
 
 with open("config.yml", "r", encoding='UTF-8') as config_file:
