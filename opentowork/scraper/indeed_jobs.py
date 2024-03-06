@@ -1,3 +1,5 @@
+# pylint: disable=broad-exception-caught
+# disabled due to variability in scraping exceptions, no specific expected exception
 """
 Module retrieves job information from indeed.com using Selenium and BeautifulSoup.
 Returns a list of job information stores as dictionaries.
@@ -27,7 +29,7 @@ def clean_date(text):
         raise TypeError("Date input is not a string")
     characters = []
     upper_count = 0
-    #add a space after the first word
+    # add a space after the first word
     for char in text:
         if char.isupper():
             upper_count += 1
@@ -38,7 +40,7 @@ def clean_date(text):
         else:
             characters.append(char)
     joined_text = ''.join(characters)
-    #check if the first and second words are the same
+    # check if the first and second words are the same
     words = joined_text.split()
     if words[0] == words[1] and len(words) >= 2:
         cleaned_text = ' '.join(words[1:])

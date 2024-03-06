@@ -1,10 +1,12 @@
+# pylint: disable=broad-exception-caught
+# disabled due to variability in scraping exceptions, no specific expected exception
 """
 Module retrieves job information from linkedin.com using Selenium and BeautifulSoup.
 Returns a list of job information stores as dictionaries.
 Functions:
     calculate_pages - calculates the number of pages needed for specific number of jobs
     scrape_linkedin_listings - gathers job details from input generated with BeautifulSoup
-    linkedin_job_listings - searches inputted job title on linkedin.com, calls scrape_indeed_listings
+    linkedin_job_listings - searches job title on linkedin.com, calls scrape_indeed_listings
 """
 from datetime import datetime
 import time
