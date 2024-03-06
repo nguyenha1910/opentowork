@@ -22,7 +22,11 @@ def calculate_pages(target_job_count):
     Returns:
         (pages, job_listings_per_page) (tuple): tuple with number of pages (int)
         and specified job_listings_per_page (int)
+    Exceptions:
+        TypeError if target_job_count is not int
     """
+    if isinstance(target_job_count, int) is not True:
+        raise TypeError("Target job count input is not an int")
     job_listings_per_page = 15
     pages = math.ceil(target_job_count/job_listings_per_page)
     return (pages, job_listings_per_page)

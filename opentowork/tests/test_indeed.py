@@ -10,14 +10,20 @@ Functions:
     test_clean_date_output_type - tests output type for clean_date function
     test_clean_date_input_type_num - edge test for clean_date function input
     test_clean_date_input_type - edge test for clean_date function input
+    test_calculate_pages_smoke - smoke test for calculate_pages function
+    test_calculate_pages_one_shot - one-shot test for calculate_pages function
+    test_calculate_pages_output - tests output type for calculate_pages function
+    test_calculate_pages_target_job_count_type - edge test for calculate_pages input
     test_scrape_jobs_smoke - smoke test for linkedin_job_listings
     test_scrape_jobs_output - checks linkedin_job_listings output type
     test_scrape_jobs_job_title_type - edge test for job title input type
-    test_scrape_jobs_pages_type - edge test for page number input type
+    test_scrape_jobs_target_job_count_type - edge test for target_job_count type
 """
 import unittest
-from opentowork.scraper.indeed_jobs import indeed_job_listings
 from opentowork.scraper.indeed_jobs import clean_date
+from opentowork.scraper.indeed_jobs import calculate_pages
+from opentowork.scraper.indeed_jobs import indeed_job_listings
+
 
 class TestIndeed(unittest.TestCase):
     """
@@ -64,6 +70,34 @@ class TestIndeed(unittest.TestCase):
         with self.assertRaises(TypeError):
             clean_date({'<span class="css-10pe3me eu4oa1w0">Employer</span>'})
 
+    def test_calculate_pages_smoke(self):
+        """
+        Smoke test for calculate_pages function
+        """
+        result = calculate_pages(30)
+        self.assertIsNotNone(result)
+
+    def test_calculate_pages_one_shot(self):
+        """
+        One-shot test for calculate_pages function, expected output = (3, 15)
+        """
+        result = calculate_pages(35)
+        self.assertEqual(result, (3, 15))
+
+    def test_calculate_pages_output(self):
+        """
+        Test output of calculate_pages function, should be tuple
+        """
+        result = calculate_pages(10)
+        self.assertTrue(isinstance(result, tuple), "calculate_pages output is not tuple")
+
+    def test_calculate_pages_target_job_count_type(self):
+        """
+        Edge test calculate_pages should return TypeError for non-int input
+        """
+        with self.assertRaises(TypeError):
+            calculate_pages(5.7)
+
     def test_scrape_jobs_smoke(self):
         """
         Test indeed_job_listings runs and returns something.
@@ -86,9 +120,9 @@ class TestIndeed(unittest.TestCase):
         with self.assertRaises(TypeError):
             indeed_job_listings(4, 2)
 
-    def test_scrape_jobs_pages_type(self):
+    def test_scrape_jobs_target_job_count_type(self):
         """
-        Edge test indeed_job_listings returns TypeError for page number input.
+        Edge test indeed_job_listings returns TypeError for target_job_count input.
         """
         with self.assertRaises(TypeError):
             indeed_job_listings('data engineer', 2.5)
