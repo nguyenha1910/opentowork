@@ -21,7 +21,7 @@ def skill_extraction_resume(path):
         path (string): source path for uploaded resume file
 
     Returns:
-        list of string : returns the list of string consists of unique skils
+        tuple: returns a tuple containing a list of unique skills and the resume text
     """
 
     if os.path.splitext(path)[1].lower() != ".pdf":
@@ -53,7 +53,7 @@ def skill_extraction_resume(path):
     # remove duplicates (capitalization)
     lowercase_skills = [s.lower() for s in skill_patterns_path]
     unique_skills = list(set(lowercase_skills))
-    return unique_skills
+    return unique_skills, resume
 
 def skill_extraction_job_description(description_row):
     """
