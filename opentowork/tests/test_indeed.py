@@ -1,6 +1,19 @@
 """
 This module contains unit tests for the indeed_jobs module
 in the opentowork/scraper module.
+Classes:
+    TestIndeed - unit tests for indeed_jobs module
+Functions:
+    test_clean_date_smoke - smoke test for clean_date function
+    test_clean_date_one_shot_posted - one-shot test for clean_date function
+    test_clean_date_one_shot_employer - one-shot test for clean_date function
+    test_clean_date_output_type - tests output type for clean_date function
+    test_clean_date_input_type_num - edge test for clean_date function input
+    test_clean_date_input_type - edge test for clean_date function input
+    test_scrape_jobs_smoke - smoke test for linkedin_job_listings
+    test_scrape_jobs_output - checks linkedin_job_listings output type
+    test_scrape_jobs_job_title_type - edge test for job title input type
+    test_scrape_jobs_pages_type - edge test for page number input type
 """
 import unittest
 from opentowork.scraper.indeed_jobs import indeed_job_listings
@@ -55,14 +68,14 @@ class TestIndeed(unittest.TestCase):
         """
         Test indeed_job_listings runs and returns something.
         """
-        result = indeed_job_listings('data analyst', 1)
+        result = indeed_job_listings('data analyst', 2)
         self.assertIsNotNone(result)
 
     def test_scrape_jobs_output(self):
         """
         Test indeed_job_listings returns a list.
         """
-        result = indeed_job_listings('data scientist', 1)
+        result = indeed_job_listings('data scientist', 2)
         self.assertTrue(isinstance(result, list),
                         "indeed_job_listings output is not a list")
 
