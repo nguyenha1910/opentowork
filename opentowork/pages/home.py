@@ -7,7 +7,7 @@ import yaml
 import streamlit as st
 from streamlit_tags import st_tags
 import job_recommendation
-from ..skill_extraction import skill_extraction
+from .. import skill_extraction
 
 with open("config.yml", "r", encoding='UTF-8') as config_file:
     config = yaml.safe_load(config_file)
