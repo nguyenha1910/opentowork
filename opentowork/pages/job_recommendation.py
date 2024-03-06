@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import os
 # from .. import skill_extraction
-from .. import sim_score_calculator_new
+# from .. import sim_score_calculator_new
 
 def get_latest_csv_file():
     csv_dir = os.path.join(os.path.dirname(__file__), '..', 'csvs')
