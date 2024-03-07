@@ -5,8 +5,8 @@ import os
 from pathlib import Path
 import streamlit as st
 import pandas as pd
-from opentowork.skill_extraction import get_job_description_skills
-from opentowork.sim_score import get_sim_score
+from skill_extraction import get_job_description_skills #opentowork.
+from sim_score import get_sim_score #opentowork.
 
 def get_latest_csv_file():
     """
