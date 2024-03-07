@@ -1,10 +1,12 @@
+# pylint: disable=broad-exception-caught
+# disabled due to variability in scraping exceptions, no specific expected exception
 """
 Module retrieves job information from linkedin.com using Selenium and BeautifulSoup.
 Returns a list of job information stores as dictionaries.
 Functions:
     calculate_pages - calculates the number of pages needed for specific number of jobs
     scrape_linkedin_listings - gathers job details from input generated with BeautifulSoup
-    linkedin_job_listings - searches inputted job title on linkedin.com, calls scrape_indeed_listings
+    linkedin_job_listings - searches job title on linkedin.com, calls scrape_indeed_listings
 """
 from datetime import datetime
 import time
@@ -22,7 +24,11 @@ def calculate_pages(target_job_count):
     Returns:
         (pages, job_listings_per_page) (tuple): tuple with number of pages (int)
         and specified job_listings_per_page (int)
+    Exceptions:
+        TypeError if target_job_count is not int
     """
+    if isinstance(target_job_count, int) is not True:
+        raise TypeError("Target job count input is not an int")
     job_listings_per_page = 15
     pages = math.ceil(target_job_count/job_listings_per_page)
     return (pages, job_listings_per_page)

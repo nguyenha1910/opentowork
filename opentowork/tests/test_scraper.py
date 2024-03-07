@@ -2,9 +2,14 @@
 This module contains unit tests for the job_listing_scraper module
 in the opentowork/scraper module.
 Classes:
+    TestHelperFunctions - unit tests for helper functions in job_listing_scraper module
     TestScraper - unit tests for job_listing_scraper module
 Functions:
     count_csv_rows - helper function for counting rows in csv
+    test_jobs_per_title_smoke - smoke test for jobs_per_title function
+    test_jobs_per_title_one_shot - one-shot test for jobs_per_title function
+    test_jobs_per_title_job_titles_type - edge test for jobs_per_title function
+    test_jobs_per_title_total_job_count_type - edge test for jobs_per_title function
     setUp - helper function for logging initial files before scraping
     tearDown - helper function for logging added files and cleaning up directory
     test_scraper_smoke - smoke test for job_listing_scraper
@@ -14,6 +19,7 @@ import os
 import unittest
 import csv
 from opentowork.scraper import job_listing_scraper
+from opentowork.scraper.job_listing_scraper import jobs_per_title
 
 def count_csv_rows(file_path):
     """
@@ -26,9 +32,41 @@ def count_csv_rows(file_path):
         row_count = sum(1 for row in csv_reader)
     return row_count
 
+class TestHelperFunctions(unittest.TestCase):
+    """
+    A class containing unit tests for the helper functions in job_listing_scraper.
+    """
+    def test_jobs_per_title_smoke(self):
+        """
+        Smoke test for jobs_per_title function
+        """
+        result = jobs_per_title(['data analyst', 'data scientist'], 20)
+        self.assertIsNotNone(result)
+
+    def test_jobs_per_title_one_shot(self):
+        """
+        One-shot test for jobs_per_title function, expected output = 10
+        """
+        self.assertEqual(jobs_per_title(['data analyst', 'data scientist'], 20), 10)
+
+    def test_jobs_per_title_job_titles_type(self):
+        """
+        Edge test for jobs_per_title function, job_titles type
+        """
+        with self.assertRaises(TypeError):
+            jobs_per_title('data analyst', 20)
+
+    def test_jobs_per_title_total_job_count_type(self):
+        """
+        Edge test for jobs_per_title function, total_job_count type
+        """
+        with self.assertRaises(TypeError):
+            jobs_per_title(['data analyst'], 20.5)
+
+
 class TestScraper(unittest.TestCase):
     """
-    A class containing unit tests for the job_listing_scraper module.
+    A class containing unit tests for the job_listing_scraper module's main function.
     """
     def setUp(self):
         print("setting up...")

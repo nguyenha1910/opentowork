@@ -64,7 +64,15 @@ def jobs_per_title(job_titles, total_job_count):
         total_job_count (int): total number of job listings to scrape
     Returns:
         job_count (int): number of job listings to scrape per job title
+    Exceptions:
+        TypeError for job_titles arg (if not a list)
+        TypeError for total_job_count (if not int)
     """
+    if isinstance(job_titles, list) is not True:
+        raise TypeError("Job titles input is not a list")
+    if isinstance(total_job_count, int) is not True:
+        raise TypeError("Total job count needs to be int")
+
     job_count = math.ceil(total_job_count/len(job_titles))
     return job_count
 
