@@ -101,11 +101,12 @@ jobs:
       - name: Lint with pylint
         run: |
           pylint opentowork/*.py
+          pylint opentowork/pages/*.py
+        # pylint opentowork/scraper/*.py
 
       # Next step: run the unit tests with code coverage.
       - name: Unit tests
-        run: |
-          cd opentowork
+        run: | # took out cd opentowork so tests run at same level as streamlit
           coverage run -m unittest discover
           coverage report
           coverage lcov
@@ -116,7 +117,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           base-path: opentowork
-          path-to-lcov: opentowork/coverage.lcov
+          path-to-lcov: coverage.lcov
           # The following two options are needed for "parallel"
           # runs - ie if you have a matrix of python versions.
           # This holds off on reporting code coverage to

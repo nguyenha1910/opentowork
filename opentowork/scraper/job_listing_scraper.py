@@ -41,7 +41,7 @@ def write_to_csv(data, job_titles, total_job_count):
         raise ValueError("All job titles need to be strings")
 
     scrape_dt = datetime.now().strftime("%Y%m%d_%H%M%S")
-    directory = "../csvs"
+    directory = "csvs"
     if not os.path.exists(directory):
         os.makedirs(directory)
 

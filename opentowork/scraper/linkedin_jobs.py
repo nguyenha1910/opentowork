@@ -133,7 +133,7 @@ def linkedin_job_listings(job_title_input, target_job_count):
 
         # scroll to the bottom of the page using JavaScript
         # print(f"Scrolling to bottom of page {i+1}")
-        # driver.execute_script("window.scrollTo(0, document.body.scrollHeight);") # testing!!!!!!!!
+        # driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
 
         # Wait for a random amount of time before scrolling to the next page
         time.sleep(random.choice(list(range(3, 7))))

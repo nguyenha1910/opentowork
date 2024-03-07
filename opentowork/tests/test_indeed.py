@@ -20,9 +20,9 @@ Functions:
     test_scrape_jobs_target_job_count_type - edge test for target_job_count type
 """
 import unittest
-from scraper.indeed_jobs import clean_date
-from scraper.indeed_jobs import calculate_pages
-from scraper.indeed_jobs import indeed_job_listings
+from opentowork.scraper.indeed_jobs import clean_date
+from opentowork.scraper.indeed_jobs import calculate_pages
+from opentowork.scraper.indeed_jobs import indeed_job_listings
 
 
 class TestIndeed(unittest.TestCase):
