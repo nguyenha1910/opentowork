@@ -1,4 +1,5 @@
 # opentowork
+[![Coverage Status](https://coveralls.io/repos/github/nguyenha1910/opentowork/badge.svg?branch=main)](https://coveralls.io/github/nguyenha1910/opentowork?branch=main)
 
 - Project output: a tool (an LLM data loader & a web app for visualization and application tracker)
     -  Upload your resume & input job posts you're interested in

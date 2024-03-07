@@ -1,29 +1,27 @@
 import streamlit as st
 import pandas as pd
 import os
-from skill_extraction import skill_extraction_job_description
-from sim_score_calculator_new import sim_calculator
+from skill_extraction import get_job_description_skills
+from sim_score import get_sim_score
+from pathlib import Path
 
 def get_latest_csv_file():
-    csv_dir = os.path.join(os.path.dirname(__file__), '../..', 'csvs')
+    parent_path = Path(__file__).resolve().parents[2]
+    csv_dir = Path(parent_path, 'csvs')
+    print(f"parent_path: {parent_path}")
+    print(f"csv_dir: {csv_dir}")
     csv_files = [file for file in os.listdir(csv_dir) if file.startswith('job_listings') and file.endswith('.csv')]
     csv_files_paths = [os.path.join(csv_dir, file) for file in csv_files]
     latest_csv_file = max(csv_files_paths, key=os.path.getmtime)
     return latest_csv_file
 
 def job_item(data, skills_jd, skills_resume, jd_content, resume_content):
-    # score = data['score']
-    #skills_resume = sorted(skills_resume)
-    #skills_jd = sorted(skills_jd)
-    score = sim_calculator(jd_content, resume_content)
-
+    score = get_sim_score(jd_content, resume_content)
     job_skills_set = set(skills_jd)
     resume_skills_set = set(skills_resume)
     intersection = job_skills_set.intersection(resume_skills_set)
     skills_present_in_resume = len(intersection)
     total_skills_required = len(job_skills_set)
-
-    print("score", score)
     container = st.container(border=True)
     c1, c2 = container.columns([5, 1])
     c1.subheader(data['title'])
@@ -39,7 +37,7 @@ def app(skills_resume, resume_content):
     data = pd.read_csv(data_path)
     for _, row in data.iterrows():
         if not pd.isna(row['description']):
-            skills_jd = skill_extraction_job_description(row['description'])
+            skills_jd = get_job_description_skills(row['description'])
             jd_content = row['description']
             job_item(row, skills_jd, skills_resume, jd_content, resume_content)
         else:
