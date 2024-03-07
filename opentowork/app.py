@@ -6,8 +6,10 @@ import subprocess
 import yaml
 import streamlit as st
 from streamlit_tags import st_tags
-from opentowork.skill_extraction import get_resume_skills
-from opentowork.pages import job_recommendation
+import skill_extraction
+# from opentowork import skill_extraction
+# from opentowork.pages import job_recommendation
+from pages import job_recommendation
 
 with open("config.yml", "r", encoding='UTF-8') as config_file:
 
@@ -36,7 +38,7 @@ def app():
         save_path = Path(config['pdf_dir'], uploaded_file.name)
         with open(save_path, mode='wb') as resume_file:
             resume_file.write(uploaded_file.getvalue())
-        skills_resume, resume_content = get_resume_skills(save_path)
+        skills_resume, resume_content = skill_extraction.get_resume_skills(save_path)
 
         st_tags(
             label='### Skills:',

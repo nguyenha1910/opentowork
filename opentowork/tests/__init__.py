@@ -1,2 +1,2 @@
 # pylint: disable=missing-module-docstring
-from .test_skill_extraction import *
+# from .test_skill_extraction import *
