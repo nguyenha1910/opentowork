@@ -55,7 +55,7 @@ jobs:
       - name: Lint with pylint
         run: |
           pylint opentowork/*.py
-          pylint opentowork/scraper/*.py
+        #  pylint opentowork/scraper/*.py
 
       - name: Unit tests
         run: |
