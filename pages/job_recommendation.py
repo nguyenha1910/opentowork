@@ -31,7 +31,7 @@ def job_item(data, skills_jd, skills_resume, jd_content, resume_content, key):
     c1.write(data['company'])
     c1.caption(data['location'])
     #if c2.link_button("Apply", data['link']):
-    st.link_button('applied?', on_click = status_update, args = (data,),key=key)
+    c2.button('applied?', on_click = status_update, args = (data,),key=key)
     c2.progress(score, text=f"{int(score*100)}%")
     c2.write(f"{skills_present_in_resume} of {total_skills_required} skills are present in your resume.")
     return container
