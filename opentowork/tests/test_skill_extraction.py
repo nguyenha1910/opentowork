@@ -5,8 +5,8 @@ skill_extraction function in the opentowork module.
 import os
 import unittest
 import yaml
-from skill_extraction import skill_extraction_resume
-from skill_extraction import skill_extraction_job_description
+from skill_extraction import get_resume_skills
+from skill_extraction import get_job_description_skills
 
 print(f"\nCurrent directory: {os.getcwd()}\n")
 
@@ -23,14 +23,14 @@ class TestSkillExtractionResume(unittest.TestCase):
         """
         path = "../pdfs/random_ds_resume.docx"
         with self.assertRaises(ValueError):
-            skill_extraction_resume(path)
+            get_resume_skills(path)
 
     def test_one_shot(self):
         """
         Test the skill_extraction function with a valid PDF file.
         """
         path = "../pdfs/random_ds_resume.pdf"
-        skills = skill_extraction_resume(path)
+        skills = get_resume_skills(path)
         expected = ['neo4j', 'sqlite', 'engineering', 'finance',
                     'monitoring', 'design', 'python', 'algorithms',
                     'google', 'multivariate analysis', 'tensorflow',
@@ -118,7 +118,7 @@ class TestSkillJobDescription(unittest.TestCase):
     cloud platforms Experience with technologies like PySpark, Databricks,
     and Azure Synapse. EducationBachelor's degree in Computer Science,
     Information Technology, or related field, or equivalent working experience"""
-        skills = skill_extraction_job_description(job_description)
+        skills = get_job_description_skills(job_description)
         expected = ['big data', 'scalability', 'design', 'azure',
                     'data quality', 'kafka', 'data structures',
                     'machine learning', 'java', 'database',

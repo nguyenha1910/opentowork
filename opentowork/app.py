@@ -36,7 +36,7 @@ def app():
         save_path = Path(config['pdf_dir'], uploaded_file.name)
         with open(save_path, mode='wb') as resume_file:
             resume_file.write(uploaded_file.getvalue())
-        skills_resume, resume_content = skill_extraction.skill_extraction_resume(save_path)
+        skills_resume, resume_content = skill_extraction.get_resume_skills(save_path)
 
         st_tags(
             label='### Skills:',
