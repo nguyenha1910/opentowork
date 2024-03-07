@@ -121,7 +121,7 @@ def get_jobs(job_titles, total_job_count):
 
     return scraped_data
 
-def main(total_job_count = 30):
+def main(total_job_count = 30): #testing!!!
     """
     Main function to initialize job scraping processes.
     Takes the scraping output lists and writes to one csv file.

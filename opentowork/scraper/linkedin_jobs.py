@@ -13,7 +13,12 @@ import time
 import random
 import math
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 from bs4 import BeautifulSoup
+
+# enable headless mode
+options = Options()
+options.add_argument("--headless")
 
 def calculate_pages(target_job_count):
     """
@@ -120,7 +125,7 @@ def linkedin_job_listings(job_title_input, target_job_count):
         url = base_url + f"{job_title_input}&start={start_index}"
         print(f"Scraping from this url: {url}")
 
-        driver = webdriver.Chrome()
+        driver = webdriver.Chrome(options=options)
         driver.get(url)
         # scroll to the bottom of the page using JavaScript
         print(f"Scrolling to bottom of page {i+1}")
