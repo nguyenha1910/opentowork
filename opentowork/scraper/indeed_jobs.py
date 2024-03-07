@@ -14,7 +14,14 @@ import time
 import random
 import math
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 from bs4 import BeautifulSoup
+
+# enable headless mode
+options = Options()
+options.add_argument("--headless")
+options.add_argument('--disable-gpu')
+options.add_argument('--window-size=1920,1080')
 
 def clean_date(text):
     """
@@ -152,11 +159,11 @@ def indeed_job_listings(job_title_input, target_job_count):
         url = f"https://www.indeed.com/jobs?q={job_title_input}&l=United+States&start={start_index}"
         print(f"Scraping from this url: {url}")
 
-        driver = webdriver.Chrome()
+        driver = webdriver.Chrome(options=options)
         driver.get(url)
         # scroll to the bottom of the page using JavaScript
-        print(f"Scrolling to bottom of page {i+1}")
-        driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        # print(f"Scrolling to bottom of page {i+1}")
+        # driver.execute_script("window.scrollTo(0, document.body.scrollHeight);") # testing!!!!
         # Wait for a random amount of time before scrolling to the next page
         time.sleep(random.choice(list(range(3, 7))))
         # Scrape the job postings

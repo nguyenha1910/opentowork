@@ -26,7 +26,6 @@ jobs:
 
     # Provide a runner. Options are listed on GitHub, but include
     # windows, ubuntu, and macos (latest, as well as specific versions)
-    #???? do we need windows and macos too??
     runs-on: ubuntu-latest
 
     # In order to get Conda environments to work properly, we need to
@@ -84,6 +83,19 @@ jobs:
 
       # If there are any other steps in order for your tests to
       # run successfully, you can add those steps here!
+      - name: Prepare chrome
+        # https://github.com/marketplace/actions/setup-chromedriver
+        uses: nanasess/setup-chromedriver@v2
+        # with:
+        #     # Optional: do not specify to match Chrome's version
+        #     chromedriver-version: '122.0.6261.94'
+
+      - name: Set up virtual display
+        run: |
+          sudo apt-get install -y xvfb
+          export DISPLAY=:99
+          chromedriver --url-base=/wd/hub &
+          sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 & # optional
 
       # Next step: run pylint. Anything less than 10/10 will fail.
       - name: Lint with pylint
@@ -93,6 +105,7 @@ jobs:
       # Next step: run the unit tests with code coverage.
       - name: Unit tests
         run: |
+          cd opentowork
           coverage run -m unittest discover
           coverage report
           coverage lcov

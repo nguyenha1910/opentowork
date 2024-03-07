@@ -40,7 +40,7 @@ def write_to_csv(data, job_titles, total_job_count):
     if any(not isinstance(job, str) for job in job_titles):
         raise ValueError("All job titles need to be strings")
     scrape_dt = datetime.now().strftime("%Y%m%d_%H%M%S")
-    directory = "csvs"
+    directory = "../csvs"
     if not os.path.exists(directory):
         os.makedirs(directory)
 
@@ -130,8 +130,8 @@ def main(total_job_count = 30):
     scraped_data = get_jobs(job_titles, total_job_count)
     write_to_csv(scraped_data, job_titles, total_job_count)
     if len(scraped_data) == 0:
-        oopsies = True
-        print("Oops! There was an error getting jobs. Please try again.") #need this to output to the frontend
+        print("Oops! There was an error getting jobs. Please try again.")
+        #need this to output to the frontend
 
 if __name__ == "__main__":
     main()

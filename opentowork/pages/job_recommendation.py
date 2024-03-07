@@ -1,11 +1,11 @@
 import streamlit as st
 import pandas as pd
 import os
-from opentowork import skill_extraction_job_description
-from opentowork import sim_calculator
+from skill_extraction import skill_extraction_job_description
+from sim_score_calculator_new import sim_calculator
 
 def get_latest_csv_file():
-    csv_dir = os.path.join(os.path.dirname(__file__), '..', 'csvs')
+    csv_dir = os.path.join(os.path.dirname(__file__), '../..', 'csvs')
     csv_files = [file for file in os.listdir(csv_dir) if file.startswith('job_listings') and file.endswith('.csv')]
     csv_files_paths = [os.path.join(csv_dir, file) for file in csv_files]
     latest_csv_file = max(csv_files_paths, key=os.path.getmtime)
@@ -44,4 +44,3 @@ def app(skills_resume, resume_content):
             job_item(row, skills_jd, skills_resume, jd_content, resume_content)
         else:
             continue
-            

@@ -18,8 +18,8 @@ Functions:
 import os
 import unittest
 import csv
-from opentowork.scraper import job_listing_scraper
-from opentowork.scraper.job_listing_scraper import jobs_per_title
+from scraper import job_listing_scraper
+from scraper.job_listing_scraper import jobs_per_title
 
 def count_csv_rows(file_path):
     """
@@ -70,13 +70,13 @@ class TestScraper(unittest.TestCase):
     """
     def setUp(self):
         print("setting up...")
-        directory = 'csvs/'
+        directory = '../csvs/'
         if not os.path.exists(directory):
             os.makedirs(directory)
         self.initial_files = set(os.listdir(directory))
 
     def tearDown(self):
-        directory = 'csvs/'
+        directory = '../csvs/'
         final_files = set(os.listdir(directory))
         new_files = final_files - self.initial_files
         print("tearing down...")
@@ -101,7 +101,7 @@ class TestScraper(unittest.TestCase):
         Test that the created file is a csv file.
         """
         job_listing_scraper.main(total_job_count = 6)
-        final_files = set(os.listdir('csvs/'))
+        final_files = set(os.listdir('../csvs/'))
         new_file = (final_files - self.initial_files).pop()
         self.assertTrue(new_file.endswith('.csv'))
 
