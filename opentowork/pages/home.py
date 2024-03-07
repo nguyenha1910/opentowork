@@ -10,6 +10,7 @@ import job_recommendation
 from skill_extraction import skill_extraction_resume
 
 with open("../config.yml", "r", encoding='UTF-8') as config_file:
+
     config = yaml.safe_load(config_file)
 
 for key, value in config.items():
@@ -45,7 +46,6 @@ def app():
 
         if st.button('Update Job Posting Data'):
             subprocess.run(["python", "-m", "scraper.job_listing_scraper"],check=True)
-            #subprocess.run(["python", "opentowork/scraper/job_listing_scraper.py"],check=True)
 
         job_recommendation.app(skills_resume, resume_content)
 

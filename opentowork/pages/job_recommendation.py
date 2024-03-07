@@ -12,18 +12,12 @@ def get_latest_csv_file():
     return latest_csv_file
 
 def job_item(data, skills_jd, skills_resume, jd_content, resume_content):
-    # score = data['score']
-    #skills_resume = sorted(skills_resume)
-    #skills_jd = sorted(skills_jd)
     score = sim_calculator(jd_content, resume_content)
-
     job_skills_set = set(skills_jd)
     resume_skills_set = set(skills_resume)
     intersection = job_skills_set.intersection(resume_skills_set)
     skills_present_in_resume = len(intersection)
     total_skills_required = len(job_skills_set)
-
-    print("score", score)
     container = st.container(border=True)
     c1, c2 = container.columns([5, 1])
     c1.subheader(data['title'])
