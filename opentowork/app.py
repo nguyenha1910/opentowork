@@ -47,7 +47,7 @@ def app():
         )
 
         if st.button('Update Job Posting Data'):
-            subprocess.run(["python", "-m", "opentowork.scraper.job_listing_scraper"],check=True)
+            subprocess.run(["python", "-m", "scraper.job_listing_scraper"],check=True)
 
         job_recommendation.app(skills_resume, resume_content)
 
