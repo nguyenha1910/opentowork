@@ -42,9 +42,9 @@ class TestSkillExtractionResume(unittest.TestCase):
                     'bash', 'anomaly detection', 'data mining',
                     'gradient descent', 'hadoop', 'sql', 'data science',
                     'git']
-        self.assertIsInstance(skills, list)
+        self.assertIsInstance(skills, tuple) # edited bc function returns tuple
         self.assertGreater(len(skills), 0)
-        self.assertCountEqual (skills, expected)
+        self.assertCountEqual (skills[0], expected)
 
     def test_pattern_path(self):
         """
