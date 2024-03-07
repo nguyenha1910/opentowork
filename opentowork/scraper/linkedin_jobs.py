@@ -18,7 +18,7 @@ from bs4 import BeautifulSoup
 
 # enable headless mode
 options = Options()
-# options.add_argument("--headless")
+options.add_argument("--headless")
 
 def calculate_pages(target_job_count):
     """
