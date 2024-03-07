@@ -89,6 +89,8 @@ jobs:
     if: ${{ always() }}
     runs-on: ubuntu-latest
     steps:
+    - name: Enable verbose
+      run: echo "ACTIONS_STEP_DEBUG=true" >> $GITHUB_ENV
     - name: Coveralls Finished
       uses: coverallsapp/github-action@master
       with:
