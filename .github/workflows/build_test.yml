@@ -51,9 +51,9 @@ jobs:
       - name: Prepare chrome
         # https://github.com/marketplace/actions/setup-chromedriver
         uses: nanasess/setup-chromedriver@v2
-        with:
-            # Optional: do not specify to match Chrome's version
-            chromedriver-version: '122.0.6261.94'
+        # with:
+        #     # Optional: do not specify to match Chrome's version
+        #     chromedriver-version: '122.0.6261.94'
       - name: Set up virtual display
         run: |
           sudo apt-get install -y xvfb
@@ -68,6 +68,7 @@ jobs:
 
       - name: Unit tests
         run: |
+          cd opentowork
           coverage run -m unittest discover
           coverage report
           coverage lcov
