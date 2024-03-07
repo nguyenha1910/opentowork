@@ -47,7 +47,7 @@ def app():
             text='Press enter to add more',
             value=skills_resume,
         )
-
+        
         if st.button('Update Job Posting Data'):
             subprocess.run(["python", "-m", "opentowork.scraper.job_listing_scraper"],check=True)
             #subprocess.run(["python", "opentowork/scraper/job_listing_scraper.py"],check=True)
