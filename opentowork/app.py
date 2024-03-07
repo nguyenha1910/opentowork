@@ -12,7 +12,6 @@ from pages import job_recommendation
 import skill_extraction
 
 with open("config.yml", "r", encoding='UTF-8') as config_file:
-
     config = yaml.safe_load(config_file)
 
 for key, value in config.items():
@@ -36,6 +35,16 @@ def app():
     uploaded_file = st.file_uploader(label="Upload your resume", type="pdf")
     if uploaded_file:
         save_path = Path(config['pdf_dir'], uploaded_file.name)
+        if save_path.exists():
+            base_name, extension = os.path.splitext(save_path)
+            counter = 1
+            while True:
+                new_file_path = f"{base_name} ({counter}){extension}"
+                if not os.path.exists(new_file_path):
+                    os.rename(save_path, new_file_path)
+                    break
+                counter += 1
+            save_path = new_file_path
         with open(save_path, mode='wb') as resume_file:
             resume_file.write(uploaded_file.getvalue())
         skills_resume, resume_content = skill_extraction.get_resume_skills(save_path)
