@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import os
+from opentowork import skill_extraction_job_description
 from opentowork import sim_calculator
 
 def get_latest_csv_file():
@@ -10,9 +11,19 @@ def get_latest_csv_file():
     latest_csv_file = max(csv_files_paths, key=os.path.getmtime)
     return latest_csv_file
 
-def job_item(data, skills):
+def job_item(data, skills_jd, skills_resume, jd_content, resume_content):
     # score = data['score']
-    score = sim_calculator(data['description'], skills)
+    #skills_resume = sorted(skills_resume)
+    #skills_jd = sorted(skills_jd)
+    score = sim_calculator(jd_content, resume_content)
+
+    job_skills_set = set(skills_jd)
+    resume_skills_set = set(skills_resume)
+    intersection = job_skills_set.intersection(resume_skills_set)
+    skills_present_in_resume = len(intersection)
+    total_skills_required = len(job_skills_set)
+
+    print("score", score)
     container = st.container(border=True)
     c1, c2 = container.columns([5, 1])
     c1.subheader(data['title'])
@@ -20,15 +31,17 @@ def job_item(data, skills):
     c1.caption(data['location'])
     c2.link_button("Apply", data['link'])
     c2.progress(score, text=f"{int(score*100)}%")
+    c2.write(f"{skills_present_in_resume} of {total_skills_required} skills are present in your resume.")
     return container
 
-def app(skills):
+def app(skills_resume, resume_content):
     data_path = get_latest_csv_file()
     data = pd.read_csv(data_path)
-
     for _, row in data.iterrows():
         if not pd.isna(row['description']):
-            job_item(row, skills)
+            skills_jd = skill_extraction_job_description(row['description'])
+            jd_content = row['description']
+            job_item(row, skills_jd, skills_resume, jd_content, resume_content)
         else:
             continue
             
