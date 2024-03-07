@@ -14,8 +14,8 @@ Functions:
     test_scrape_jobs_pages_type - edge test for page number input type
 """
 import unittest
-from scraper.linkedin_jobs import calculate_pages
-from scraper.linkedin_jobs import linkedin_job_listings
+from opentowork.scraper.linkedin_jobs import calculate_pages
+from opentowork.scraper.linkedin_jobs import linkedin_job_listings
 
 class TestLinkedin(unittest.TestCase):
     """

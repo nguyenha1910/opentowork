@@ -1,4 +1,3 @@
-# pylint: disable=import-error
 """
 This module represents the home page of the app.
 """
@@ -7,8 +6,8 @@ import subprocess
 import yaml
 import streamlit as st
 from streamlit_tags import st_tags
-from pages import job_recommendation
-import skill_extraction
+from opentowork import skill_extraction
+from opentowork.pages import job_recommendation
 
 with open("config.yml", "r", encoding='UTF-8') as config_file:
 
@@ -46,7 +45,7 @@ def app():
         )
 
         if st.button('Update Job Posting Data'):
-            subprocess.run(["python", "-m", "scraper.job_listing_scraper"],check=True)
+            subprocess.run(["python", "-m", "opentowork.scraper.job_listing_scraper"],check=True)
 
         job_recommendation.app(skills_resume, resume_content)
 
