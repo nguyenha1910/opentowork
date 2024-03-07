@@ -103,11 +103,10 @@ jobs:
           pylint opentowork/*.py
 
       # Next step: run the unit tests with code coverage.
-      #  coverage run -m unittest discover # moved here to test
       - name: Unit tests
         run: |
           cd opentowork
-          coverage run -m tests.test_indeed
+          coverage run -m unittest discover
           coverage report
           coverage lcov
 
