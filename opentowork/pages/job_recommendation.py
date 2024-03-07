@@ -1,12 +1,14 @@
 import streamlit as st
 import pandas as pd
 import os
-# from skill_extraction import get_job_description_skills
-# from sim_score import get_sim_score
-
+from skill_extraction import get_job_description_skills
+from sim_score import get_sim_score
+from pathlib import Path
 
 def get_latest_csv_file():
-    csv_dir = os.path.join(os.path.dirname(__file__), '../..', 'csvs')
+    parent_path = Path(__file__).resolve().parents[2]
+    csv_dir = Path(parent_path, 'csvs')
+    print(f"parent_path: {parent_path}")
     print(f"csv_dir: {csv_dir}")
     csv_files = [file for file in os.listdir(csv_dir) if file.startswith('job_listings') and file.endswith('.csv')]
     csv_files_paths = [os.path.join(csv_dir, file) for file in csv_files]
