@@ -8,7 +8,7 @@ import spacy
 import fitz  # PyMuPDF library
 
 
-with open("config.yml", "r", encoding='UTF-8') as config_file:
+with open("../config.yml", "r", encoding='UTF-8') as config_file:
     config = yaml.safe_load(config_file)
 
 nlp = spacy.load("en_core_web_lg") # python -m spacy download en_core_web_lg
@@ -57,7 +57,7 @@ def skill_extraction_resume(path):
 
 def skill_extraction_job_description(description_row):
     """
-    Extract the skill set from the job description  
+    Extract the skill set from the job description
     Args:
         description_row (string): job description
     Returns:
