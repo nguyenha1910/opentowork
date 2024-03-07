@@ -4,6 +4,7 @@ import os
 from skill_extraction import skill_extraction_job_description
 from sim_score_calculator_new import sim_calculator
 
+
 def get_latest_csv_file():
     csv_dir = os.path.join(os.path.dirname(__file__), '../..', 'csvs')
     csv_files = [file for file in os.listdir(csv_dir) if file.startswith('job_listings') and file.endswith('.csv')]
