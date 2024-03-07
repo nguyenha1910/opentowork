@@ -4,7 +4,7 @@ utilizes pytorch for cosine similairty calculation.
 """
 from sentence_transformers import SentenceTransformer, util
 
-def sim_calculator(job_posting, resume):
+def get_sim_score(job_posting, resume):
     """
     A function that calculates the similarity score between vector embedding of
     job description and skill set extracted from the user's resume based on the cosine similairty.
