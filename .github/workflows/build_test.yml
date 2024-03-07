@@ -5,7 +5,6 @@ on:
   push:
     branches:
       - main
-      - fix_chrome_issue # testing!!
   pull_request:
     # Configuring this means that your PRs will get a GitHub comment
     # from Coveralls with your coverage.
@@ -31,6 +30,10 @@ jobs:
         python-version: ["3.9","3.10", "3.11"]
 
     steps:
+      - name: Check Build Number # testing !!
+        run: |
+          echo "Build Number: $GITHUB_RUN_NUMBER"
+
       - uses: actions/checkout@v3
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v4
