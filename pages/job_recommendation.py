@@ -1,8 +1,8 @@
 import streamlit as st
 import pandas as pd
 import os
-from opentowork import skill_extraction_job_description
-from opentowork import sim_calculator
+from opentowork.skill_extraction import skill_extraction_job_description
+from opentowork.sim_score_calculator_new import sim_calculator
 
 def get_latest_csv_file():
     csv_dir = os.path.join(os.path.dirname(__file__), '..', 'csvs')
