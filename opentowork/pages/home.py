@@ -7,9 +7,10 @@ import yaml
 import streamlit as st
 from streamlit_tags import st_tags
 import job_recommendation
-from .. import skill_extraction
+from skill_extraction import skill_extraction_resume
 
-with open("config.yml", "r", encoding='UTF-8') as config_file:
+with open("../config.yml", "r", encoding='UTF-8') as config_file:
+
     config = yaml.safe_load(config_file)
 
 for key, value in config.items():
@@ -35,7 +36,7 @@ def app():
         save_path = Path(config['pdf_dir'], uploaded_file.name)
         with open(save_path, mode='wb') as resume_file:
             resume_file.write(uploaded_file.getvalue())
-        skills_resume, resume_content = skill_extraction.skill_extraction_resume(save_path)
+        skills_resume, resume_content = skill_extraction_resume(save_path)
 
         st_tags(
             label='### Skills:',
@@ -44,7 +45,7 @@ def app():
         )
 
         if st.button('Update Job Posting Data'):
-            subprocess.run(["python", "-m", "opentowork.scraper.job_listing_scraper"],check=True)
+            subprocess.run(["python", "-m", "scraper.job_listing_scraper"],check=True)
 
         job_recommendation.app(skills_resume, resume_content)
 
