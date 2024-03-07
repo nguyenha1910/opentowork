@@ -1,4 +1,3 @@
-# pylint: disable=import-error
 """
 This module represents the home page of the app.
 """

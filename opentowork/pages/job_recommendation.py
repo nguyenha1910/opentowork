@@ -1,4 +1,3 @@
-# pylint: disable=import-error
 """
 This module represents the job list of the app.
 """
@@ -6,8 +5,8 @@ import os
 from pathlib import Path
 import streamlit as st
 import pandas as pd
-from skill_extraction import get_job_description_skills
-from sim_score import get_sim_score
+from opentowork.skill_extraction import get_job_description_skills
+from opentowork.sim_score import get_sim_score
 
 def get_latest_csv_file():
     """
@@ -36,9 +35,9 @@ def job_item(data, skills_jd, skills_resume, jd_content, resume_content):
         skills_resume (list): The skills present in the resume.
         jd_content (str): The job description.
         resume_content (str): The resume content.
-    
+
     Returns:
-        container (streamlit.container): 
+        container (streamlit.container):
             The container containing the job item.
     """
     score = get_sim_score(jd_content, resume_content)
