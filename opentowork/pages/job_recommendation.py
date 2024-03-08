@@ -5,7 +5,6 @@
 This module represents the job list of the app.
 """
 import os
-import datetime
 from pathlib import Path
 from datetime import datetime
 import streamlit as st
@@ -28,7 +27,7 @@ def get_latest_csv_file():
     latest_csv_file = max(csv_files_paths, key=os.path.getmtime)
 
     last_modified_timestamp = os.path.getmtime(latest_csv_file)
-    last_scraped_dt = datetime.datetime.fromtimestamp(last_modified_timestamp)
+    last_scraped_dt = datetime.fromtimestamp(last_modified_timestamp)
     last_scraped_dt = last_scraped_dt.strftime("%a %b %d %Y %H:%M:%S")
     return latest_csv_file, last_scraped_dt
 
