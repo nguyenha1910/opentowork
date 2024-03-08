@@ -6,12 +6,13 @@ This module represents the home page of the app.
 from pathlib import Path
 import subprocess
 import yaml
+import datetime
 import streamlit as st
 from streamlit_tags import st_tags
 import skill_extraction
 from scraper import job_listing_scraper
 # from opentowork import skill_extraction
-# from opentowork.pages import job_recommendation
+from pages.job_recommendation import get_latest_csv_file
 from pages import job_recommendation
 
 with open("config.yml", "r", encoding='UTF-8') as config_file:
@@ -59,6 +60,11 @@ def app():
             #     st.error(f"Subprocess return code: {e.returncode}")
             except Exception as e:
                 st.error(f"An unexpected error occurred: {str(e)}")
+
+        _, last_scraped_dt = get_latest_csv_file()
+        st.write(f"Job postings last updated: {last_scraped_dt}")
+
         job_recommendation.app(skills_resume, resume_content)
+
 
 app()

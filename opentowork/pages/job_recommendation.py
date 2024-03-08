@@ -4,6 +4,8 @@
 This module represents the job list of the app.
 """
 import os
+import datetime
+import time
 from pathlib import Path
 import streamlit as st
 import pandas as pd
@@ -25,7 +27,10 @@ def get_latest_csv_file():
                  if file.startswith('job_listings') and file.endswith('.csv')]
     csv_files_paths = [os.path.join(csv_dir, file) for file in csv_files]
     latest_csv_file = max(csv_files_paths, key=os.path.getmtime)
-    return latest_csv_file
+
+    last_modified_timestamp = os.path.getmtime(latest_csv_file)
+    last_scraped_dt = datetime.datetime.fromtimestamp(last_modified_timestamp).strftime("%a %b %d %Y %H:%M:%S")
+    return latest_csv_file, last_scraped_dt
 
 def job_item(data, skills_jd, skills_resume, jd_content, resume_content):
     """
@@ -69,8 +74,9 @@ def app(skills_resume, resume_content):
     Returns:
         None
     """
-    data_path = get_latest_csv_file()
+    data_path, last_scraped_dt = get_latest_csv_file()
     data = pd.read_csv(data_path)
+    scraped_dt = data.iloc[-1]['scraped date'].split('.')[0] 
     for _, row in data.iterrows():
         if not pd.isna(row['description']):
             skills_jd = get_job_description_skills(row['description'])
@@ -78,3 +84,4 @@ def app(skills_resume, resume_content):
             job_item(row, skills_jd, skills_resume, jd_content, resume_content)
         else:
             continue
+    return scraped_dt
