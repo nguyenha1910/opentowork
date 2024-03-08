@@ -55,6 +55,8 @@ def app():
                 st.error("Error occurred:")
                 st.error(f"Subprocess error output: {e.output}")
                 st.error(f"Subprocess return code: {e.returncode}")
+            except Exception as e:
+                st.error(f"An unexpected error occurred: {str(e)}")
         job_recommendation.app(skills_resume, resume_content)
 
 app()
