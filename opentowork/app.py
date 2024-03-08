@@ -9,6 +9,7 @@ import yaml
 import streamlit as st
 from streamlit_tags import st_tags
 import skill_extraction
+from .scraper import job_listing_scraper
 # from opentowork import skill_extraction
 # from opentowork.pages import job_recommendation
 from pages import job_recommendation
@@ -50,11 +51,12 @@ def app():
 
         if st.button('Update Job Posting Data'):
             try:
-                subprocess.run(["python", "-m", "opentowork.scraper.job_listing_scraper"], check=True)
-            except subprocess.CalledProcessError as e:
-                st.error("Error occurred:")
-                st.error(f"Subprocess error output: {e.output}")
-                st.error(f"Subprocess return code: {e.returncode}")
+                job_listing_scraper.main()
+                # subprocess.run(["python", "-m", "scraper.job_listing_scraper"], check=True)
+            # except subprocess.CalledProcessError as e:
+            #     st.error("Error occurred:")
+            #     st.error(f"Subprocess error output: {e.output}")
+            #     st.error(f"Subprocess return code: {e.returncode}")
             except Exception as e:
                 st.error(f"An unexpected error occurred: {str(e)}")
         job_recommendation.app(skills_resume, resume_content)
