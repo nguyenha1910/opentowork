@@ -1,10 +1,11 @@
 # pylint: disable=import-error
 # pylint runs from a different place than deployed app
+# pylint: disable=broad-exception-caught
 """
 This module represents the home page of the app.
 """
 from pathlib import Path
-import subprocess
+# import subprocess
 import yaml
 import datetime
 import streamlit as st
