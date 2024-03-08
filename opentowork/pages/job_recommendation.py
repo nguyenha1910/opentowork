@@ -89,10 +89,10 @@ def app(skills_resume, resume_content):
     """
     data_path = get_latest_csv_file()
     data = pd.read_csv(data_path)
-    for _, row in data.iterrows():
+    for idx, row in data.iterrows():
         if not pd.isna(row['description']):
             skills_jd = get_job_description_skills(row['description'])
             jd_content = row['description']
-            job_item(row, skills_jd, skills_resume, jd_content, resume_content)
+            job_item(row, skills_jd, skills_resume, jd_content, resume_content, idx)
         else:
             continue
