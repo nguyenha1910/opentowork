@@ -84,7 +84,6 @@ def app():
             if status is not None:
                 st.dataframe(status)
 
-
         job_recommendation.app(skills_resume, resume_content)
 
 
