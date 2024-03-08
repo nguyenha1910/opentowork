@@ -7,7 +7,7 @@ This module represents the job list of the app.
 import os
 import datetime
 from pathlib import Path
-from datetime import datetime
+import datetime
 import streamlit as st
 import pandas as pd
 from skill_extraction import get_job_description_skills
