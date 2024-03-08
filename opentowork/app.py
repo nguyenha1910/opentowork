@@ -29,6 +29,7 @@ def app():
     st.set_page_config(
         page_title="OpenToWork",
         page_icon="🟢",
+        initial_sidebar_state="collapsed"
     )
     st.title("Open To Work")
 
