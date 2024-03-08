@@ -4,9 +4,7 @@
 This module represents the home page of the app.
 """
 from pathlib import Path
-import subprocess
 import yaml
-import datetime
 import streamlit as st
 from streamlit_tags import st_tags
 import skill_extraction
@@ -58,8 +56,8 @@ def app():
             #     st.error("Error occurred:")
             #     st.error(f"Subprocess error output: {e.output}")
             #     st.error(f"Subprocess return code: {e.returncode}")
-            except Exception as e:
-                st.error(f"An unexpected error occurred: {str(e)}")
+            except Exception as exception:
+                st.error(f"An unexpected error occurred: {str(exception)}")
 
         _, last_scraped_dt = get_latest_csv_file()
         st.write(f"Job postings last updated: {last_scraped_dt}")
