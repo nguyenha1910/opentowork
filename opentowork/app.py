@@ -23,7 +23,8 @@ try:
         r'\data\csvs\app_status.csv'
         )
 except Exception as e:
-    STATUS = None
+    STATUS = pd.DataFrame(columns= ['Company Name', 'Position Title',
+                                    'Location', 'Status', 'Date'])
 
 for key, value in config.items():
     if isinstance(value, str):
