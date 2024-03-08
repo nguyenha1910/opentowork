@@ -19,8 +19,6 @@ def get_latest_csv_file():
     """
     parent_path = Path(__file__).resolve().parents[2]
     csv_dir = Path(parent_path, 'csvs')
-    print(f"parent_path: {parent_path}")
-    print(f"csv_dir: {csv_dir}")
     csv_files = [file for file in os.listdir(csv_dir) \
                  if file.startswith('job_listings') and file.endswith('.csv')]
     csv_files_paths = [os.path.join(csv_dir, file) for file in csv_files]
