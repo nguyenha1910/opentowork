@@ -52,7 +52,7 @@ def app():
 
         if st.button('Update Job Posting Data'):
             subprocess.run(["python", "-m", "opentowork.scraper.job_listing_scraper"],check=True)
-        
+
         with st.expander("See Job Dashboard"):
             if status is not None:
                 st.dataframe(status) 

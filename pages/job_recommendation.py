@@ -27,7 +27,11 @@ def job_item(data, skills_jd, skills_resume, jd_content, resume_content, key):
 
     container = st.container(border=True)
     c1, c2 = container.columns([5, 1])
-    c1.subheader(data['title'])
+    #data_link = st.markdown(f"{data['title']}(%s)" % data['link'])
+
+    c1.subheader(data['title'], anchor = data['link']) # data[title] to markdow nsth and 
+    #st.markdown("check out this [link](%s)" % url)
+
     c1.write(data['company'])
     c1.caption(data['location'])
     #if c2.link_button("Apply", data['link']):
