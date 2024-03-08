@@ -143,4 +143,4 @@ jobs:
         parallel-finished: true
         # This says finish the parallel runs that we did above
         # and send to Coveralls.
-        carryforward: "run-3.7,run-3.8,run-3.9,run-3.10"
+        carryforward: "run-3.9,run-3.10,3.11"
