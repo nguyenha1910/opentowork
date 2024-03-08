@@ -1,22 +1,32 @@
-# !! based off example code, can change later
 [build-system]
 requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
-# The "project" section contains metadata about the project
 [project]
 name = "opentowork"
 version = "0.0.1"
 authors = [
-  { name="Janice Kim" },
-  { name="Nguyen Ha" },
-  { name="Kelly Wang" },
-  { name="Elaine ZHang" },
+  { name="Janice Kim", email="ymkim814@uw.edu" },
+  { name="Nguyen Ha", email="nguyenbh@uw.edu" },
+  { name="Kelly Wang", email="zwang28@uw.edu" },
+  { name="Elaine Zhang", email="ezhang33@uw.edu" },
 ]
-#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! check this
-description = "bob wants a job"
+description = "Tool to optimize job searching by calculating a match score for uploaded resumes and job listings"
 readme = "README.md"
-requires-python = ">=3"
+requires-python = ">=3.9, <4.0"
+dependencies = [
+    "streamlit",
+    "numpy",
+    "pandas",
+    "spacy",
+    "pyyaml",
+    "beautifulsoup4",
+    "pymupdf",
+    "sentence-transformers==2.2.2",
+    "streamlit_tags",
+    "selenium==4.17.2",
+    "build"
+]
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
@@ -24,13 +34,10 @@ classifiers = [
 ]
 dynamic = ["dependencies"]
 
-# In conjunction with the "dynamic" option above in the "project"
-# section, this tells the build system to add any dependencies
-# specified in requirements.txt.
 [tool.setuptools.dynamic]
 dependencies = {file = ["requirements.txt"]}
 
-# Where can someone find out more about your project?
 [project.urls]
 Homepage = "https://github.com/nguyenha1910/opentowork"
+
 Issues = "https://github.com/nguyenha1910/opentowork/issues"
