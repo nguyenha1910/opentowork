@@ -6,11 +6,12 @@ This module represents the home page of the app.
 """
 import os
 from pathlib import Path
-# import subprocess
+import subprocess
 import yaml
 import streamlit as st
 from streamlit_tags import st_tags
 import skill_extraction
+import pandas as pd
 from scraper import job_listing_scraper
 # from opentowork import skill_extraction
 # from opentowork.pages import job_recommendation
@@ -18,6 +19,11 @@ from pages import job_recommendation
 
 with open("config.yml", "r", encoding='UTF-8') as config_file:
     config = yaml.safe_load(config_file)
+
+try:
+    status = pd.read_csv(r'C:\Users\user\Desktop\GitHub\opentowork\app_status.csv')
+except:
+    status = None
 
 for key, value in config.items():
     if isinstance(value, str):
@@ -64,13 +70,18 @@ def app():
         if st.button('Update Job Posting Data'):
             try:
                 job_listing_scraper.main()
-                # subprocess.run(["python", "-m", "scraper.job_listing_scraper"], check=True)
+                # subprocess.run(["python", "-m", "opentowork.scraper.job_listing_scraper"], check=True)
             # except subprocess.CalledProcessError as e:
             #     st.error("Error occurred:")
             #     st.error(f"Subprocess error output: {e.output}")
             #     st.error(f"Subprocess return code: {e.returncode}")
             except Exception as exception:
                 st.error(f"An unexpected error occurred: {str(exception)}")
+
+        with st.expander("See Job Dashboard"):
+            if status is not None:
+                st.dataframe(status)
+
         job_recommendation.app(skills_resume, resume_content)
 
 app()
