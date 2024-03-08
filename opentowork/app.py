@@ -9,7 +9,7 @@ import yaml
 import streamlit as st
 from streamlit_tags import st_tags
 import skill_extraction
-from .scraper import job_listing_scraper
+from scraper import job_listing_scraper
 # from opentowork import skill_extraction
 # from opentowork.pages import job_recommendation
 from pages import job_recommendation

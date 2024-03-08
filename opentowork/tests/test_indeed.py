@@ -102,14 +102,14 @@ class TestIndeed(unittest.TestCase):
         """
         Test indeed_job_listings runs and returns something.
         """
-        result = indeed_job_listings('data analyst', 2)
+        result = indeed_job_listings('nail art', 2)
         self.assertIsNotNone(result)
 
     def test_scrape_jobs_output(self):
         """
         Test indeed_job_listings returns a list.
         """
-        result = indeed_job_listings('data scientist', 2)
+        result = indeed_job_listings('barista', 2)
         self.assertTrue(isinstance(result, list),
                         "indeed_job_listings output is not a list")
 
@@ -125,7 +125,7 @@ class TestIndeed(unittest.TestCase):
         Edge test indeed_job_listings returns TypeError for target_job_count input.
         """
         with self.assertRaises(TypeError):
-            indeed_job_listings('data engineer', 2.5)
+            indeed_job_listings('technician', 2.5)
 
 if __name__ == '__main__':
     unittest.main()

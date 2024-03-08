@@ -53,14 +53,14 @@ class TestLinkedin(unittest.TestCase):
         """
         Test linkedin_job_listings runs and returns something.
         """
-        result = linkedin_job_listings('data analyst', 2)
+        result = linkedin_job_listings('software', 2)
         self.assertIsNotNone(result)
 
     def test_scrape_jobs_output(self):
         """
         Test linkedin_job_listings returns a list.
         """
-        result = linkedin_job_listings('data scientist', 2)
+        result = linkedin_job_listings('electrical engineer', 2)
         self.assertTrue(isinstance(result, list),
                         "linkedin_job_listings output is not a list")
 
@@ -76,7 +76,7 @@ class TestLinkedin(unittest.TestCase):
         Edge test linkedin_job_listings returns TypeError for page number input.
         """
         with self.assertRaises(TypeError):
-            linkedin_job_listings('data engineer', 2.5)
+            linkedin_job_listings('artist', 2.5)
 
 if __name__ == '__main__':
     unittest.main()
