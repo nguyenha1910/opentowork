@@ -18,7 +18,9 @@ with open("config.yml", "r", encoding='UTF-8') as config_file:
     config = yaml.safe_load(config_file)
 
 try:
-    STATUS = pd.read_csv(r'C:\Users\user\Desktop\GitHub\opentowork\app_status.csv')
+    STATUS = pd.read_csv(
+        r'C:\Users\user\Desktop\GitHub\opentowork\data\csvs\app_status.csv'
+        )
 except Exception as e:
     STATUS = None
 

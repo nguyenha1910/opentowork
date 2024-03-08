@@ -82,7 +82,7 @@ def status_update(data):
         ['Company Name', 'Position Title', 'Location', 'Status']
         )
     app_status.to_csv(
-        r'C:\Users\user\Desktop\GitHub\opentowork\app_status.csv', 
+        r'C:\Users\user\Desktop\GitHub\opentowork\data\csvs\app_status.csv', 
         index = None, header=True
         )
     return app_status
