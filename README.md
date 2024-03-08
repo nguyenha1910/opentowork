@@ -1,6 +1,6 @@
 # opentowork
 [![build_test](https://github.com/nguyenha1910/opentowork/actions/workflows/build_test.yml/badge.svg)](https://github.com/nguyenha1910/opentowork/actions/workflows/build_test.yml)
-
+[![Coverage Status](https://coveralls.io/repos/github/nguyenha1910/opentowork/badge.svg?branch=main)](https://coveralls.io/github/nguyenha1910/opentowork?branch=main)
 
 - Project output: a tool (an LLM data loader & a web app for visualization and application tracker)
     -  Upload your resume & input job posts you're interested in
