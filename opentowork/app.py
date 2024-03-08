@@ -6,7 +6,7 @@ This module represents the home page of the app.
 """
 import os
 from pathlib import Path
-# import subprocess
+import subprocess
 import yaml
 import streamlit as st
 from streamlit_tags import st_tags
@@ -62,6 +62,11 @@ def app():
         )
 
         if st.button('Update Job Posting Data'):
+            subprocess.run(["python", "-m", "opentowork.scraper.job_listing_scraper"],check=True)
+
+        with st.expander("See Job Dashboard"):
+            if status is not None:
+                st.dataframe(status) 
             try:
                 job_listing_scraper.main()
                 # subprocess.run(["python", "-m", "scraper.job_listing_scraper"], check=True)
