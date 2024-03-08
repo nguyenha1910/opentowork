@@ -1,3 +1,5 @@
+# pylint: disable=import-error
+# pylint runs from a different place than deployed app
 """
 This module represents the job list of the app.
 """
