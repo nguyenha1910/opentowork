@@ -1,2 +1,2 @@
-pdf_dir: 'pdfs/'
+pdf_dir: 'data/pdfs/'
 pattern_path: 'data/jz_skill_patterns.jsonl'

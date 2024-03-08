@@ -21,7 +21,7 @@ class TestSkillExtractionResume(unittest.TestCase):
         """
         Test the skill_extraction function with an invalid file.
         """
-        path = "pdfs/random_ds_resume.docx"
+        path = "data/pdfs/random_ds_resume.docx"
         with self.assertRaises(ValueError):
             get_resume_skills(path)
 
