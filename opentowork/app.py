@@ -6,7 +6,6 @@ This module represents the home page of the app.
 """
 import os
 from pathlib import Path
-import subprocess
 import yaml
 import streamlit as st
 from streamlit_tags import st_tags
@@ -21,9 +20,10 @@ with open("config.yml", "r", encoding='UTF-8') as config_file:
     config = yaml.safe_load(config_file)
 
 try:
-    status = pd.read_csv(r'C:\Users\user\Desktop\GitHub\opentowork\app_status.csv')
-except:
-    status = None
+    Status = pd.read_csv(r'C:\Users\user\Desktop\GitHub\opentowork\app_status.csv')
+except Exception as exception:
+    Status = None
+    st.error(f"An unexpected error occurred: {str(exception)}")
 
 for key, value in config.items():
     if isinstance(value, str):
@@ -79,8 +79,8 @@ def app():
                 st.error(f"An unexpected error occurred: {str(exception)}")
 
         with st.expander("See Job Dashboard"):
-            if status is not None:
-                st.dataframe(status)
+            if Status is not None:
+                st.dataframe(Status)
 
         job_recommendation.app(skills_resume, resume_content)
 

@@ -6,6 +6,7 @@ This module represents the job list of the app.
 import os
 from pathlib import Path
 import streamlit as st
+from datetime import datetime
 import pandas as pd
 from skill_extraction import get_job_description_skills #opentowork.
 from sim_score import get_sim_score #opentowork.
@@ -70,7 +71,8 @@ def status_update(data):
     global app_status
 
     st.toast("You Applied! Congrats")
-    new_app = [{'Company Name': data['company'], 'Position Title': data['title'], 'Location': data['location'], 'Status': 'Applied', 'Date' : datetime.now()}]
+    new_app = [{'Company Name': data['company'], 'Position Title': data['title'], 'Location': data['location'], 
+                'Status': 'Applied', 'Date' : datetime.now()}]
     app_status = pd.concat([app_status, pd.DataFrame(new_app)], ignore_index=True)
     app_status = app_status.drop_duplicates(['Company Name', 'Position Title', 'Location', 'Status'])
     app_status.to_csv(r'C:\Users\user\Desktop\GitHub\opentowork\app_status.csv', index = None, header=True) 
