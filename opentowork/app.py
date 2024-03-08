@@ -1,10 +1,11 @@
 # pylint: disable=import-error
 # pylint runs from a different place than deployed app
+# pylint: disable=broad-exception-caught
 """
 This module represents the home page of the app.
 """
 from pathlib import Path
-import subprocess
+# import subprocess
 import yaml
 import streamlit as st
 from streamlit_tags import st_tags
@@ -57,8 +58,8 @@ def app():
             #     st.error("Error occurred:")
             #     st.error(f"Subprocess error output: {e.output}")
             #     st.error(f"Subprocess return code: {e.returncode}")
-            except Exception as e:
-                st.error(f"An unexpected error occurred: {str(e)}")
+            except Exception as exception:
+                st.error(f"An unexpected error occurred: {str(exception)}")
         job_recommendation.app(skills_resume, resume_content)
 
 app()
