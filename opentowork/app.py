@@ -1,4 +1,5 @@
 # pylint: disable=import-error
+# pylint runs from a different place than deployed app
 """
 This module represents the home page of the app.
 """
@@ -48,8 +49,12 @@ def app():
         )
 
         if st.button('Update Job Posting Data'):
-            subprocess.run(["python", "-m", "opentowork.scraper.job_listing_scraper"],check=True)
-
+            try:
+                subprocess.run(["python", "-m", "opentowork.scraper.job_listing_scraper"], check=True)
+            except subprocess.CalledProcessError as e:
+                st.error("Error occurred:")
+                st.error(f"Subprocess error output: {e.output}")
+                st.error(f"Subprocess return code: {e.returncode}")
         job_recommendation.app(skills_resume, resume_content)
 
 app()
