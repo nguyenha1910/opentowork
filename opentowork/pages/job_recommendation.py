@@ -6,7 +6,6 @@ This module represents the job list of the app.
 """
 import os
 import datetime
-import time
 from pathlib import Path
 from datetime import datetime
 import streamlit as st
@@ -29,7 +28,8 @@ def get_latest_csv_file():
     latest_csv_file = max(csv_files_paths, key=os.path.getmtime)
 
     last_modified_timestamp = os.path.getmtime(latest_csv_file)
-    last_scraped_dt = datetime.datetime.fromtimestamp(last_modified_timestamp).strftime("%a %b %d %Y %H:%M:%S")
+    last_scraped_dt = datetime.datetime.fromtimestamp(last_modified_timestamp)
+    last_scraped_dt = last_scraped_dt.strftime("%a %b %d %Y %H:%M:%S")
     return latest_csv_file, last_scraped_dt
 
 def job_item(data, skills_jd, skills_resume, jd_content, resume_content, key):
@@ -102,7 +102,7 @@ def app(skills_resume, resume_content):
     Returns:
         None
     """
-    data_path, last_scraped_dt = get_latest_csv_file()
+    data_path, _ = get_latest_csv_file()
     data = pd.read_csv(data_path)
 
     for idx, row in data.iterrows():

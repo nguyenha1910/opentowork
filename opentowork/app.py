@@ -9,8 +9,8 @@ from pathlib import Path
 import yaml
 import streamlit as st
 from streamlit_tags import st_tags
-import skill_extraction
 import pandas as pd
+import skill_extraction
 from scraper import job_listing_scraper
 from pages.job_recommendation import get_latest_csv_file
 from pages import job_recommendation
@@ -72,7 +72,7 @@ def app():
                 job_listing_scraper.main()
             except Exception as exception:
                 st.error(f"An unexpected error occurred: {str(exception)}")
-      
+
         _, last_scraped_dt = get_latest_csv_file()
         st.write(f"Job postings last updated: {last_scraped_dt}")
 
