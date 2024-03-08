@@ -46,16 +46,6 @@ def status_update(data):
     app_status.to_csv(r'C:\Users\user\Desktop\GitHub\opentowork\app_status.csv', index = None, header=True) 
 
     return app_status
-#initiate data frame
-
-
-    # alternative dropdown list for 'Status' cell but not sure if this works just proposing
-    # https://docs.streamlit.io/library/api-reference/data/st.dataframe -- lots of options here!
-    #    status = (‘Applied’, ‘Reject’, ‘Interview’, 'Offer')
-    #    gb.configure_column('Status', editable=True, cellEditor=‘agSelectCellEditor’, cellEditorParams={‘values’: dropdownlst })
-    
-# in separate page, we can do this
-# st.dataframe(app_status, hide_index= True)
 
         
 def app(skills_resume, resume_content):
