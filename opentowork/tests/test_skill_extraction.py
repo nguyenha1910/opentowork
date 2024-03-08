@@ -21,7 +21,7 @@ class TestSkillExtractionResume(unittest.TestCase):
         """
         Test the skill_extraction function with an invalid file.
         """
-        path = "pdfs/random_ds_resume.docx"
+        path = "data/pdfs/random_ds_resume.docx"
         with self.assertRaises(ValueError):
             get_resume_skills(path)
 
@@ -29,7 +29,7 @@ class TestSkillExtractionResume(unittest.TestCase):
         """
         Test the skill_extraction function with a valid PDF file.
         """
-        path = "pdfs/random_ds_resume.pdf"
+        path = "data/pdfs/random_ds_resume.pdf"
         skills = get_resume_skills(path)
         expected = ['neo4j', 'sqlite', 'engineering', 'finance',
                     'monitoring', 'design', 'python', 'algorithms',
