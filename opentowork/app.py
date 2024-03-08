@@ -10,6 +10,7 @@ import yaml
 import streamlit as st
 from streamlit_tags import st_tags
 import skill_extraction
+import pandas as pd
 from scraper import job_listing_scraper
 # from opentowork import skill_extraction
 # from opentowork.pages import job_recommendation
@@ -18,6 +19,12 @@ from pages import job_recommendation
 with open("config.yml", "r", encoding='UTF-8') as config_file:
 
     config = yaml.safe_load(config_file)
+
+try:
+    status = pd.read_csv(r'C:\Users\user\Desktop\GitHub\opentowork\app_status.csv')
+except:
+    status = None #either dataframe or initiate col
+    pass
 
 for key, value in config.items():
     if isinstance(value, str):
