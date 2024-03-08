@@ -1,1 +1,2 @@
-from .job_recommendation import *
+# pylint: disable=missing-module-docstring
+# from .job_recommendation import *

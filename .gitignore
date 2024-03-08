@@ -1,6 +1,6 @@
 # Data folder
 # pdfs/
-csvs/
+# csvs/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
