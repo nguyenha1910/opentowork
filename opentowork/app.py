@@ -23,9 +23,8 @@ with open("config.yml", "r", encoding='UTF-8') as config_file:
 try:
     status = pd.read_csv(r'C:\Users\user\Desktop\GitHub\opentowork\app_status.csv')
 except:
-    status = None #either dataframe or initiate col
-    pass
-
+    status = None
+    
 for key, value in config.items():
     if isinstance(value, str):
         config[key] = Path(value)
