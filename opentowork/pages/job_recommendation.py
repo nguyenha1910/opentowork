@@ -1,4 +1,5 @@
 # pylint: disable=import-error
+# pylint: disable=too-many-arguments
 # pylint runs from a different place than deployed app
 """
 This module represents the job list of the app.
@@ -7,10 +8,11 @@ import os
 import datetime
 import time
 from pathlib import Path
+from datetime import datetime
 import streamlit as st
 import pandas as pd
-from skill_extraction import get_job_description_skills #opentowork.
-from sim_score import get_sim_score #opentowork.
+from skill_extraction import get_job_description_skills
+from sim_score import get_sim_score
 
 def get_latest_csv_file():
     """
@@ -20,7 +22,7 @@ def get_latest_csv_file():
     latest_csv_file (str): The latest csv file.
     """
     parent_path = Path(__file__).resolve().parents[2]
-    csv_dir = Path(parent_path, 'csvs')
+    csv_dir = Path(parent_path, 'data', 'csvs')
     csv_files = [file for file in os.listdir(csv_dir) \
                  if file.startswith('job_listings') and file.endswith('.csv')]
     csv_files_paths = [os.path.join(csv_dir, file) for file in csv_files]
@@ -63,7 +65,7 @@ def job_item(data, skills_jd, skills_resume, jd_content, resume_content, key):
               skills are present in your resume.")
     return container
 
-def status_update(data): 
+def status_update(data):
     """
     The main app that creates and updates job application
     Args:
@@ -72,14 +74,22 @@ def status_update(data):
     Returns:
         dataframe: updated job application info
     """
-    global app_status
+    app_status = pd.DataFrame()
 
     st.toast("You Applied! Congrats")
-    new_app = [{'Company Name': data['company'], 'Position Title': data['title'], 'Location': data['location'], 'Status': 'Applied', 'Date' : datetime.now()}]
+    new_app = [{'Company Name': data['company'],
+                'Position Title': data['title'], 
+                'Location': data['location'], 
+                'Status': 'Applied', 
+                'Date' : datetime.now()}]
     app_status = pd.concat([app_status, pd.DataFrame(new_app)], ignore_index=True)
-    app_status = app_status.drop_duplicates(['Company Name', 'Position Title', 'Location', 'Status'])
-    app_status.to_csv(r'C:\Users\user\Desktop\GitHub\opentowork\app_status.csv', index = None, header=True) 
-
+    app_status = app_status.drop_duplicates(
+        ['Company Name', 'Position Title', 'Location', 'Status']
+        )
+    app_status.to_csv(
+        r'data\csvs\app_status.csv', 
+        index = None, header=True
+        )
     return app_status
 
 def app(skills_resume, resume_content):
@@ -94,12 +104,11 @@ def app(skills_resume, resume_content):
     """
     data_path, last_scraped_dt = get_latest_csv_file()
     data = pd.read_csv(data_path)
-    scraped_dt = data.iloc[-1]['scraped date'].split('.')[0] 
-    for _, row in data.iterrows():
+
+    for idx, row in data.iterrows():
         if not pd.isna(row['description']):
             skills_jd = get_job_description_skills(row['description'])
             jd_content = row['description']
-            job_item(row, skills_jd, skills_resume, jd_content, resume_content)
+            job_item(row, skills_jd, skills_resume, jd_content, resume_content, idx)
         else:
             continue
-    return scraped_dt
