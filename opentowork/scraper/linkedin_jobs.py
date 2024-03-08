@@ -13,7 +13,14 @@ import time
 import random
 import math
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 from bs4 import BeautifulSoup
+
+# enable headless mode
+options = Options()
+options.add_argument("--headless")
+options.add_argument('--disable-gpu')
+options.add_argument('--window-size=1920,1080')
 
 def calculate_pages(target_job_count):
     """
@@ -84,6 +91,7 @@ def scrape_linkedin_listings(job_listings, driver, valid_job_count, last_page, t
             valid_job_count += 1
         if last_page is True and valid_job_count >= target_job_count:
             break
+
     return (listings, valid_job_count)
 
 def linkedin_job_listings(job_title_input, target_job_count):
@@ -120,11 +128,13 @@ def linkedin_job_listings(job_title_input, target_job_count):
         url = base_url + f"{job_title_input}&start={start_index}"
         print(f"Scraping from this url: {url}")
 
-        driver = webdriver.Chrome()
+        driver = webdriver.Chrome(options=options)
         driver.get(url)
+
         # scroll to the bottom of the page using JavaScript
-        print(f"Scrolling to bottom of page {i+1}")
-        driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        # print(f"Scrolling to bottom of page {i+1}")
+        # driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+
         # Wait for a random amount of time before scrolling to the next page
         time.sleep(random.choice(list(range(3, 7))))
         # Scrape the job postings

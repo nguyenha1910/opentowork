@@ -21,6 +21,8 @@ import csv
 from opentowork.scraper import job_listing_scraper
 from opentowork.scraper.job_listing_scraper import jobs_per_title
 
+directory = 'csvs/'
+
 def count_csv_rows(file_path):
     """
     A function for counting the rows in a csv file.
@@ -70,13 +72,11 @@ class TestScraper(unittest.TestCase):
     """
     def setUp(self):
         print("setting up...")
-        directory = 'csvs/'
         if not os.path.exists(directory):
             os.makedirs(directory)
         self.initial_files = set(os.listdir(directory))
 
     def tearDown(self):
-        directory = 'csvs/'
         final_files = set(os.listdir(directory))
         new_files = final_files - self.initial_files
         print("tearing down...")
@@ -101,7 +101,7 @@ class TestScraper(unittest.TestCase):
         Test that the created file is a csv file.
         """
         job_listing_scraper.main(total_job_count = 6)
-        final_files = set(os.listdir('csvs/'))
+        final_files = set(os.listdir(directory))
         new_file = (final_files - self.initial_files).pop()
         self.assertTrue(new_file.endswith('.csv'))
 
@@ -111,9 +111,9 @@ class TestScraper(unittest.TestCase):
     #     Test that the created file is not empty.
     #     """
     #     job_listing_scraper.main()
-    #     final_files = set(os.listdir('csvs/'))
+    #     final_files = set(os.listdir(directory))
     #     new_file = (final_files - self.initial_files).pop()
-    #     self.assertGreater(count_csv_rows('csvs/'+new_file), 1, "Generated file is empty")
+    #     self.assertGreater(count_csv_rows(directory+new_file), 1, "Generated file is empty")
 
 if __name__ == '__main__':
     unittest.main()

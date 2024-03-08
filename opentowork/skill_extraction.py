@@ -13,7 +13,7 @@ with open("config.yml", "r", encoding='UTF-8') as config_file:
 
 nlp = spacy.load("en_core_web_lg") # python -m spacy download en_core_web_lg
 
-def skill_extraction_resume(path):
+def get_resume_skills(path):
     """
     parse the resume in a pdf format and extract a unique list of skill set
     that will be compared to job description
@@ -55,9 +55,9 @@ def skill_extraction_resume(path):
     unique_skills = list(set(lowercase_skills))
     return unique_skills, resume
 
-def skill_extraction_job_description(description_row):
+def get_job_description_skills(description_row):
     """
-    Extract the skill set from the job description  
+    Extract the skill set from the job description
     Args:
         description_row (string): job description
     Returns:

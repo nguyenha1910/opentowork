@@ -39,6 +39,7 @@ def write_to_csv(data, job_titles, total_job_count):
         raise ValueError("All data need to be in dict")
     if any(not isinstance(job, str) for job in job_titles):
         raise ValueError("All job titles need to be strings")
+
     scrape_dt = datetime.now().strftime("%Y%m%d_%H%M%S")
     directory = "csvs"
     if not os.path.exists(directory):
@@ -110,13 +111,13 @@ def get_jobs(job_titles, total_job_count):
             data = linkedin_job_listings(job_title, target_job_count)
             if len(data) > 0:
                 has_data = True
-                break
+
         while 2 <= total_tries < 4 and has_data is False:
             total_tries += 1
             data = indeed_job_listings(job_title, target_job_count)
             if len(data) > 0:
                 has_data = True
-                break
+
         scraped_data.extend(data)
 
     return scraped_data
@@ -126,12 +127,13 @@ def main(total_job_count = 30):
     Main function to initialize job scraping processes.
     Takes the scraping output lists and writes to one csv file.
     """
-    job_titles = ['data analyst'] #, 'data scientist', 'data engineer'] #testing
+    job_titles = ['data analyst', 'data scientist', 'data engineer']
     scraped_data = get_jobs(job_titles, total_job_count)
     write_to_csv(scraped_data, job_titles, total_job_count)
+
     if len(scraped_data) == 0:
-        oopsies = True
-        print("Oops! There was an error getting jobs. Please try again.") #need this to output to the frontend
+        print("Oops! There was an error getting jobs. Please try again.")
+        #need this to output to the frontend
 
 if __name__ == "__main__":
     main()
