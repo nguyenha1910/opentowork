@@ -24,7 +24,7 @@ try:
     status = pd.read_csv(r'C:\Users\user\Desktop\GitHub\opentowork\app_status.csv')
 except:
     status = None
-    
+
 for key, value in config.items():
     if isinstance(value, str):
         config[key] = Path(value)
@@ -68,20 +68,20 @@ def app():
         )
 
         if st.button('Update Job Posting Data'):
-            subprocess.run(["python", "-m", "opentowork.scraper.job_listing_scraper"],check=True)
-
-        with st.expander("See Job Dashboard"):
-            if status is not None:
-                st.dataframe(status) 
             try:
                 job_listing_scraper.main()
-                # subprocess.run(["python", "-m", "scraper.job_listing_scraper"], check=True)
+                # subprocess.run(["python", "-m", "opentowork.scraper.job_listing_scraper"], check=True)
             # except subprocess.CalledProcessError as e:
             #     st.error("Error occurred:")
             #     st.error(f"Subprocess error output: {e.output}")
             #     st.error(f"Subprocess return code: {e.returncode}")
             except Exception as exception:
                 st.error(f"An unexpected error occurred: {str(exception)}")
+
+        with st.expander("See Job Dashboard"):
+            if status is not None:
+                st.dataframe(status)
+
         job_recommendation.app(skills_resume, resume_content)
 
 app()
