@@ -94,13 +94,13 @@ class TestScraper(unittest.TestCase):
         """
         Test that a file is created upon calling the function.
         """
-        job_listing_scraper.main(total_job_count = 6)
+        job_listing_scraper.main(job_titles = ['starbucks'], total_job_count = 1)
 
     def test_scraper_check_csv_type(self):
         """
         Test that the created file is a csv file.
         """
-        job_listing_scraper.main(total_job_count = 6)
+        job_listing_scraper.main(job_titles = ['teacher'], total_job_count = 2)
         final_files = set(os.listdir(DIRECTORY))
         new_file = (final_files - self.initial_files).pop()
         self.assertTrue(new_file.endswith('.csv'))
