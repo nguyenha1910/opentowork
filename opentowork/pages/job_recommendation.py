@@ -9,8 +9,8 @@ from pathlib import Path
 from datetime import datetime
 import streamlit as st
 import pandas as pd
-from skill_extraction import get_job_description_skills
-from sim_score import get_sim_score
+from opentowork.skill_extraction import get_job_description_skills
+from opentowork.sim_score import get_sim_score
 
 def get_latest_csv_file():
     """
