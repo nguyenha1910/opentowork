@@ -9,6 +9,7 @@ Functions:
     test_clean_date_smoke - smoke test for clean_date function
     test_clean_date_one_shot_posted - one-shot test for clean_date function
     test_clean_date_one_shot_employer - one-shot test for clean_date function
+    test_clean_date_one_shot - one-shot test for clean_date function
     test_clean_date_output_type - tests output type for clean_date function
     test_clean_date_input_type_num - edge test for clean_date function input
     test_clean_date_input_type - edge test for clean_date function input
@@ -49,6 +50,12 @@ class TestIndeed(unittest.TestCase):
         One-shot test for clean_date function, concatenated words.
         """
         self.assertEqual(clean_date("EmployerActive 2 days ago"), "Employer Active 2 days ago")
+
+    def test_clean_date_one_shot(self):
+        """
+        One-shot test for clean_date function, no cleaning needed.
+        """
+        self.assertEqual(clean_date("Posted 2 days ago"), "Posted 2 days ago")
 
     def test_clean_date_output_type(self):
         """

@@ -122,7 +122,7 @@ def get_jobs(job_titles, total_job_count):
 
     return scraped_data
 
-def main(job_titles = ['data analyst', 'data scientist', 'data engineer'], total_job_count = 30):
+def main(job_titles = None, total_job_count = 30):
     """
     Main function to initialize job scraping processes.
     Takes the scraping output lists and writes to one csv file.
@@ -130,6 +130,8 @@ def main(job_titles = ['data analyst', 'data scientist', 'data engineer'], total
         job_titles (list) - list of job titles to search
         total_job_count (int) - number of total jobs to scrape
     """
+    if job_titles is None:
+        job_titles = ['data analyst', 'data scientist', 'data engineer']
     scraped_data = get_jobs(job_titles, total_job_count)
     write_to_csv(scraped_data, job_titles, total_job_count)
 
