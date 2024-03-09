@@ -68,11 +68,13 @@ def app():
             resume_file.write(uploaded_file.getvalue())
         skills_resume, resume_content = get_resume_skills(save_path)
 
-        st_tags(
+        st_tags_component = st_tags(
             label='### Skills:',
             text='Press enter to add more',
             value=skills_resume,
+            key='skills_resume'
         )
+        skills_resume = st_tags_component # to change resume skill list dynamically
 
         update_job_button = st.button('Update Job Posting Data')
         if update_job_button:
