@@ -1,16 +1,14 @@
+# pylint: disable=W0221,R0801
+# pylint: disable=protected-access
+# pylint: disable=too-few-public-methods
+# pylint: disable=invalid-name
+
 """test_streamlit.py"""
 import unittest
 import os
 import sys
-import pdb # delete later
 from unittest import mock
-import streamlit as st
 from streamlit.testing.v1 import AppTest
-from opentowork.pages.job_recommendation import status_update
-from opentowork.app import app
-from opentowork.skill_extraction import get_resume_skills
-from opentowork.skill_extraction import get_job_description_skills
-
 
 class TestStreamlit(unittest.TestCase):
     """
@@ -27,20 +25,26 @@ class TestStreamlit(unittest.TestCase):
         project_dir = os.path.abspath(os.path.join(current_dir, '..'))
         sys.path.append(project_dir)
 
-        self.at = AppTest.from_file('../app.py')#.run()
-        #self.at = AppTest.from_file('../pages/job_recommendation.py').run()
+        self.at = AppTest.from_file('../app.py')
 
-        class MockFileUploader(object):
+        class MockFileUploader():
+            """
+            Mock file uploader class for testing purposes.
+            """
             def __init__(self):
                 self.name = 'resume.pdf'
 
             def getvalue(self):
+                """ 
+                Get the content of the uploaded file.
+                Returns: The raw content of the uploaded file.
+                """
                 path = "pdfs/random_ds_resume.pdf"
                 # open a test pdf file, read in
                 with open(path, mode='rb') as real_pdf:
                     return real_pdf.read() # just raw content of pdf
 
-        mock_file_uploader.return_value = MockFileUploader() 
+        mock_file_uploader.return_value = MockFileUploader()
 
         self.at.run(timeout=20)
 
