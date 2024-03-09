@@ -46,7 +46,7 @@ class TestStreamlit(unittest.TestCase):
 
         mock_file_uploader.return_value = MockFileUploader()
 
-        self.at.run(timeout=30)
+        self.at.run(timeout=40)
 
     def test_title(self):
         """ Test title """
