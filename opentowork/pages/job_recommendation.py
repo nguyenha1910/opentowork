@@ -9,8 +9,8 @@ from pathlib import Path
 from datetime import datetime
 import streamlit as st
 import pandas as pd
-from skill_extraction import get_job_description_skills
-from sim_score import get_sim_score
+from opentowork.skill_extraction import get_job_description_skills
+from opentowork.sim_score import get_sim_score
 
 def get_latest_csv_file():
     """
@@ -25,7 +25,11 @@ def get_latest_csv_file():
                  if file.startswith('job_listings') and file.endswith('.csv')]
     csv_files_paths = [os.path.join(csv_dir, file) for file in csv_files]
     latest_csv_file = max(csv_files_paths, key=os.path.getmtime)
-    return latest_csv_file
+
+    last_modified_timestamp = os.path.getmtime(latest_csv_file)
+    last_scraped_dt = datetime.fromtimestamp(last_modified_timestamp)
+    last_scraped_dt = last_scraped_dt.strftime("%a %b %d %Y %H:%M:%S")
+    return latest_csv_file, last_scraped_dt
 
 def job_item(data, skills_jd, skills_resume, jd_content, resume_content, key):
     """
@@ -51,10 +55,11 @@ def job_item(data, skills_jd, skills_resume, jd_content, resume_content, key):
     total_skills_required = len(job_skills_set)
     container = st.container(border=True)
     col1, col2 = container.columns([5, 1])
-    col1.subheader(data['title'], anchor = data['link'])
+    col1.subheader(data['title'])
     col1.write(data['company'])
     col1.caption(data['location'])
-    col2.button('applied?', on_click = status_update, args = (data,),key=key)
+    col1.markdown(f"[Apply through company site]({data['link']})")
+    col2.button('Applied?', on_click = status_update, args = (data,),key=key)
     col2.progress(score, text=f"{int(score*100)}%")
     col2.write(f"{skills_present_in_resume} of {total_skills_required}\
               skills are present in your resume.")
@@ -97,8 +102,9 @@ def app(skills_resume, resume_content):
     Returns:
         None
     """
-    data_path = get_latest_csv_file()
+    data_path, _ = get_latest_csv_file()
     data = pd.read_csv(data_path)
+
     for idx, row in data.iterrows():
         if not pd.isna(row['description']):
             skills_jd = get_job_description_skills(row['description'])

@@ -21,7 +21,7 @@ import csv
 from opentowork.scraper import job_listing_scraper
 from opentowork.scraper.job_listing_scraper import jobs_per_title
 
-directory = 'csvs/'
+DIRECTORY = 'csvs/'
 
 def count_csv_rows(file_path):
     """
@@ -72,19 +72,19 @@ class TestScraper(unittest.TestCase):
     """
     def setUp(self):
         print("setting up...")
-        if not os.path.exists(directory):
-            os.makedirs(directory)
-        self.initial_files = set(os.listdir(directory))
+        if not os.path.exists(DIRECTORY):
+            os.makedirs(DIRECTORY)
+        self.initial_files = set(os.listdir(DIRECTORY))
 
     def tearDown(self):
-        final_files = set(os.listdir(directory))
+        final_files = set(os.listdir(DIRECTORY))
         new_files = final_files - self.initial_files
         print("tearing down...")
         #clean up files/directories made during testing
         for file in new_files:
-            os.remove(directory + file)
+            os.remove(DIRECTORY + file)
         if len(self.initial_files) == 0:
-            os.rmdir(directory)
+            os.rmdir(DIRECTORY)
         else:
             pass
         self.assertGreater(len(new_files), 0, "No new file created")
@@ -101,7 +101,7 @@ class TestScraper(unittest.TestCase):
         Test that the created file is a csv file.
         """
         job_listing_scraper.main(total_job_count = 6)
-        final_files = set(os.listdir(directory))
+        final_files = set(os.listdir(DIRECTORY))
         new_file = (final_files - self.initial_files).pop()
         self.assertTrue(new_file.endswith('.csv'))
 

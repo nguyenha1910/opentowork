@@ -1,3 +1,5 @@
+# pylint: disable=duplicate-code
+# disabling for now
 """
 This module contains unit tests for the linkedin_jobs module
 in the opentowork/scraper module.
