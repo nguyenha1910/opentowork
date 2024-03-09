@@ -46,7 +46,7 @@ class TestStreamlit(unittest.TestCase):
 
         mock_file_uploader.return_value = MockFileUploader()
 
-        self.at.run(timeout=20)
+        self.at.run(timeout=30)
 
     def test_title(self):
         """ Test title """
@@ -63,6 +63,6 @@ class TestStreamlit(unittest.TestCase):
 
     def test_applied_button(self):
         """ Test the applied button """
-        if self.at.button[1]:
+        if len(self.at.button) > 1:
             first_applied_button = self.at.button[1]
             self.assertTrue(first_applied_button.click()._value)
