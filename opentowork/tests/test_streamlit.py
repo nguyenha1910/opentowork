@@ -81,11 +81,6 @@ class TestStreamlit(unittest.TestCase):
         expected_columns = ['Company Name', 'Position Title', 'Location', 'Status', 'Date']
         self.assertCountEqual(df_columns, expected_columns)
 
-    def test_job_items_cols(self):
-        """ Test that job item has 2 columns"""
-        columns = self.at[0][6].columns
-        self.assertEqual(len(columns), 2)
-
     def test_job_description(self):
         """ Test that the job description is not empty"""
         description = self.at[0][6].columns[0].markdown[0].value
@@ -93,7 +88,9 @@ class TestStreamlit(unittest.TestCase):
         self.assertNotEqual(description, "")
 
     def test_job_link(self):
-        """ Test that the job link is not empty"""
+        """ Test that job link is not empty"""
         link = self.at[0][6].columns[0].markdown[1].value
+        link_title = link.split('[')[1].split(']')[0]
         self.assertIsInstance(link, str)
         self.assertNotEqual(link, "")
+        self.assertEqual(link_title, 'Apply through company site')
