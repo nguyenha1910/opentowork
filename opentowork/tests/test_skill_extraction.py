@@ -51,12 +51,8 @@ class TestSkillExtractionResume(unittest.TestCase):
         Test skill pattern file exists.
         """
         path = config["pattern_path"]
-        if os.path.isfile(path):
-            self.assertTrue(os.path.isfile(path))
-        else:
-            with self.assertRaises(FileNotFoundError):
-                with open(path, "r", encoding='UTF-8'):
-                    pass
+        self.assertTrue(os.path.isfile(path))
+       
 
 class TestSkillJobDescription(unittest.TestCase):
     """
@@ -136,12 +132,7 @@ class TestSkillJobDescription(unittest.TestCase):
         Test skill pattern file exists.
         """
         path = config["pattern_path"]
-        if os.path.isfile(path):
-            self.assertTrue(os.path.isfile(path))
-        else:
-            with self.assertRaises(FileNotFoundError):
-                with open(path, "r", encoding='UTF-8'):
-                    pass
+        self.assertTrue(os.path.isfile(path))
 
 if __name__ == "__main__":
     unittest.main()
