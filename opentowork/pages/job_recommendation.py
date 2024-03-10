@@ -71,7 +71,7 @@ def job_item(data, skills_jd, skills_resume, jd_content, resume_content, key):
     col2.write(f"{skills_present_in_resume} of {total_skills_required}\
               skills are present in your resume.")
     return container
-
+global app_status
 app_status = pd.DataFrame(columns= ['Company Name', 'Position Title',
                                     'Location', 'Status', 'Date'])
 def status_update(data):
@@ -84,12 +84,12 @@ def status_update(data):
         dataframe: updated job application info
     """
     st.toast("You Applied! Congrats")
+    global app_status
     new_app = [{'Company Name': data['company'],
                 'Position Title': data['title'], 
                 'Location': data['location'], 
                 'Status': 'Applied', 
                 'Date' : datetime.now()}]
-    global app_status
     app_status = pd.concat([app_status, pd.DataFrame(new_app)], ignore_index=True)
     app_status = app_status.drop_duplicates(
         ['Company Name', 'Position Title', 'Location', 'Status']
