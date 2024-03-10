@@ -76,11 +76,12 @@ def jobs_per_title(job_titles, total_job_count):
     job_count = math.ceil(total_job_count/len(job_titles))
     return job_count
 
-def get_jobs(job_titles, total_job_count):
+def scrape_jobs(job_titles, total_job_count):
     """
     Function gets the number of listings to scrape for each job title and loops through
     job titles to create job listings dataset. Tries LinkedIn twice before moving to Indeed
-    if no jobs found, tries scraping 4 times total for each job title.
+    if no jobs found, tries scraping 4 times total for each job title. Calls scrape_search
+    from get_jobs module.
     Args:
         job_titles (list): list of job titles to scrape
         total_job_count (int): target total number of jobs to scrape for all titles
@@ -131,7 +132,7 @@ def main(job_titles = None, total_job_count = 30):
     """
     if job_titles is None:
         job_titles = ['data analyst', 'data scientist', 'data engineer']
-    scraped_data = get_jobs(job_titles, total_job_count)
+    scraped_data = scrape_jobs(job_titles, total_job_count)
     write_to_csv(scraped_data, job_titles, total_job_count)
 
     if len(scraped_data) == 0:
