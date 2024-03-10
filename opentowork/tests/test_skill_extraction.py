@@ -44,7 +44,7 @@ class TestSkillExtractionResume(unittest.TestCase):
                     'git']
         self.assertIsInstance(skills, tuple) # edited bc function returns tuple
         self.assertGreater(len(skills), 0)
-        self.assertCountEqual (skills[0], expected)
+        self.assertCountEqual(skills[0], expected)
 
     def test_pattern_path(self):
         """

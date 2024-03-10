@@ -9,8 +9,9 @@ import csv
 import os
 import math
 from datetime import datetime
-from .indeed_jobs import indeed_job_listings
-from .linkedin_jobs import linkedin_job_listings
+from .get_jobs import scrape_search
+# from .indeed_jobs import indeed_job_listings
+# from .linkedin_jobs import linkedin_job_listings
 
 def write_to_csv(data, job_titles, total_job_count):
     """
@@ -108,13 +109,13 @@ def get_jobs(job_titles, total_job_count):
         has_data = False
         while total_tries < 2 and has_data is False:
             total_tries += 1
-            data = linkedin_job_listings(job_title, target_job_count)
+            data = scrape_search(job_title, target_job_count, "LinkedIn")
             if len(data) > 0:
                 has_data = True
 
         while 2 <= total_tries < 4 and has_data is False:
             total_tries += 1
-            data = indeed_job_listings(job_title, target_job_count)
+            data = scrape_search(job_title, target_job_count, "Indeed")
             if len(data) > 0:
                 has_data = True
 
@@ -137,7 +138,6 @@ def main(job_titles = None, total_job_count = 30):
 
     if len(scraped_data) == 0:
         print("Oops! There was an error getting jobs. Please try again.")
-        #need this to output to the frontend
 
 if __name__ == "__main__":
     main()
