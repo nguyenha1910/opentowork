@@ -1,3 +1,4 @@
+# pylint: disable=redundant-unittest-assert
 """
 Test the get_sim_score function in the opentowork module.
 """
@@ -16,7 +17,7 @@ class TestSimScore(unittest.TestCase):
         """
         get_sim_score("", "")
         self.assertTrue(True)
-    
+
     def test_get_sim_score(self):
         """
         Test the get_sim_score function with a valid job description and resume.

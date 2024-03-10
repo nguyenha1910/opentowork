@@ -88,7 +88,12 @@ class TestStreamlit(unittest.TestCase):
 
     def test_job_description(self):
         """ Test that the job description is not empty"""
-        import pdb; pdb.set_trace()
         description = self.at[0][6].columns[0].markdown[0].value
         self.assertIsInstance(description, str)
         self.assertNotEqual(description, "")
+
+    def test_job_link(self):
+        """ Test that the job link is not empty"""
+        link = self.at[0][6].columns[0].markdown[1].value
+        self.assertIsInstance(link, str)
+        self.assertNotEqual(link, "")
