@@ -21,7 +21,7 @@ import csv
 from opentowork.scraper import job_listing_scraper
 from opentowork.scraper.job_listing_scraper import jobs_per_title
 
-DIRECTORY = 'csvs/'
+DIRECTORY = 'data/csvs/'
 
 def count_csv_rows(file_path):
     """
@@ -94,26 +94,16 @@ class TestScraper(unittest.TestCase):
         """
         Test that a file is created upon calling the function.
         """
-        job_listing_scraper.main(total_job_count = 6)
+        job_listing_scraper.main(job_titles = ['starbucks'], total_job_count = 1)
 
     def test_scraper_check_csv_type(self):
         """
         Test that the created file is a csv file.
         """
-        job_listing_scraper.main(total_job_count = 6)
+        job_listing_scraper.main(job_titles = ['teacher'], total_job_count = 2)
         final_files = set(os.listdir(DIRECTORY))
         new_file = (final_files - self.initial_files).pop()
         self.assertTrue(new_file.endswith('.csv'))
-
-    # commented out to allow for empty files -> if empty then tell user on frontend
-    # def test_scraper_check_file_has_data(self):
-    #     """
-    #     Test that the created file is not empty.
-    #     """
-    #     job_listing_scraper.main()
-    #     final_files = set(os.listdir(directory))
-    #     new_file = (final_files - self.initial_files).pop()
-    #     self.assertGreater(count_csv_rows(directory+new_file), 1, "Generated file is empty")
 
 if __name__ == '__main__':
     unittest.main()

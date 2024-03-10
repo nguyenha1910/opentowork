@@ -103,7 +103,7 @@ jobs:
           pylint opentowork/*.py
           pylint opentowork/pages/*.py
           pylint opentowork/tests/*.py
-        # pylint opentowork/scraper/*.py
+          pylint opentowork/scraper/*.py
 
       # Next step: run the unit tests with code coverage.
       - name: Unit tests

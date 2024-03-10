@@ -9,8 +9,7 @@ import csv
 import os
 import math
 from datetime import datetime
-from .indeed_jobs import indeed_job_listings
-from .linkedin_jobs import linkedin_job_listings
+from .get_jobs import scrape_search
 
 def write_to_csv(data, job_titles, total_job_count):
     """
@@ -41,7 +40,7 @@ def write_to_csv(data, job_titles, total_job_count):
         raise ValueError("All job titles need to be strings")
 
     scrape_dt = datetime.now().strftime("%Y%m%d_%H%M%S")
-    directory = "csvs"
+    directory = "data/csvs"
     if not os.path.exists(directory):
         os.makedirs(directory)
 
@@ -108,13 +107,13 @@ def get_jobs(job_titles, total_job_count):
         has_data = False
         while total_tries < 2 and has_data is False:
             total_tries += 1
-            data = linkedin_job_listings(job_title, target_job_count)
+            data = scrape_search(job_title, target_job_count, "LinkedIn")
             if len(data) > 0:
                 has_data = True
 
         while 2 <= total_tries < 4 and has_data is False:
             total_tries += 1
-            data = indeed_job_listings(job_title, target_job_count)
+            data = scrape_search(job_title, target_job_count, "Indeed")
             if len(data) > 0:
                 has_data = True
 
@@ -122,18 +121,21 @@ def get_jobs(job_titles, total_job_count):
 
     return scraped_data
 
-def main(total_job_count = 30):
+def main(job_titles = None, total_job_count = 30):
     """
     Main function to initialize job scraping processes.
     Takes the scraping output lists and writes to one csv file.
+    Args:
+        job_titles (list) - list of job titles to search
+        total_job_count (int) - number of total jobs to scrape
     """
-    job_titles = ['data analyst', 'data scientist', 'data engineer']
+    if job_titles is None:
+        job_titles = ['data analyst', 'data scientist', 'data engineer']
     scraped_data = get_jobs(job_titles, total_job_count)
     write_to_csv(scraped_data, job_titles, total_job_count)
 
     if len(scraped_data) == 0:
         print("Oops! There was an error getting jobs. Please try again.")
-        #need this to output to the frontend
 
 if __name__ == "__main__":
     main()
