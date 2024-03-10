@@ -96,25 +96,6 @@ def get_url(source, job_title_input, start_index):
         url = f"https://www.indeed.com/jobs?q={job_title_input}&l=United+States&start={start_index}"
     return url
 
-def find_listings(soup, source):
-    """
-    Function takes BeautifulSoup input and finds job listings using specified class.
-    Args:
-        soup (BeautifulSoup): generated from scrape_search function
-        source (string): either "LinkedIn" or "Indeed"
-    Returns:
-        job_listings (ResultSet): contains div tags matching specified class
-    """
-    if source == "LinkedIn":
-        job_listings = soup.find_all("div", class_=("base-card relative w-full hover:no-underline "
-                                                        "focus:no-underline "
-                                                        "base-card--link base-search-card "
-                                                        "base-search-card--link job-search-card"))
-    if source == "Indeed":
-        job_listings = soup.find_all("div", class_=lambda x: x and
-                                    x.startswith('cardOutline tapItem dd-privacy-allow result job'))
-    return job_listings
-
 def get_details(job, source):
     """
     Function finds details of each job listing from job passed in from scrape_listings.
@@ -162,6 +143,25 @@ def get_description(description_soup, source):
         description = description_soup.find("div", id='jobDescriptionText').text
     job_description = description.strip().replace('\n', '')
     return job_description
+
+def find_listings(soup, source):
+    """
+    Function takes BeautifulSoup input and finds job listings using specified class.
+    Args:
+        soup (BeautifulSoup): generated from scrape_search function
+        source (string): either "LinkedIn" or "Indeed"
+    Returns:
+        job_listings (ResultSet): contains div tags matching specified class
+    """
+    if source == "LinkedIn":
+        job_listings = soup.find_all("div", class_=("base-card relative w-full hover:no-underline "
+                                                        "focus:no-underline "
+                                                        "base-card--link base-search-card "
+                                                        "base-search-card--link job-search-card"))
+    if source == "Indeed":
+        job_listings = soup.find_all("div", class_=lambda x: x and
+                                    x.startswith('cardOutline tapItem dd-privacy-allow result job'))
+    return job_listings
 
 def scrape_listings(job_listings, driver, valid_job_count, last_page, target_job_count, source):
     """
@@ -214,7 +214,7 @@ def scrape_listings(job_listings, driver, valid_job_count, last_page, target_job
 def scrape_search(job_title_input, target_job_count, source):
     """
     Function initializes the scraping process by getting search url for the
-    inputed job title and number of pages. Calls calculate_pages, find_listings,
+    inputed job title and number of pages. Calls calculate_pages, get_url, find_listings,
     and scrape_listings functions. Returns one list with all the job listings.
     Uses selenium and BeautifulSoup.
     Args:

@@ -10,8 +10,6 @@ import os
 import math
 from datetime import datetime
 from .get_jobs import scrape_search
-# from .indeed_jobs import indeed_job_listings
-# from .linkedin_jobs import linkedin_job_listings
 
 def write_to_csv(data, job_titles, total_job_count):
     """
