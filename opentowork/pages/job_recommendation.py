@@ -9,8 +9,8 @@ from pathlib import Path
 from datetime import datetime
 import streamlit as st
 import pandas as pd
-from skill_extraction import get_job_description_skills
-from sim_score import get_sim_score
+from opentowork.skill_extraction import get_job_description_skills
+from opentowork.sim_score import get_sim_score
 
 def get_latest_csv_file():
     """
@@ -23,13 +23,20 @@ def get_latest_csv_file():
     csv_dir = Path(parent_path, 'data', 'csvs')
     csv_files = [file for file in os.listdir(csv_dir) \
                  if file.startswith('job_listings') and file.endswith('.csv')]
-    csv_files_paths = [os.path.join(csv_dir, file) for file in csv_files]
-    latest_csv_file = max(csv_files_paths, key=os.path.getmtime)
 
-    last_modified_timestamp = os.path.getmtime(latest_csv_file)
-    last_scraped_dt = datetime.fromtimestamp(last_modified_timestamp)
-    last_scraped_dt = last_scraped_dt.strftime("%a %b %d %Y %H:%M:%S")
+    if len(csv_files) != 0:
+        csv_files_paths = [os.path.join(csv_dir, file) for file in csv_files]
+        latest_csv_file = max(csv_files_paths, key=os.path.getmtime)
+
+        last_modified_timestamp = os.path.getmtime(latest_csv_file)
+        last_scraped_dt = datetime.fromtimestamp(last_modified_timestamp)
+        last_scraped_dt = last_scraped_dt.strftime("%a %b %d %Y %H:%M:%S")
+    else:
+        latest_csv_file = None
+        last_scraped_dt = "no csv found in csvs folder"
+
     return latest_csv_file, last_scraped_dt
+
 
 def job_item(data, skills_jd, skills_resume, jd_content, resume_content, key):
     """
@@ -103,12 +110,19 @@ def app(skills_resume, resume_content):
         None
     """
     data_path, _ = get_latest_csv_file()
-    data = pd.read_csv(data_path)
 
-    for idx, row in data.iterrows():
-        if not pd.isna(row['description']):
-            skills_jd = get_job_description_skills(row['description'])
-            jd_content = row['description']
-            job_item(row, skills_jd, skills_resume, jd_content, resume_content, idx)
-        else:
-            continue
+    if data_path is not None:
+        data = pd.read_csv(data_path)
+
+        if len(data.dropna()) <= 1:
+            st.write("Oops, no jobs were found. Please try again. 🥺")
+
+        for idx, row in data.iterrows():
+            if not pd.isna(row['description']):
+                skills_jd = get_job_description_skills(row['description'])
+                jd_content = row['description']
+                job_item(row, skills_jd, skills_resume, jd_content, resume_content, idx)
+            else:
+                continue
+    else:
+        st.write("Oops, no jobs were found. Please try again. 🥺")

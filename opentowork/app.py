@@ -10,10 +10,10 @@ import yaml
 import streamlit as st
 from streamlit_tags import st_tags
 import pandas as pd
-import skill_extraction
-from scraper import job_listing_scraper
-from pages.job_recommendation import get_latest_csv_file
-from pages import job_recommendation
+from opentowork.skill_extraction import get_resume_skills
+from opentowork.scraper import job_listing_scraper
+from opentowork.pages.job_recommendation import get_latest_csv_file
+from opentowork.pages.job_recommendation import app as job_recommendation_app
 
 with open("config.yml", "r", encoding='UTF-8') as config_file:
     config = yaml.safe_load(config_file)
@@ -46,6 +46,7 @@ def app():
     st.title("Open To Work")
 
     uploaded_file = st.file_uploader(label="Upload your resume", type="pdf")
+
     if uploaded_file:
         save_path = Path(config['pdf_dir'], uploaded_file.name)
         if save_path.exists():
@@ -60,15 +61,18 @@ def app():
             save_path = new_file_path
         with open(save_path, mode='wb') as resume_file:
             resume_file.write(uploaded_file.getvalue())
-        skills_resume, resume_content = skill_extraction.get_resume_skills(save_path)
+        skills_resume, resume_content = get_resume_skills(save_path)
 
-        st_tags(
+        st_tags_component = st_tags(
             label='### Skills:',
             text='Press enter to add more',
             value=skills_resume,
+            key='skills_resume'
         )
+        skills_resume = st_tags_component # to change resume skill list dynamically
 
-        if st.button('Update Job Posting Data'):
+        update_job_button = st.button('Update Job Posting Data')
+        if update_job_button:
             try:
                 job_listing_scraper.main()
             except Exception as exception:
@@ -81,7 +85,7 @@ def app():
             if STATUS is not None:
                 st.dataframe(STATUS)
 
-        job_recommendation.app(skills_resume, resume_content)
+        job_recommendation_app(skills_resume, resume_content)
 
 
 app()

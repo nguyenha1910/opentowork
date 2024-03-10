@@ -8,8 +8,6 @@ import yaml
 from opentowork.skill_extraction import get_resume_skills
 from opentowork.skill_extraction import get_job_description_skills
 
-print(f"\nCurrent directory: {os.getcwd()}\n")
-
 with open("config.yml", "r", encoding='UTF-8') as config_file:
     config = yaml.safe_load(config_file)
 
@@ -51,12 +49,7 @@ class TestSkillExtractionResume(unittest.TestCase):
         Test skill pattern file exists.
         """
         path = config["pattern_path"]
-        if os.path.isfile(path):
-            self.assertTrue(os.path.isfile(path))
-        else:
-            with self.assertRaises(FileNotFoundError):
-                with open(path, "r", encoding='UTF-8'):
-                    pass
+        self.assertTrue(os.path.isfile(path))
 
 class TestSkillJobDescription(unittest.TestCase):
     """
@@ -136,12 +129,7 @@ class TestSkillJobDescription(unittest.TestCase):
         Test skill pattern file exists.
         """
         path = config["pattern_path"]
-        if os.path.isfile(path):
-            self.assertTrue(os.path.isfile(path))
-        else:
-            with self.assertRaises(FileNotFoundError):
-                with open(path, "r", encoding='UTF-8'):
-                    pass
+        self.assertTrue(os.path.isfile(path))
 
 if __name__ == "__main__":
     unittest.main()
