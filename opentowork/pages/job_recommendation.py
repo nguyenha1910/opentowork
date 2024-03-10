@@ -65,8 +65,8 @@ def job_item(data, skills_jd, skills_resume, jd_content, resume_content, key):
     col1.subheader(data['title'])
     col1.write(data['company'])
     col1.caption(data['location'])
-    col1.markdown(f"[Apply through company site]({data['link']})")
-    col2.button('Applied?', on_click = status_update, args = (data,),key=key)
+    col1.button('I applied!', on_click = status_update, args = (data,),key=key)
+    col2.link_button("Apply", data['link'])
     col2.progress(score, text=f"{int(score*100)}%")
     col2.write(f"{skills_present_in_resume} of {total_skills_required}\
               skills are present in your resume.")
