@@ -8,8 +8,6 @@ import yaml
 from opentowork.skill_extraction import get_resume_skills
 from opentowork.skill_extraction import get_job_description_skills
 
-print(f"\nCurrent directory: {os.getcwd()}\n")
-
 with open("config.yml", "r", encoding='UTF-8') as config_file:
     config = yaml.safe_load(config_file)
 
