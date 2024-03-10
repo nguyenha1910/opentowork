@@ -52,7 +52,6 @@ class TestSkillExtractionResume(unittest.TestCase):
         """
         path = config["pattern_path"]
         self.assertTrue(os.path.isfile(path))
-       
 
 class TestSkillJobDescription(unittest.TestCase):
     """
