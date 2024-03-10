@@ -2,8 +2,11 @@
 # pylint: disable=protected-access
 # pylint: disable=too-few-public-methods
 # pylint: disable=invalid-name
+# pylint: disable=import-error
 
-"""test_streamlit.py"""
+"""
+This module contains the ui tests for the app and job_recommendation modules.
+"""
 import unittest
 import os
 import sys
@@ -45,7 +48,6 @@ class TestStreamlit(unittest.TestCase):
                     return real_pdf.read() # just raw content of pdf
 
         mock_file_uploader.return_value = MockFileUploader()
-
         self.at.run(timeout=120)
 
     def test_title(self):
@@ -66,3 +68,20 @@ class TestStreamlit(unittest.TestCase):
         if len(self.at.button) > 1:
             first_applied_button = self.at.button[1]
             self.assertTrue(first_applied_button.click()._value)
+            self.assertEqual(first_applied_button.click().label, "Applied?")
+            self.assertEqual(self.at.columns[1].button[0].key, '0')
+
+    def test_expander_exists(self):
+        """ Test that the expander exists """
+        self.assertEqual(self.at[0][5].type, 'expandable')
+
+    def test_dataframe_cols(self):
+        """ Test that columns in the dataframe are as expected"""
+        df_columns = self.at.dataframe[0].value.columns
+        expected_columns = ['Company Name', 'Position Title', 'Location', 'Status', 'Date']
+        self.assertCountEqual(df_columns, expected_columns)
+
+    def test_job_items_cols(self):
+        """ Test that job item has 2 columns"""
+        columns = self.at[0][6].columns
+        self.assertEqual(len(columns), 2)
