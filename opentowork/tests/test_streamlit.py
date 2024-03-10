@@ -85,3 +85,10 @@ class TestStreamlit(unittest.TestCase):
         """ Test that job item has 2 columns"""
         columns = self.at[0][6].columns
         self.assertEqual(len(columns), 2)
+
+    def test_job_description(self):
+        """ Test that the job description is not empty"""
+        import pdb; pdb.set_trace()
+        description = self.at[0][6].columns[0].markdown[0].value
+        self.assertIsInstance(description, str)
+        self.assertNotEqual(description, "")
