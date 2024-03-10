@@ -17,10 +17,9 @@ from opentowork.pages.job_recommendation import app as job_recommendation_app
 
 with open("config.yml", "r", encoding='UTF-8') as config_file:
     config = yaml.safe_load(config_file)
-
 try:
     STATUS = pd.read_csv(
-        r'\data\csvs\app_status.csv'
+        r'.\data\csvs\app_status.csv'
         )
 except Exception as e:
     STATUS = pd.DataFrame(columns= ['Company Name', 'Position Title',
@@ -82,8 +81,7 @@ def app():
         st.write(f"Job postings last updated: {last_scraped_dt}")
 
         with st.expander("See Job Dashboard"):
-            if STATUS is not None:
-                st.dataframe(STATUS)
+            st.dataframe(STATUS)
 
         job_recommendation_app(skills_resume, resume_content)
 
