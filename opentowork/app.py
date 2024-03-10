@@ -10,15 +10,10 @@ import yaml
 import streamlit as st
 from streamlit_tags import st_tags
 import pandas as pd
-#import skill_extraction
 from opentowork.skill_extraction import get_resume_skills
-#from opentowork.skill_extraction import get_job_description_skills
 from opentowork.scraper import job_listing_scraper
 from opentowork.pages.job_recommendation import get_latest_csv_file
-#from opentowork.pages.job_recommendation import job_item
-#from opentowork.pages.job_recommendation import status_update
 from opentowork.pages.job_recommendation import app as job_recommendation_app
-#from pages import job_recommendation
 
 with open("config.yml", "r", encoding='UTF-8') as config_file:
     config = yaml.safe_load(config_file)
