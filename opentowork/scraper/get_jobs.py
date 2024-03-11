@@ -245,6 +245,7 @@ def scrape_search(job_title_input, target_job_count, source):
     last_page = False
 
     for i in range(pages[0]):
+        time.sleep(random.uniform(1, 3))
         if i == pages[0]-1:
             last_page = True
         start_index = i * pages[1]

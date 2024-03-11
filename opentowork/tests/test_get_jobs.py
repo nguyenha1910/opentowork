@@ -3,6 +3,7 @@
 This module contains unit tests for get_jobs
 in the opentowork/scraper module.
 Classes:
+    TestGetJobsHelper - unit tests for helper functions in get_jobs module
     TestGetJobs - unit tests for get_jobs module
 Functions:
     test_clean_date_smoke - smoke test for clean_date function
@@ -16,13 +17,22 @@ Functions:
     test_calculate_pages_one_shot - one-shot test for calculate_pages function
     test_calculate_pages_output - tests output type for calculate_pages function
     test_calculate_pages_target_job_count_type - edge test for calculate_pages input
-    !!!!!!!!!!!!!!!!!!!!
-    test_scrape_search_smoke - smoke test for scrape_search
-    test_scrape_search_output - checks scrape_search output type
-    test_scrape_search_job_title_type - edge test for job title input type
-    test_scrape_search_target_job_count_type - edge test for target_job_count type
-    test_scrape_jobs_source_type - edge test for source type
-    test_scrape_jobs_source_value - edge test for source value
+    test_get_url_smoke - smoke test for get_url function
+    test_get_url_output - tests output type for get_url function
+    test_get_url_one_shot_linkedin - one-shot test for get_url, linkedin
+    test_get_url_one_shot_indeed - one-shot test for get_url, indeed
+    test_find_listings_smoke_linkedin - smoke test for find_listings, linkedin
+    test_find_listings_smoke_indeed - smoke test for find_listings, indeed
+    test_get_details_smoke_linkedin - smoke test for get_details, linkedin
+    test_get_details_smoke_indeed - smoke test for get_details, indeed
+    test_get_description_smoke_linkedin - smoke test for get_description, linkedin
+    test_get_description_smoke_indeed - smoke test for get_description, indeed
+    test_scrape_listings_smoke - smoke test for scrape_listings
+    test_scrape_search_output - tests output for scrape_search function
+    test_scrape_search_job_title_type - edge test for scrape_search function
+    test_scrape_search_target_job_count_type - edge test for scrape_search function
+    test_scrape_search_source_type - edge test for scrape_search function
+    test_scrape_search_source_value - edge test for scrape_search function
 """
 import unittest
 from bs4 import BeautifulSoup
@@ -42,9 +52,9 @@ options.add_argument("--headless")
 options.add_argument('--disable-gpu')
 options.add_argument('--window-size=1920,1080')
 
-class TestGetJobs(unittest.TestCase):
+class TestGetJobsHelper(unittest.TestCase):
     """
-    A class containing unit tests for the get_jobs module.
+    A class containing unit tests for helper functions in the get_jobs module.
     """
     def test_clean_date_smoke(self):
         """
@@ -151,6 +161,10 @@ class TestGetJobs(unittest.TestCase):
         self.assertEqual(result, ("https://www.indeed.com/jobs?q=abc&"
                                   "l=United+States&start=0"))
 
+class TestGetJobs(unittest.TestCase):
+    """
+    A class containing unit tests for the get_jobs module.
+    """
     def test_find_listings_smoke_linkedin(self):
         """
         Smoke test for find_listings function, LinkedIn.
@@ -370,43 +384,36 @@ class TestGetJobs(unittest.TestCase):
         driver.quit()
         self.assertIsNotNone(results)
 
-    def test_scrape_search_smoke(self):
-        """
-        Test scrape_search runs and returns something.
-        """
-        result = scrape_search('nail art', 2, "Indeed")
-        self.assertIsNotNone(result)
-
     def test_scrape_search_output(self):
         """
         Test scrape_search returns a list.
         """
-        result = scrape_search('barista', 2, "LinkedIn")
+        result = scrape_search('barista', 2, "Indeed")
         self.assertTrue(isinstance(result, list),
                         "indeed_job_listings output is not a list")
 
-    def test_scrape_jobs_job_title_type(self):
+    def test_scrape_search_job_title_type(self):
         """
         Edge test scrape_search returns TypeError for job title input.
         """
         with self.assertRaises(TypeError):
             scrape_search(4, 2, "LinkedIn")
 
-    def test_scrape_jobs_target_job_count_type(self):
+    def test_scrape_search_target_job_count_type(self):
         """
         Edge test scrape_search returns TypeError for target_job_count input.
         """
         with self.assertRaises(TypeError):
             scrape_search('technician', 2.5, "Indeed")
 
-    def test_scrape_jobs_source_type(self):
+    def test_scrape_search_source_type(self):
         """
         Edge test scrape_search returns TypeError for source input.
         """
         with self.assertRaises(TypeError):
             scrape_search('magician', 3, 25)
 
-    def test_scrape_jobs_source_value(self):
+    def test_scrape_search_source_value(self):
         """
         Edge test scrape_search returns ValueError for source input.
         """
