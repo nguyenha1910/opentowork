@@ -81,23 +81,19 @@ def status_update(data):
     Returns:
         dataframe: updated job application info
     """
-    app_status = pd.DataFrame()
 
+    st.session_state['status'] = 1
     st.toast("You Applied! Congrats")
-    new_app = [{'Company Name': data['company'],
+    new_app = pd.DataFrame([{'Company Name': data['company'],
                 'Position Title': data['title'], 
                 'Location': data['location'], 
                 'Status': 'Applied', 
-                'Date' : datetime.now()}]
-    app_status = pd.concat([app_status, pd.DataFrame(new_app)], ignore_index=True)
-    app_status = app_status.drop_duplicates(
-        ['Company Name', 'Position Title', 'Location', 'Status']
-        )
-    app_status.to_csv(
+                'Date' : datetime.now()}])
+    new_app.to_csv(
         r'data\csvs\app_status.csv', 
-        index = None, header=True
+        index = None, mode='a', header=False
         )
-    return app_status
+    return new_app
 
 def app(skills_resume, resume_content):
     """
@@ -110,7 +106,6 @@ def app(skills_resume, resume_content):
         None
     """
     data_path, _ = get_latest_csv_file()
-
     if data_path is not None:
         data = pd.read_csv(data_path)
 

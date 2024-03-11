@@ -15,17 +15,9 @@ from opentowork.scraper import job_listing_scraper
 from opentowork.pages.job_recommendation import get_latest_csv_file
 from opentowork.pages.job_recommendation import app as job_recommendation_app
 
+# Load config file
 with open("config.yml", "r", encoding='UTF-8') as config_file:
     config = yaml.safe_load(config_file)
-
-try:
-    STATUS = pd.read_csv(
-        r'\data\csvs\app_status.csv'
-        )
-except Exception as e:
-    STATUS = pd.DataFrame(columns= ['Company Name', 'Position Title',
-                                    'Location', 'Status', 'Date'])
-
 for key, value in config.items():
     if isinstance(value, str):
         config[key] = Path(value)
@@ -81,11 +73,15 @@ def app():
         _, last_scraped_dt = get_latest_csv_file()
         st.write(f"Job postings last updated: {last_scraped_dt}")
 
-        with st.expander("See Job Dashboard"):
-            if STATUS is not None:
-                st.dataframe(STATUS)
+        if 'status' in st.session_state and st.session_state['status']==1:
+            with st.expander("See Job Dashboard"):
+                status_df = pd.read_csv(r'data\csvs\app_status.csv')
+                st.dataframe(status_df)
+        else:
+            status_df = pd.DataFrame(
+                    columns= ['Company Name', 'Position Title','Location', 'Status', 'Date'])
+            status_df.to_csv(r'data\csvs\app_status.csv', header=True, index=False)
 
         job_recommendation_app(skills_resume, resume_content)
-
 
 app()
