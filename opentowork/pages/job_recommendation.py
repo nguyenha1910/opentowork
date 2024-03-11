@@ -38,7 +38,7 @@ def get_latest_csv_file():
     return latest_csv_file, last_scraped_dt
 
 
-def job_item(data, skills_jd, skills_resume, jd_content, resume_content, key):
+def job_item(data, skills_jd, skills_resume, score_pct, key):
     """
     Create a job item using streamlit container.
 
@@ -54,7 +54,7 @@ def job_item(data, skills_jd, skills_resume, jd_content, resume_content, key):
         container (streamlit.container):
             The container containing the job item.
     """
-    score = get_sim_score(jd_content, resume_content)
+    #score = get_sim_score(jd_content, resume_content)
     job_skills_set = set(skills_jd)
     resume_skills_set = set(skills_resume)
     intersection = job_skills_set.intersection(resume_skills_set)
@@ -65,9 +65,9 @@ def job_item(data, skills_jd, skills_resume, jd_content, resume_content, key):
     col1.subheader(data['title'])
     col1.write(data['company'])
     col1.caption(data['location'])
-    col1.markdown(f"[Apply through company site]({data['link']})")
-    col2.button('Applied?', on_click = status_update, args = (data,),key=key)
-    col2.progress(score, text=f"{int(score*100)}%")
+    col1.button('I applied!', on_click = status_update, args = (data,),key=key)
+    col2.link_button("Apply", data['link'])
+    col2.progress(score_pct, text=f"{int(score_pct*100)}%")
     col2.write(f"{skills_present_in_resume} of {total_skills_required}\
               skills are present in your resume.")
     return container
@@ -117,11 +117,26 @@ def app(skills_resume, resume_content):
         if len(data.dropna()) <= 1:
             st.write("Oops, no jobs were found. Please try again. 🥺")
 
+        with st.spinner("Loading job items..."):
+            # Calculate similarity scores for each job posting
+            similarity_scores = []
+            for idx, row in data.iterrows():
+                if not pd.isna(row['description']):
+                    jd_content = row['description']
+                    score = get_sim_score(jd_content, resume_content)
+                    similarity_scores.append(score)
+                else:
+                    similarity_scores.append(0)  # If no description, set score to 0
+            data['similarity_score'] = similarity_scores
+            data = data.sort_values(by='similarity_score', ascending=False)
+
+        # display job items
         for idx, row in data.iterrows():
             if not pd.isna(row['description']):
                 skills_jd = get_job_description_skills(row['description'])
                 jd_content = row['description']
-                job_item(row, skills_jd, skills_resume, jd_content, resume_content, idx)
+                score_pct = row['similarity_score']
+                job_item(row, skills_jd, skills_resume, score_pct, idx)
             else:
                 continue
     else:
