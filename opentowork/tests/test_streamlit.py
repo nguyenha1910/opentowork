@@ -68,8 +68,7 @@ class TestStreamlit(unittest.TestCase):
         if len(self.at.button) > 1:
             first_applied_button = self.at.button[1]
             self.assertTrue(first_applied_button.click()._value)
-            self.assertEqual(first_applied_button.click().label, "Applied?")
-            self.assertEqual(self.at.columns[1].button[0].key, '0')
+            self.assertEqual(first_applied_button.click().label, "I applied!")
 
     def test_expander_exists(self):
         """ Test that the expander exists """
@@ -83,14 +82,6 @@ class TestStreamlit(unittest.TestCase):
 
     def test_job_description(self):
         """ Test that the job description is not empty"""
-        description = self.at[0][6].columns[0].markdown[0].value
+        description = self.at.markdown[2].value
         self.assertIsInstance(description, str)
         self.assertNotEqual(description, "")
-
-    def test_job_link(self):
-        """ Test that job link is not empty"""
-        link = self.at[0][6].columns[0].markdown[1].value
-        link_title = link.split('[')[1].split(']')[0]
-        self.assertIsInstance(link, str)
-        self.assertNotEqual(link, "")
-        self.assertEqual(link_title, 'Apply through company site')

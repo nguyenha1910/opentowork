@@ -23,15 +23,22 @@ def get_latest_csv_file():
     csv_dir = Path(parent_path, 'data', 'csvs')
     csv_files = [file for file in os.listdir(csv_dir) \
                  if file.startswith('job_listings') and file.endswith('.csv')]
-    csv_files_paths = [os.path.join(csv_dir, file) for file in csv_files]
-    latest_csv_file = max(csv_files_paths, key=os.path.getmtime)
 
-    last_modified_timestamp = os.path.getmtime(latest_csv_file)
-    last_scraped_dt = datetime.fromtimestamp(last_modified_timestamp)
-    last_scraped_dt = last_scraped_dt.strftime("%a %b %d %Y %H:%M:%S")
+    if len(csv_files) != 0:
+        csv_files_paths = [os.path.join(csv_dir, file) for file in csv_files]
+        latest_csv_file = max(csv_files_paths, key=os.path.getmtime)
+
+        last_modified_timestamp = os.path.getmtime(latest_csv_file)
+        last_scraped_dt = datetime.fromtimestamp(last_modified_timestamp)
+        last_scraped_dt = last_scraped_dt.strftime("%a %b %d %Y %H:%M:%S")
+    else:
+        latest_csv_file = None
+        last_scraped_dt = "no csv found in csvs folder"
+
     return latest_csv_file, last_scraped_dt
 
-def job_item(data, skills_jd, skills_resume, jd_content, resume_content, key):
+
+def job_item(data, skills_jd, skills_resume, score_pct, key):
     """
     Create a job item using streamlit container.
 
@@ -47,7 +54,7 @@ def job_item(data, skills_jd, skills_resume, jd_content, resume_content, key):
         container (streamlit.container):
             The container containing the job item.
     """
-    score = get_sim_score(jd_content, resume_content)
+    #score = get_sim_score(jd_content, resume_content)
     job_skills_set = set(skills_jd)
     resume_skills_set = set(skills_resume)
     intersection = job_skills_set.intersection(resume_skills_set)
@@ -58,9 +65,9 @@ def job_item(data, skills_jd, skills_resume, jd_content, resume_content, key):
     col1.subheader(data['title'])
     col1.write(data['company'])
     col1.caption(data['location'])
-    col1.markdown(f"[Apply through company site]({data['link']})")
-    col2.button('Applied?', on_click = status_update, args = (data,),key=key)
-    col2.progress(score, text=f"{int(score*100)}%")
+    col1.button('I applied!', on_click = status_update, args = (data,),key=key)
+    col2.link_button("Apply", data['link'])
+    col2.progress(score_pct, text=f"{int(score_pct*100)}%")
     col2.write(f"{skills_present_in_resume} of {total_skills_required}\
               skills are present in your resume.")
     return container
@@ -103,12 +110,34 @@ def app(skills_resume, resume_content):
         None
     """
     data_path, _ = get_latest_csv_file()
-    data = pd.read_csv(data_path)
 
-    for idx, row in data.iterrows():
-        if not pd.isna(row['description']):
-            skills_jd = get_job_description_skills(row['description'])
-            jd_content = row['description']
-            job_item(row, skills_jd, skills_resume, jd_content, resume_content, idx)
-        else:
-            continue
+    if data_path is not None:
+        data = pd.read_csv(data_path)
+
+        if len(data.dropna()) <= 1:
+            st.write("Oops, no jobs were found. Please try again. 🥺")
+
+        with st.spinner("Loading job items..."):
+            # Calculate similarity scores for each job posting
+            similarity_scores = []
+            for idx, row in data.iterrows():
+                if not pd.isna(row['description']):
+                    jd_content = row['description']
+                    score = get_sim_score(jd_content, resume_content)
+                    similarity_scores.append(score)
+                else:
+                    similarity_scores.append(0)  # If no description, set score to 0
+            data['similarity_score'] = similarity_scores
+            data = data.sort_values(by='similarity_score', ascending=False)
+
+        # display job items
+        for idx, row in data.iterrows():
+            if not pd.isna(row['description']):
+                skills_jd = get_job_description_skills(row['description'])
+                jd_content = row['description']
+                score_pct = row['similarity_score']
+                job_item(row, skills_jd, skills_resume, score_pct, idx)
+            else:
+                continue
+    else:
+        st.write("Oops, no jobs were found. Please try again. 🥺")

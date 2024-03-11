@@ -46,11 +46,11 @@ jobs:
     # The actual workflow steps!
     steps:
       # First, check out the repository for the current branch.
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       # Then set up Python with a python version from the matrix.
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
 
@@ -58,7 +58,7 @@ jobs:
       # Conda environment set up using your environment.yml file.
       # More at https://github.com/marketplace/actions/setup-miniconda
       - name: Set up conda
-        uses: conda-incubator/setup-miniconda@v2
+        uses: conda-incubator/setup-miniconda@v3
         with:
           # Use the environment name from your environment.yml file
           activate-environment: opentowork
@@ -103,7 +103,7 @@ jobs:
           pylint opentowork/*.py
           pylint opentowork/pages/*.py
           pylint opentowork/tests/*.py
-        # pylint opentowork/scraper/*.py
+          pylint opentowork/scraper/*.py
 
       # Next step: run the unit tests with code coverage.
       - name: Unit tests
