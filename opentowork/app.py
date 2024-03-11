@@ -73,14 +73,14 @@ def app():
         _, last_scraped_dt = get_latest_csv_file()
         st.write(f"Job postings last updated: {last_scraped_dt}")
 
-        if 'status' in st.session_state and st.session_state['status']==1:
-            with st.expander("See Job Dashboard"):
+        with st.expander("See Job Dashboard"):
+            if 'status' in st.session_state and st.session_state['status']==1:
                 status_df = pd.read_csv(r'data\csvs\app_status.csv')
-                st.dataframe(status_df)
-        else:
-            status_df = pd.DataFrame(
-                    columns= ['Company Name', 'Position Title','Location', 'Status', 'Date'])
-            status_df.to_csv(r'data\csvs\app_status.csv', header=True, index=False)
+            else:
+                status_df = pd.DataFrame(
+                        columns= ['Company Name', 'Position Title','Location', 'Status', 'Date'])
+                status_df.to_csv(r'data\csvs\app_status.csv', header=True, index=False)
+            st.dataframe(status_df)
 
         job_recommendation_app(skills_resume, resume_content)
 
