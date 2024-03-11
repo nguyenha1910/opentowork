@@ -22,10 +22,6 @@ import math
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from bs4 import BeautifulSoup
-import chromedriver_autoinstaller
-
-# check for chromedriver and install as needed
-chromedriver_autoinstaller.install()
 
 # enable headless mode
 options = Options()
