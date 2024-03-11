@@ -76,6 +76,8 @@ def app():
         with st.expander("See Job Dashboard"):
             if 'status' in st.session_state and st.session_state['status']==1:
                 status_df = pd.read_csv(r'data\csvs\app_status.csv')
+                status_df = status_df.drop_duplicates(['Company Name',
+                                                         'Position Title', 'Location', 'Status'])
             else:
                 status_df = pd.DataFrame(
                         columns= ['Company Name', 'Position Title','Location', 'Status', 'Date'])
