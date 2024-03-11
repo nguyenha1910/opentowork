@@ -1,5 +1,6 @@
 # pylint: disable=import-error
 # pylint: disable=too-many-arguments
+# pylint: disable=global-statement
 # pylint runs from a different place than deployed app
 """
 This module represents the job list of the app.
@@ -11,6 +12,10 @@ import streamlit as st
 import pandas as pd
 from opentowork.skill_extraction import get_job_description_skills
 from opentowork.sim_score import get_sim_score
+
+global APP_STATUS
+APP_STATUS = pd.DataFrame(columns= ['Company Name', 'Position Title',
+                                    'Location', 'Status', 'Date'])
 
 def get_latest_csv_file():
     """
@@ -38,7 +43,7 @@ def get_latest_csv_file():
     return latest_csv_file, last_scraped_dt
 
 
-def job_item(data, skills_jd, skills_resume, score_pct, key):
+def job_item(data, skills_jd, skills_resume, score_pct, key, session_state):
     """
     Create a job item using streamlit container.
 
@@ -54,7 +59,6 @@ def job_item(data, skills_jd, skills_resume, score_pct, key):
         container (streamlit.container):
             The container containing the job item.
     """
-    #score = get_sim_score(jd_content, resume_content)
     job_skills_set = set(skills_jd)
     resume_skills_set = set(skills_resume)
     intersection = job_skills_set.intersection(resume_skills_set)
@@ -65,14 +69,26 @@ def job_item(data, skills_jd, skills_resume, score_pct, key):
     col1.subheader(data['title'])
     col1.write(data['company'])
     col1.caption(data['location'])
-    col1.button('I applied!', on_click = status_update, args = (data,),key=key)
+
+
+    #col1.button('I applied!', on_click = status_update, args = (data,), key=key)
+    applied_jobs = session_state.get('applied_jobs', [])
+    if key not in applied_jobs:
+        if col1.button('I applied!', key=key):
+            status_update(data, session_state)
+            applied_jobs.append(key)
+            session_state['applied_jobs'] = applied_jobs
+    print("****** applied_jobs:", applied_jobs)
+
+
     col2.link_button("Apply", data['link'])
     col2.progress(score_pct, text=f"{int(score_pct*100)}%")
     col2.write(f"{skills_present_in_resume} of {total_skills_required}\
               skills are present in your resume.")
     return container
 
-def status_update(data):
+
+def status_update(data, session_state):
     """
     The main app that creates and updates job application
     Args:
@@ -81,23 +97,28 @@ def status_update(data):
     Returns:
         dataframe: updated job application info
     """
-    app_status = pd.DataFrame()
+    applied_jobs = session_state.get('applied_jobs', [])
 
+    if 'APP_STATUS' not in session_state:
+        session_state['APP_STATUS'] = pd.DataFrame(columns=['Company Name', 'Position Title', 'Location', 'Status', 'Date'])
+    
+    print("~~~~~~~~session_state['APP_STATUS']", session_state['APP_STATUS'])
     st.toast("You Applied! Congrats")
     new_app = [{'Company Name': data['company'],
                 'Position Title': data['title'], 
                 'Location': data['location'], 
                 'Status': 'Applied', 
                 'Date' : datetime.now()}]
-    app_status = pd.concat([app_status, pd.DataFrame(new_app)], ignore_index=True)
-    app_status = app_status.drop_duplicates(
+    new_row_df = pd.DataFrame([new_app]) 
+    session_state['APP_STATUS'] = pd.concat([session_state['APP_STATUS'], new_row_df], ignore_index=True)
+    session_state['APP_STATUS'] = session_state['APP_STATUS'].drop_duplicates(
         ['Company Name', 'Position Title', 'Location', 'Status']
         )
-    app_status.to_csv(
-        r'data\csvs\app_status.csv', 
+    session_state['APP_STATUS'].to_csv(
+        r'.\data\csvs\app_status.csv', 
         index = None, header=True
         )
-    return app_status
+    return session_state['APP_STATUS']
 
 def app(skills_resume, resume_content):
     """
@@ -109,6 +130,9 @@ def app(skills_resume, resume_content):
     Returns:
         None
     """
+    session_state = st.session_state
+    print("!!!!!!!!!!st.session_state", st.session_state)
+    print("session_state", session_state)
     data_path, _ = get_latest_csv_file()
 
     if data_path is not None:
@@ -136,7 +160,7 @@ def app(skills_resume, resume_content):
                 skills_jd = get_job_description_skills(row['description'])
                 jd_content = row['description']
                 score_pct = row['similarity_score']
-                job_item(row, skills_jd, skills_resume, score_pct, idx)
+                job_item(row, skills_jd, skills_resume, score_pct, idx, session_state)
             else:
                 continue
     else:

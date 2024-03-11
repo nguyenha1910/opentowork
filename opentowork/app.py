@@ -20,11 +20,14 @@ with open("config.yml", "r", encoding='UTF-8') as config_file:
 
 try:
     STATUS = pd.read_csv(
-        r'\data\csvs\app_status.csv'
+        r'.\data\csvs\app_status.csv'
         )
+    print("****STATUS in try", STATUS)
 except Exception as e:
     STATUS = pd.DataFrame(columns= ['Company Name', 'Position Title',
                                     'Location', 'Status', 'Date'])
+    print("STATUS in except", STATUS)
+print("STATUS", STATUS)
 
 for key, value in config.items():
     if isinstance(value, str):
@@ -81,9 +84,8 @@ def app():
         _, last_scraped_dt = get_latest_csv_file()
         st.write(f"Job postings last updated: {last_scraped_dt}")
 
-        with st.expander("See Job Dashboard"):
-            if STATUS is not None:
-                st.dataframe(STATUS)
+        with st.expander("See Job Application Tracker"):
+            st.dataframe(STATUS)
 
         job_recommendation_app(skills_resume, resume_content)
 
