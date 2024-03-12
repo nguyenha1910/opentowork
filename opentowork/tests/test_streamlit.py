@@ -72,7 +72,7 @@ class TestStreamlit(unittest.TestCase):
 
     def test_expander_exists(self):
         """ Test that the expander exists """
-        self.assertEqual(self.at[0][5].type, 'expandable')
+        self.assertTrue(self.at[0][5].type in ['expandable', 'expander'])
 
     def test_dataframe_cols(self):
         """ Test that columns in the dataframe are as expected"""
