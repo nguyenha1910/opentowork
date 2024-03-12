@@ -128,7 +128,7 @@ If not already installed, install Google Chrome [here](https://www.google.com/ch
 Chromedriver is necessary for running the scraping code and needs to match the Chrome version.
 1. Find Google Chrome version
 
-    To check Chrome version in the Chrome program, click the three dots at the upper right-hand corner, select Help at the very bottom, and click About Google Chrome.
+    To check Chrome version in the Chrome program itself, click the three dots at the upper right-hand corner, select Help at the very bottom, and click About Google Chrome.
 
     To check Chrome version in Linux, run the following command:
     ```bash
