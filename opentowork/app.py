@@ -15,6 +15,7 @@ from opentowork.scraper import job_listing_scraper
 from opentowork.pages.job_recommendation import get_latest_csv_file
 from opentowork.pages.job_recommendation import app as job_recommendation_app
 
+# Load config file
 with open("config.yml", "r", encoding='UTF-8') as config_file:
     config = yaml.safe_load(config_file)
 

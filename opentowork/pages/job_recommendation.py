@@ -115,6 +115,7 @@ def app(skills_resume, resume_content):
         None
     """
     data_path, _ = get_latest_csv_file()
+    # Get temp data path
     directory, filename = os.path.split(data_path)
     name, extension = os.path.splitext(filename)
     temp_name = f"{name}_temp{extension}"

@@ -2,10 +2,19 @@
 [![build_test](https://github.com/nguyenha1910/opentowork/actions/workflows/build_test.yml/badge.svg)](https://github.com/nguyenha1910/opentowork/actions/workflows/build_test.yml)
 [![Coverage Status](https://coveralls.io/repos/github/nguyenha1910/opentowork/badge.svg?branch=main)](https://coveralls.io/github/nguyenha1910/opentowork?branch=main)
 
-
-### Introduction
+<a id="introduction"></a>
+## Introduction
 This repository hosts a comprehensive tool that helps job seekers in streamlining their job search process. The tool comprises a web application and data loader designed to provide job posting recommendations based on resume analysis, similarity scoring, and application status tracking.
 
+## Table of Contents
+* [Introduction](#introduction)
+* [Key Features](#key-features)
+* [Directory Overview](#directory-overview)
+* [Dependencies & Installation](#installation)
+  * [Environment](#environment)
+  * [Data](#data)
+  * [Application](#application)
+* [Examples](#examples)
 
 | Team Member  | GitHub                                   |
 |------------------|--------------------------------------|
@@ -14,7 +23,8 @@ This repository hosts a comprehensive tool that helps job seekers in streamlinin
 | Elaine Zhang     | [ezhang17](https://github.com/ezhang17)|
 | Janice Kim      | [ymkim814](https://github.com/ymkim814)|
 
-### Key Features
+<a id="key-features"></a>
+## Key Features
 * Web Scraper​: collects data science related job posting data from LinkedIn and Indeed.
 
 * Resume/Job Description Skill Analyzer​: leverages spaCy's Named Entity Recognition (NER) and Entity Ruler, combined with a JSON file containing data-related skills, to extract skill keywords from resumes and job descriptions.
@@ -23,7 +33,8 @@ This repository hosts a comprehensive tool that helps job seekers in streamlinin
 
 * Web App Interface: enables users to upload resumes, add or delete skills, and view job listings with match percentages and the presence of skills. Users can trigger the web scraper for updates and track application status.
 
-### Directory Summary
+<a id="directory-overview"></a>
+## Directory Summary
 **data**: All data used is accessible from the data folder. The job_listing_scraper.py writes out job posting data from LinkedIn and Indeed to a CSV file in the csvs folder. The pdfs folder stores resume PDFs uploaded by the user.
 
 **doc**: Documentation for the project is found in this folder. This includes the files such as technology review presentation, component design, functional specification, and user stories.
@@ -53,6 +64,7 @@ This repository hosts a comprehensive tool that helps job seekers in streamlinin
 |   └── user_stories.md
 ├── examples
 |   └── README.md
+|   └── scraper.md
 ├── opentowork
 |   └── pages
 |       └── __init__.py
@@ -81,3 +93,104 @@ This repository hosts a comprehensive tool that helps job seekers in streamlinin
 ├── pyproject.toml
 └── requirements.txt
 ```
+<a id="installation"></a>
+## Dependencies & Installation
+<a id="environment"></a>
+### Environment
+1. Clone the environment using the `git` command below:
+    ```bash
+    git clone https://github.com/nguyenha1910/opentowork.git
+    ```
+2. Setup the `opentowork` Conda environment using the following commands:
+
+    Create the environment (may take a couple minutes):
+    ```bash
+    conda env create -f environment.yml
+    ```
+    Activate the `opentowork` environment:
+    ```bash
+    conda activate opentowork
+    ```
+    To deactivate the `opentowork` environment:
+    ```bash
+    conda deactivate
+    ```
+    Note that these commands require Conda to work properly. Conda installation instructions can be found [here](https://docs.conda.io/projects/conda/en/stable/).
+
+<a id="data"></a>
+### Data
+This app uses user-uploaded resumes (in PDF format on local computer) and scraped job listings from LinkedIn and Indeed.
+
+The repository includes a sample resume (in [data/pdfs](/data/pdfs/)) and a base job listing dataset (in [data/csvs](/data/csvs/)).
+
+To update the job listing dataset, the following additional requirements are needed and not included in the `opentowork` environment:
+#### Google Chrome
+If not already installed, install Google Chrome [here](https://www.google.com/chrome/). Using the latest version of Google Chrome is recommended.
+
+If using Linux, install or update to latest version:
+```bash
+sudo apt update
+sudo apt upgrade google-chrome-stable
+```
+#### Chromedriver
+Chromedriver is necessary for running the scraping code and needs to match the Chrome version.
+1. Find Google Chrome version
+
+    To check Chrome version in the Chrome program itself, click the three dots at the upper right-hand corner, select Help at the very bottom, and click About Google Chrome. Update as needed.
+
+    If running in Linux, run the following command:
+
+    *This assumes that Chrome is installed in Linux
+    ```bash
+    google-chrome --version
+    ```
+2. Install the matching Chromedriver version
+
+    Check if Chromedriver is already installed and matches the Chrome version:
+    ```bash
+    chromedriver --version
+    ```
+
+    If it's not installed or does not match your Chrome version, follow the following instructions:
+
+    For Chrome versions 115 or newer, find the matching Chromedriver version and its URL [here](https://googlechromelabs.github.io/chrome-for-testing/). Make sure the URL obtained is for the chromedriver binary of the platform and channel that matches your Chrome installation.
+
+    For older Chrome versions, Chromedriver can be downloaded from [here](https://chromedriver.chromium.org/downloads).
+
+    With the URL for the Chromedriver version, run the following code using your specified URL:
+    ```bash
+    # use your URL after chromedriver.zip
+    curl -o chromedriver.zip https://storage.googleapis.com/chrome-for-testing-public/122.0.6261.111/linux64/chromedriver-linux64.zip
+    ```
+    Unzip the file and find the unzipped folder name
+    ```bash
+    unzip chromedriver.zip
+    ls
+    ```
+    Move the chromedriver executable file to a directory in the opentowork environment PATH:
+    ```bash
+    # replace chromedriver-linux64 with the correct folder name
+    conda activate opentowork
+    mv chromedriver-linux64/chromedriver $CONDA_PREFIX/bin/
+    ```
+    Check that Chromedriver is successfully installed:
+    ```bash
+    chromedriver --version
+    ```
+    More details on Chromedriver can be found [here](https://chromedriver.chromium.org/getting-started).
+    Detailed documentation on our web scraping scripts can be found [here](/examples/scraper.md).
+
+<a id="key-features"></a>
+### Application
+Our application uses `Streamlit`.
+To run the app locally, run this command:
+```bash
+conda activate opentowork
+python -m streamlit run pages/home.py
+```
+
+<a id="examples"></a>
+## Examples
+Examples on installation, usage, and data can be found in the [examples directory](/examples/README.md).
+
+A video demo of the app can be found [here].
