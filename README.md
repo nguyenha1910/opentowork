@@ -133,7 +133,7 @@ To update the job listing dataset, the following additional requirements are nee
 #### Google Chrome
 If not already installed, install Google Chrome [here](https://www.google.com/chrome/). Using the latest version of Google Chrome is recommended.
 
-If using Linux, install or update to latest version:
+If using Linux, run these commands to install or update to latest version:
 ```bash
 sudo apt update
 sudo apt upgrade google-chrome-stable
@@ -142,9 +142,9 @@ sudo apt upgrade google-chrome-stable
 Chromedriver is necessary for running the scraping code and needs to match the Chrome version.
 1. Find Google Chrome version
 
-    To check Chrome version in the Chrome program itself, click the three dots at the upper right-hand corner, select Help at the very bottom, and click About Google Chrome. Update as needed.
+    For MacOS/Windows: To check Chrome version in the Chrome program itself, click the three dots at the upper right-hand corner, select Help at the very bottom, and click About Google Chrome. Update as needed.
 
-    If running in Linux, run the following command:
+    For Linux, run the following command:
 
     *This assumes that Chrome is installed in Linux
     ```bash
@@ -159,14 +159,14 @@ Chromedriver is necessary for running the scraping code and needs to match the C
 
     If it's not installed or does not match your Chrome version, follow the following instructions:
 
-    For Chrome versions 115 or newer, find the matching Chromedriver version and its URL [here](https://googlechromelabs.github.io/chrome-for-testing/). Make sure the URL obtained is for the chromedriver binary of the platform and channel that matches your Chrome installation.
+    For Chrome versions 115 or newer, find the Chromedriver file URL [here](https://googlechromelabs.github.io/chrome-for-testing/). Make sure the URL obtained is for the chromedriver binary of the platform and channel that matches your Chrome installation.
 
     For older Chrome versions, Chromedriver can be downloaded from [here](https://chromedriver.chromium.org/downloads).
 
     With the URL for the Chromedriver version, run the following code using your specified URL:
     ```bash
     # use your URL after chromedriver.zip
-    curl -o chromedriver.zip https://storage.googleapis.com/chrome-for-testing-public/122.0.6261.111/linux64/chromedriver-linux64.zip
+    curl -o chromedriver.zip <your_chromedriver_link_here>
     ```
     Unzip the file and find the unzipped folder name
     ```bash
@@ -175,9 +175,9 @@ Chromedriver is necessary for running the scraping code and needs to match the C
     ```
     Move the chromedriver executable file to a directory in the opentowork environment PATH:
     ```bash
-    # replace chromedriver-linux64 with the correct folder name
+    # replace <chromedriver-youros> with the correct folder name
     conda activate opentowork
-    mv chromedriver-linux64/chromedriver $CONDA_PREFIX/bin/
+    mv <chromedriver-youros>/chromedriver $CONDA_PREFIX/bin/
     ```
     Check that Chromedriver is successfully installed:
     ```bash
