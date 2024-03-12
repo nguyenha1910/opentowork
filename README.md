@@ -106,7 +106,7 @@ This repository hosts a comprehensive tool that helps job seekers in streamlinin
     ```bash
     git clone https://github.com/nguyenha1910/opentowork.git
     ```
-2. Setup the `opentowork` Conda environment using the following commands:
+2. Set up the `opentowork` Conda environment using the following commands:
 
     Create the environment (may take a couple minutes):
     ```bash
