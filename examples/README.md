@@ -31,14 +31,14 @@ conda activate opentowork
 To run the app locally, run this command
 ```bash
 conda activate opentowork
-python -m streamlit run pages/home.py
+python -m streamlit run opentowork/app.py
 ```
 
 <a id="data-scraping"></a>
 ### 3. Update job listing data
 A starter data file is included in the repository. To update this data, click the "Update Job Posting Data" button in the web app. (The button is only visible after uploading a resume). Additional requirements to install for this function are listed [here](../README.md#data).
 
-*Note that the scraping process may take anywhere from 10-30 minutes to complete. We also cannot guarantee that the scraper will get data everytime, as it depends on LinkedIn and Indeed website behavior. More details can be found [here](scraper.md).
+*Note that the scraping process may take anywhere from 10-20 minutes to complete. We also cannot guarantee that the scraper will get data everytime, as it depends on LinkedIn and Indeed website behavior. More details can be found [here](scraper.md).
 
 <a id="web-app"></a>
 ### 4. Explore the web application

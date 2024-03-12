@@ -18,6 +18,7 @@ from opentowork.pages.job_recommendation import app as job_recommendation_app
 # Load config file
 with open("config.yml", "r", encoding='UTF-8') as config_file:
     config = yaml.safe_load(config_file)
+
 for key, value in config.items():
     if isinstance(value, str):
         config[key] = Path(value)
@@ -76,12 +77,15 @@ def app():
         with st.expander("See Applied Jobs"):
             if 'status' in st.session_state and st.session_state['status']==1:
                 status_df = pd.read_csv(r'data\csvs\app_status.csv')
+
             else:
                 status_df = pd.DataFrame(
                         columns= ['Company Name', 'Position Title','Location', 'Status', 'Date'])
-                status_df.to_csv(r'data\csvs\app_status.csv', header=True, index=False)
+                status_df.to_csv(config['status_csv_path'], header=True, index=False)
             st.dataframe(status_df)
 
+        if 'job_loaded' in st.session_state and st.session_state['job_loaded']:
+            st.write("Job list sorted by matched score")
         job_recommendation_app(skills_resume, resume_content)
 
 app()
