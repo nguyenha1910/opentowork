@@ -10,8 +10,12 @@ from pathlib import Path
 from datetime import datetime
 import streamlit as st
 import pandas as pd
+import yaml
 from opentowork.skill_extraction import get_job_description_skills
 from opentowork.sim_score import get_sim_score
+
+with open("config.yml", "r", encoding='UTF-8') as config_file:
+    config = yaml.safe_load(config_file)
 
 def get_latest_csv_file():
     """
@@ -95,7 +99,7 @@ def status_update(data):
                 'Status': 'Applied', 
                 'Date' : datetime.now()}])
     new_app.to_csv(
-        r'data\csvs\app_status.csv', 
+        config['status_csv_path'],
         index = None, mode='a', header=False
         )
     return new_app
@@ -141,7 +145,6 @@ def app(skills_resume, resume_content):
 
         elif 'job_loaded' in st.session_state and st.session_state['job_loaded']:
             sorted_data = pd.read_csv(temp_data_path)
-            print(f"columns: {sorted_data.columns}")
             for idx, row in sorted_data.iterrows():
                 if not pd.isna(row['description']):
                     skills_jd = get_job_description_skills(row['description'])
