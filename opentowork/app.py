@@ -18,14 +18,6 @@ from opentowork.pages.job_recommendation import app as job_recommendation_app
 with open("config.yml", "r", encoding='UTF-8') as config_file:
     config = yaml.safe_load(config_file)
 
-try:
-    STATUS = pd.read_csv(
-        r'\data\csvs\app_status.csv'
-        )
-except Exception as e:
-    STATUS = pd.DataFrame(columns= ['Company Name', 'Position Title',
-                                    'Location', 'Status', 'Date'])
-
 for key, value in config.items():
     if isinstance(value, str):
         config[key] = Path(value)
