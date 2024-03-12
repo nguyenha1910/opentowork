@@ -82,10 +82,16 @@ def app():
         st.write(f"Job postings last updated: {last_scraped_dt}")
 
         with st.expander("See Job Dashboard"):
-            if STATUS is not None:
-                st.dataframe(STATUS)
+            if 'status' in st.session_state and st.session_state['status']:
+                status_df = pd.read_csv(r'data\csvs\app_status.csv')
+            else:
+                status_df = pd.DataFrame(
+                        columns= ['Company Name', 'Position Title','Location', 'Status', 'Date'])
+                status_df.to_csv(r'data\csvs\app_status.csv', header=True, index=False)
+            st.dataframe(status_df)
 
+        if 'job_loaded' in st.session_state and st.session_state['job_loaded']:
+            st.write("Job list sorted by matched score")
         job_recommendation_app(skills_resume, resume_content)
-
 
 app()
