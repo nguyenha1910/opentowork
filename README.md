@@ -166,6 +166,6 @@ python -m streamlit run pages/home.py
 
 <a id="examples"></a>
 ## Examples
-Examples on installation, usage, and data can be found in the [examples directory](./examples/README.md).
+Examples on installation, usage, and data can be found in the [examples directory](/examples/README.md).
 
 A video demo of the app can be found [here].
