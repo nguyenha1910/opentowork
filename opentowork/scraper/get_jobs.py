@@ -25,9 +25,9 @@ from bs4 import BeautifulSoup
 
 # enable headless mode
 options = Options()
-# options.add_argument("--headless")
-# options.add_argument('--disable-gpu')
-# options.add_argument('--window-size=1920,1080')
+options.add_argument("--headless")
+options.add_argument('--disable-gpu')
+options.add_argument('--window-size=1920,1080')
 
 def clean_date(text):
     """
