@@ -33,7 +33,7 @@ The job posting last updated date is displayed under the Skills box with the "Up
 
 ![alt text](/images/image_6.png)
 
-*Note that updating the data will take anywhere from 10-30 minutes to complete.
+*Note that updating the data will take anywhere from 10-20 minutes to complete.
 
 New job posting data will repopulate the page with updated match scores.
 

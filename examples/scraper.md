@@ -6,6 +6,7 @@ The web scraper uses Selenium and BeautifulSoup4. Both are included in the envir
 
 ### How it Works
 The scripts access LinkedIn/Indeed job searches for a job title and scrape details for a specified number of jobs by looking for certain HTML tags on each site. It then exports the job listings to a csv file, stored in data/csv.
+The scraper will look for jobs on LinkedIn first - if that fails, then it will look on Indeed.
 
 **Note that if the site changes its layout, the scraping script will need to be updated to accurately find job details. We cannot guarantee that the script works all the time and will continue to work in the future.
 
@@ -16,7 +17,7 @@ The web scraping process can be triggered through the app's "Update Job Posting 
 conda activate opentowork
 python -m opentowork.scraper.job_listing_scraper
 ```
-The scraping process can take anywhere from 10-30 minutes once triggered.
+The scraping process can take anywhere from 10-20 minutes once triggered.
 
 If the web scraper is unable to scrape any job data, a message will appear on the app and the terminal.
 
