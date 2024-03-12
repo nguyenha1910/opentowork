@@ -45,5 +45,6 @@ Note that the scraping process may take anywhere from 10-30 minutes to complete.
 
 <a id="web-app"></a>
 ### 4. Explore the web application
-[Tutorial](./streamlit_app.md)
+[Tutorial](streamlit_app.md)
+
 [Video demo]()
