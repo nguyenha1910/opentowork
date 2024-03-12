@@ -139,6 +139,8 @@ def app(skills_resume, resume_content):
                         row, skills_jd, skills_resume, jd_content, resume_content, idx
                         )
                     scores.append(score)
+                else:
+                    scores.append(0)
             data['score'] = scores
             sorted_data = data.sort_values(by='score', ascending=False)
             sorted_data.to_csv(temp_data_path)
