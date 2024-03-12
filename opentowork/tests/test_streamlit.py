@@ -38,7 +38,7 @@ class TestStreamlit(unittest.TestCase):
                 self.name = 'resume.pdf'
 
             def getvalue(self):
-                """ 
+                """
                 Get the content of the uploaded file.
                 Returns: The raw content of the uploaded file.
                 """
@@ -85,3 +85,6 @@ class TestStreamlit(unittest.TestCase):
         description = self.at.markdown[2].value
         self.assertIsInstance(description, str)
         self.assertNotEqual(description, "")
+
+if __name__ == '__main__':
+    unittest.main()
