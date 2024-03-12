@@ -103,7 +103,7 @@ This repository hosts a comprehensive tool that helps job seekers in streamlinin
     ```
 2. Setup the `opentowork` Conda environment using the following commands:
 
-    Create the environment:
+    Create the environment (may take a couple minutes):
     ```bash
     conda env create -f environment.yml
     ```
@@ -121,20 +121,37 @@ This repository hosts a comprehensive tool that helps job seekers in streamlinin
 ### Data
 This app uses user-uploaded resumes (in PDF format on local computer) and scraped job listings from LinkedIn and Indeed.
 
-The repository includes a sample resume (in [data/pdfs](/data/pdfs/)) and a base job listing dataset (in [data/csvs](/data/csvs/)). To update the job listing dataset, the following additional requirements are needed and not included in the `opentowork` environment:
+The repository includes a sample resume (in [data/pdfs](/data/pdfs/)) and a base job listing dataset (in [data/csvs](/data/csvs/)).
+
+To update the job listing dataset, the following additional requirements are needed and not included in the `opentowork` environment:
 #### Google Chrome
-If not already installed, install Google Chrome [here](https://www.google.com/chrome/).
+If not already installed, install Google Chrome [here](https://www.google.com/chrome/). Using the latest version of Google Chrome is recommended.
+
+If using Linux, install or update to latest version:
+```bash
+sudo apt update
+sudo apt upgrade google-chrome-stable
+```
 #### Chromedriver
 Chromedriver is necessary for running the scraping code and needs to match the Chrome version.
 1. Find Google Chrome version
 
-    To check Chrome version in the Chrome program itself, click the three dots at the upper right-hand corner, select Help at the very bottom, and click About Google Chrome.
+    To check Chrome version in the Chrome program itself, click the three dots at the upper right-hand corner, select Help at the very bottom, and click About Google Chrome. Update as needed.
 
-    To check Chrome version in Linux, run the following command:
+    If running in Linux, run the following command:
+
+    *This assumes that Chrome is installed in Linux
     ```bash
     google-chrome --version
     ```
 2. Install the matching Chromedriver version
+
+    Check if Chromedriver is already installed and matches the Chrome version:
+    ```bash
+    chromedriver --version
+    ```
+
+    If it's not installed or does not match your Chrome version, follow the following instructions:
 
     For Chrome versions 115 or newer, find the matching Chromedriver version and its URL [here](https://googlechromelabs.github.io/chrome-for-testing/). Make sure the URL obtained is for the chromedriver binary of the platform and channel that matches your Chrome installation.
 
@@ -142,17 +159,23 @@ Chromedriver is necessary for running the scraping code and needs to match the C
 
     With the URL for the Chromedriver version, run the following code using your specified URL:
     ```bash
-    curl -o chromedriver.zip https://storage.googleapis.com/chrome-for-testing-public/122.0.6261.111/linux64/chromedriver-linux64.zip
     # use your URL after chromedriver.zip
+    curl -o chromedriver.zip https://storage.googleapis.com/chrome-for-testing-public/122.0.6261.111/linux64/chromedriver-linux64.zip
     ```
     Unzip the file:
     ```bash
-    unzip chromedriver.zip
+    unzip chromedriver.zip -d chromedriver
     ```
-    For more options on unzipping, run the following command:
+    Move the chromedriver executable file to a directory in your PATH:
     ```bash
-    unzip -h
+    # example path, depends on your system setup
+    sudo mv chromedriver/chromedriver ../../usr/bin/
     ```
+    Check that Chromedriver is successfully installed:
+    ```bash
+    chromedriver --version
+    ```
+
     More details on Chromedriver can be found [here](https://chromedriver.chromium.org/getting-started).
     Detailed documentation on our web scraping scripts can be found [here](/examples/scraper.md).
 
