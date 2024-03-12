@@ -162,20 +162,21 @@ Chromedriver is necessary for running the scraping code and needs to match the C
     # use your URL after chromedriver.zip
     curl -o chromedriver.zip https://storage.googleapis.com/chrome-for-testing-public/122.0.6261.111/linux64/chromedriver-linux64.zip
     ```
-    Unzip the file:
+    Unzip the file and find the unzipped folder name
     ```bash
-    unzip chromedriver.zip -d chromedriver
+    unzip chromedriver.zip
+    ls
     ```
-    Move the chromedriver executable file to a directory in your PATH:
+    Move the chromedriver executable file to a directory in the opentowork environment PATH:
     ```bash
-    # example path, depends on your system setup
-    sudo mv chromedriver/chromedriver ../../usr/bin/
+    # replace chromedriver-linux64 with the correct folder name
+    conda activate opentowork
+    mv chromedriver-linux64/chromedriver $CONDA_PREFIX/bin/
     ```
     Check that Chromedriver is successfully installed:
     ```bash
     chromedriver --version
     ```
-
     More details on Chromedriver can be found [here](https://chromedriver.chromium.org/getting-started).
     Detailed documentation on our web scraping scripts can be found [here](/examples/scraper.md).
 
