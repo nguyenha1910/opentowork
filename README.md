@@ -136,17 +136,18 @@ Chromedriver is necessary for running the scraping code and needs to match the C
     ```
 2. Install the matching Chromedriver version
 
-    For Chrome versions 115 or newer, find the matching Chromedriver version [here](https://googlechromelabs.github.io/chrome-for-testing/).
+    For Chrome versions 115 or newer, find the matching Chromedriver version and its URL [here](https://googlechromelabs.github.io/chrome-for-testing/). Make sure the URL obtained is for the chromedriver binary of the platform and channel that matches your Chrome installation.
 
     For older Chrome versions, Chromedriver can be downloaded from [here](https://chromedriver.chromium.org/downloads).
 
     With the URL for the Chromedriver version, run the following code using your specified URL:
     ```bash
-    curl -O https://storage.googleapis.com/chrome-for-testing-public/122.0.6261.111/linux64/chromedriver-linux64.zip
+    curl -o chromedriver.zip https://storage.googleapis.com/chrome-for-testing-public/122.0.6261.111/linux64/chromedriver-linux64.zip
+    # use your URL after chromedriver.zip
     ```
     Unzip the file:
     ```bash
-    unzip chromedriver-linux64.zip
+    unzip chromedriver.zip
     ```
     For more options on unzipping, run the following command:
     ```bash
