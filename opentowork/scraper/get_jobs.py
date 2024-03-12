@@ -184,9 +184,9 @@ def scrape_listings(job_listings, driver, valid_job_count, last_page, target_job
     """
     listings = []
     for job in job_listings:
-        details = get_details(job, source)
+        job_data = get_details(job, source)
         # navigate to the job posting page to scrape job description
-        driver.get(details[4])
+        driver.get(job_data[4])
         # sleeping randomly
         time.sleep(random.choice(list(range(5, 11))))
         try:
@@ -196,8 +196,8 @@ def scrape_listings(job_listings, driver, valid_job_count, last_page, target_job
         except AttributeError:
             job_description = None # job_description is None if not found
             print("AttributeError occurred while retrieving job description.")
-        job_data = details.append(job_description)
-        if all(job_detail is not None for job_detail in job_data):
+        job_data.append(job_description)
+        if all(detail is not None for detail in job_data):
             listings.append({"title": job_data[0],
                         "company": job_data[1],
                         "location": job_data[2],
