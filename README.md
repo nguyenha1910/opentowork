@@ -64,6 +64,7 @@ This repository hosts a comprehensive tool that helps job seekers in streamlinin
 |   └── user_stories.md
 ├── examples
 |   └── README.md
+|   └── scraper.md
 ├── opentowork
 |   └── pages
 |       └── __init__.py
