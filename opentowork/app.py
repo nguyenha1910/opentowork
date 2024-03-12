@@ -73,7 +73,7 @@ def app():
         _, last_scraped_dt = get_latest_csv_file()
         st.write(f"Job postings last updated: {last_scraped_dt}")
 
-        with st.expander("See Job Dashboard"):
+        with st.expander("See Applied Jobs"):
             if 'status' in st.session_state and st.session_state['status']==1:
                 status_df = pd.read_csv(r'data\csvs\app_status.csv')
             else:
