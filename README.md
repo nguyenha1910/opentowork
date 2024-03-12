@@ -193,7 +193,7 @@ Our application uses `Streamlit`.
 To run the app locally, run this command:
 ```bash
 conda activate opentowork
-python -m streamlit run pages/home.py
+python -m streamlit run opentowork/app.py
 ```
 
 <a id="examples"></a>
