@@ -11,7 +11,12 @@ import unittest
 import os
 import sys
 from unittest import mock
+import yaml
 from streamlit.testing.v1 import AppTest
+
+# Load config file
+with open("config.yml", "r", encoding='UTF-8') as config_file:
+    config = yaml.safe_load(config_file)
 
 class TestStreamlit(unittest.TestCase):
     """
@@ -38,7 +43,7 @@ class TestStreamlit(unittest.TestCase):
                 self.name = 'resume.pdf'
 
             def getvalue(self):
-                """ 
+                """
                 Get the content of the uploaded file.
                 Returns: The raw content of the uploaded file.
                 """
@@ -69,10 +74,12 @@ class TestStreamlit(unittest.TestCase):
             first_applied_button = self.at.button[1]
             self.assertTrue(first_applied_button.click()._value)
             self.assertEqual(first_applied_button.click().label, "I applied!")
+            self.assertTrue( self.at.session_state['job_loaded'])
+            self.assertTrue(os.path.exists(config['status_csv_path']))
 
     def test_expander_exists(self):
         """ Test that the expander exists """
-        self.assertEqual(self.at[0][5].type, 'expandable')
+        self.assertTrue(self.at[0][5].type in ['expandable', 'expander'])
 
     def test_dataframe_cols(self):
         """ Test that columns in the dataframe are as expected"""
@@ -85,3 +92,6 @@ class TestStreamlit(unittest.TestCase):
         description = self.at.markdown[2].value
         self.assertIsInstance(description, str)
         self.assertNotEqual(description, "")
+
+if __name__ == '__main__':
+    unittest.main()

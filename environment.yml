@@ -1,6 +1,5 @@
 name: opentowork
 channels:
-  #- conda-forge
   - defaults
 dependencies:
   - pandas
