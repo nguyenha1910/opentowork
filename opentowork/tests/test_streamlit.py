@@ -47,7 +47,7 @@ class TestStreamlit(unittest.TestCase):
                 Get the content of the uploaded file.
                 Returns: The raw content of the uploaded file.
                 """
-                path = "data/pdfs/random_ds_resume.pdf"
+                path = "data/pdfs/sample_resume.pdf"
                 # open a test pdf file, read in
                 with open(path, mode='rb') as real_pdf:
                     return real_pdf.read() # just raw content of pdf
