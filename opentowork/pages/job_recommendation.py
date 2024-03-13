@@ -145,11 +145,13 @@ def app(skills_resume, resume_content):
                     scores.append(score)
                 else:
                     scores.append(0)
-            
-            sorted_data.to_csv(temp_data_path) #Save temporary data
-            progress_bar.progress(1.0, text='Done loading data')
+
+            #Save temporary data with the score
             data['score'] = scores
             sorted_data = data.sort_values(by='score', ascending=False)
+            sorted_data.to_csv(temp_data_path)
+
+            progress_bar.progress(1.0, text='Done loading data')
             st.session_state['job_loaded'] = True
 
         elif 'job_loaded' in st.session_state and st.session_state['job_loaded']:
