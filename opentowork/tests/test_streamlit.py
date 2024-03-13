@@ -1,5 +1,7 @@
-# pylint: disable=W0221,R0801
+# pylint: disable=W0221
+# disabling due to use of setup function in 2 different test files
 # pylint: disable=protected-access
+# disabling bc we need _value (attribute name of the object)
 # pylint: disable=too-few-public-methods
 # disabled because using class as mock file uploader
 

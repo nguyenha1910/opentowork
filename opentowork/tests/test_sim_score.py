@@ -1,5 +1,5 @@
 # pylint: disable=redundant-unittest-assert
-
+# needed for smoke test assertTrue
 """
 Test the get_sim_score function in the opentowork module.
 """
