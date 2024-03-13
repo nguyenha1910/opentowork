@@ -1,8 +1,7 @@
 # pylint: disable=W0221,R0801
 # pylint: disable=protected-access
 # pylint: disable=too-few-public-methods
-# pylint: disable=invalid-name
-# pylint: disable=import-error
+# disabled because using class as mock file uploader
 
 """
 This module contains the ui tests for the app and job_recommendation modules.

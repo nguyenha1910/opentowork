@@ -1,6 +1,7 @@
-# pylint: disable=import-error
 # pylint: disable=too-many-arguments
+# disabled due to all arguments necessary (6/5)
 # pylint: disable=too-many-locals
+# disabled bc all variables necessary (17/15)
 
 """
 This module represents the job list of the app.
@@ -94,9 +95,9 @@ def status_update(data):
     st.session_state['status'] = True
     st.toast("You Applied! Congrats")
     new_app = pd.DataFrame([{'Company Name': data['company'],
-                'Position Title': data['title'], 
-                'Location': data['location'], 
-                'Status': 'Applied', 
+                'Position Title': data['title'],
+                'Location': data['location'],
+                'Status': 'Applied',
                 'Date' : datetime.now()}])
     new_app.to_csv(
         config['status_csv_path'],
