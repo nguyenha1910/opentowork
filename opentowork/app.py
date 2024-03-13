@@ -10,6 +10,7 @@ import yaml
 import streamlit as st
 from streamlit_tags import st_tags
 import pandas as pd
+import fitz
 from opentowork.skill_extraction import get_resume_skills
 from opentowork.scraper import job_listing_scraper
 from opentowork.pages.job_recommendation import get_latest_csv_file
@@ -54,7 +55,10 @@ def app():
             save_path = new_file_path
         with open(save_path, mode='wb') as resume_file:
             resume_file.write(uploaded_file.getvalue())
-        skills_resume, resume_content = get_resume_skills(save_path)
+        try:
+            skills_resume, resume_content = get_resume_skills(save_path)
+        except fitz.EmptyFileError:
+            st.error("Please upload non-empty PDF file.")
 
         st_tags_component = st_tags(
             label='### Skills:',
