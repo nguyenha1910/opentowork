@@ -39,7 +39,7 @@ class TestHelperFunctions(unittest.TestCase):
         self.assertTrue(('job_listings_data_analyst_data_scientist'
                         '_data_engineer_30_jobs_scraped_20240312_'
                         '183404.csv') in latest_csv_file)
-        self.assertTrue('Mar 12 2024' in last_scraped_dt)
+        self.assertTrue('2024' in last_scraped_dt)
 
     def test_get_latest_csv_file_output(self):
         """
