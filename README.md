@@ -134,20 +134,34 @@ The repository includes a sample resume (in [data/pdfs](/data/pdfs/)) and a base
 
 To update the job listing dataset, the following additional requirements are needed and not included in the `opentowork` environment:
 #### Google Chrome
-If not already installed, install Google Chrome [here](https://www.google.com/chrome/). Using the latest version of Google Chrome is recommended.
+For MacOS/Windows: If not already installed, install Google Chrome [here](https://www.google.com/chrome/). Using the latest version of Google Chrome is recommended.
 
-If using Linux, install or update to latest version:
+For Linux: Check if Google Chrome is installed:
+```bash
+google-chrome --version
+```
+If already installed, update using the following commands:
 ```bash
 sudo apt update
 sudo apt upgrade google-chrome-stable
+```
+If not, install Google Chrome using these commands:
+```bash
+wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+sudo dpkg -i google-chrome-stable_current_amd64.deb
+sudo apt install -f
+```
+Check that Google Chrome installed successfully:
+```bash
+google-chrome --version
 ```
 #### Chromedriver
 Chromedriver is necessary for running the scraping code and needs to match the Chrome version.
 1. Find Google Chrome version
 
-    To check Chrome version in the Chrome program itself, click the three dots at the upper right-hand corner, select Help at the very bottom, and click About Google Chrome. Update as needed.
+    For MacOS/Windows: To check Chrome version in the Chrome program itself, click the three dots at the upper right-hand corner, select Help at the very bottom, and click About Google Chrome. Update as needed.
 
-    If running in Linux, run the following command:
+    For Linux, run the following command:
 
     *This assumes that Chrome is installed in Linux
     ```bash
@@ -162,25 +176,49 @@ Chromedriver is necessary for running the scraping code and needs to match the C
 
     If it's not installed or does not match your Chrome version, follow the following instructions:
 
-    For Chrome versions 115 or newer, find the matching Chromedriver version and its URL [here](https://googlechromelabs.github.io/chrome-for-testing/). Make sure the URL obtained is for the chromedriver binary of the platform and channel that matches your Chrome installation.
+    For Chrome versions 115 or newer, find the Chromedriver file URL [here](https://googlechromelabs.github.io/chrome-for-testing/).
+
+    Make sure to copy the URL for "chromedriver" and your platform:
+    ![alt text](examples/images/readme_1.png)
 
     For older Chrome versions, Chromedriver can be downloaded from [here](https://chromedriver.chromium.org/downloads).
 
     With the URL for the Chromedriver version, run the following code using your specified URL:
     ```bash
     # use your URL after chromedriver.zip
-    curl -o chromedriver.zip https://storage.googleapis.com/chrome-for-testing-public/122.0.6261.111/linux64/chromedriver-linux64.zip
+    curl -o chromedriver.zip <your_chromedriver_link_here>
     ```
-    Unzip the file and find the unzipped folder name
+
+    #### For MacOS/Linux:
+    Unzip the file and find the unzipped folder name (should be something like chromedriver-linux64)
     ```bash
     unzip chromedriver.zip
     ls
     ```
     Move the chromedriver executable file to a directory in the opentowork environment PATH:
     ```bash
-    # replace chromedriver-linux64 with the correct folder name
+    # replace <chromedriver-youros> with the correct folder name and path
     conda activate opentowork
-    mv chromedriver-linux64/chromedriver $CONDA_PREFIX/bin/
+    mv <chromedriver-youros>/chromedriver $CONDA_PREFIX/bin/
+    ```
+    Check that Chromedriver is successfully installed:
+    ```bash
+    chromedriver --version
+    ```
+    #### For Windows:
+    Activate powershell and unzip the chromedriver.zip file, then find the unzipped folder name (should be something like chromedriver-win64)
+    ```cmd
+    REM replace <folder_of_your_choice> with where you want chromedriver.zip to unzip to
+    powershell
+    Expand-Archive -Path chromedriver.zip -DestinationPath <folder_of_your_choice>
+    cd <folder_of_your_choice>
+    dir
+    ```
+    Move the chromedriver executable file to a directory in the opentowork environment PATH:
+    ```cmd
+    REM replace <chromedriver-win64> with the correct folder name
+    conda activate opentowork
+    move <chromedriver-win64>\chromedriver %CONDA_PREFIX%\Scripts
     ```
     Check that Chromedriver is successfully installed:
     ```bash
@@ -193,7 +231,7 @@ Chromedriver is necessary for running the scraping code and needs to match the C
 ### Application
 
 Our application uses `Streamlit`.
-To run the app locally, run this command:
+To run the app locally, run this command from the root folder:
 ```bash
 conda activate opentowork
 python -m streamlit run opentowork/app.py
