@@ -87,7 +87,7 @@ def app():
             st.dataframe(status_df)
 
         if 'job_loaded' in st.session_state and st.session_state['job_loaded']:
-            st.write("Job list sorted by matched score")
+            st.success("Job list has been loaded and sorted by match score.")
         job_recommendation_app(skills_resume, resume_content)
 
 app()
