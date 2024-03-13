@@ -172,6 +172,7 @@ def app(skills_resume, resume_content):
                     score = job_item(
                         row, skills_jd, skills_resume, jd_content, resume_content, idx
                         )
+            st.session_state['job_loaded'] = True
 
     else:
         st.write("Oops, no jobs were found. Please try again. 🥺")
