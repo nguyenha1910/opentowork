@@ -206,18 +206,22 @@ Chromedriver is necessary for running the scraping code and needs to match the C
     chromedriver --version
     ```
     #### For Windows:
-    Activate powershell and unzip the chromedriver.zip file, then find the unzipped folder name (should be something like chromedriver-win64)
+    Activate powershell and unzip the chromedriver.zip file, then find the unzipped folder name (should be something like chromedriver-win64), replace <folder_of_your_choice> with where you want chromedriver.zip to unzip to:
     ```cmd
-    REM replace <folder_of_your_choice> with where you want chromedriver.zip to unzip to
     powershell
+    ```
+    ```cmd
     Expand-Archive -Path chromedriver.zip -DestinationPath <folder_of_your_choice>
+    ```
+    ```cmd
     cd <folder_of_your_choice>
     dir
     ```
-    Move the chromedriver executable file to a directory in the opentowork environment PATH:
+    Move the chromedriver executable file to a directory in the opentowork environment PATH, replace <chromedriver-win64> with the correct folder name:
     ```cmd
-    REM replace <chromedriver-win64> with the correct folder name
     conda activate opentowork
+    ```
+    ```cmd
     move <chromedriver-win64>\chromedriver %CONDA_PREFIX%\Scripts
     ```
     Check that Chromedriver is successfully installed:
@@ -231,7 +235,7 @@ Chromedriver is necessary for running the scraping code and needs to match the C
 ### Application
 
 Our application uses `Streamlit`.
-To run the app locally, run this command from the root folder:
+To run the app locally, run this command from the **root** folder:
 ```bash
 conda activate opentowork
 python -m streamlit run opentowork/app.py
@@ -242,4 +246,4 @@ python -m streamlit run opentowork/app.py
 
 Examples on installation, usage, and data can be found in the [examples directory](/examples/README.md).
 
-A video demo of the app can be found [here].
+A video demo of the app can be found [here](https://drive.google.com/file/d/1jhcOcOz5kY4p_G4Doxj_RliTtoBupCMR/view?usp=drive_link).
