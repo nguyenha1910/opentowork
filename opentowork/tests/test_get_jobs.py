@@ -1,4 +1,3 @@
-#pylint: disable=too-many-public-methods
 """
 This module contains unit tests for get_jobs
 in the opentowork/scraper module.
