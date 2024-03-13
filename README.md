@@ -246,4 +246,4 @@ python -m streamlit run opentowork/app.py
 
 Examples on installation, usage, and data can be found in the [examples directory](/examples/README.md).
 
-A video demo of the app can be found [here].
+A video demo of the app can be found [here](https://drive.google.com/file/d/1jhcOcOz5kY4p_G4Doxj_RliTtoBupCMR/view?usp=drive_link).
