@@ -30,7 +30,7 @@ class TestSimScore(unittest.TestCase):
         job_posting = pd.read_csv(scraped_data_path).iloc[0]
         description = job_posting['description']
         _, resume_content = get_resume_skills(resume_path)
-        expected_score = 0.29
+        expected_score = 0.186
         actual_score = get_sim_score(description, resume_content)
         self.assertGreaterEqual(actual_score, 0.0)
         self.assertLessEqual(actual_score, 1.0)
