@@ -68,6 +68,7 @@ def app():
         if update_job_button:
             try:
                 job_listing_scraper.main()
+                st.session_state.pop('job_loaded')
             except Exception as exception:
                 st.error(f"An unexpected error occurred: {str(exception)}")
 
