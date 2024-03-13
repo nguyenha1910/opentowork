@@ -241,7 +241,7 @@ class TestScraper(unittest.TestCase):
         """
         Test that the created file is a csv file.
         """
-        job_listing_scraper.main(job_titles = ['teacher'], total_job_count = 2)
+        job_listing_scraper.main(total_job_count = 2)
         final_files = set(os.listdir(DIRECTORY))
         new_file = (final_files - self.initial_files).pop()
         self.assertTrue(new_file.endswith('.csv'))
