@@ -4,11 +4,12 @@ The opentowork application uses job listings scraped from LinkedIn and Indeed. T
 ### Requirements
 The web scraper uses Selenium and BeautifulSoup4. Both are included in the environment.yml file. Selenium additionally requires both Google Chrome and Chromedriver - installation instructions can be found [here](../README.md#data).
 
+Scraper behavior may differ due to different browser cookie settings.
 ### How it Works
 The scripts access LinkedIn/Indeed job searches for a job title and scrape details for a specified number of jobs by looking for certain HTML tags on each site. It then exports the job listings to a csv file, stored in data/csv.
 The scraper will look for jobs on LinkedIn first - if that fails, then it will look on Indeed.
 
-**Note that if the site changes its layout, the scraping script will need to be updated to accurately find job details. We cannot guarantee that the script works all the time and will continue to work in the future.
+**Note that if the site changes its layout, the scraping script will need to be updated to accurately find job details. We cannot guarantee that the script works all the time and will continue to work in the future. Some cookie settings may interfere with scraping capability.
 
 ### How to Run It
 The web scraping process can be triggered through the app's "Update Job Posting Data" button or by running a command locally:

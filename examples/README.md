@@ -44,7 +44,7 @@ A starter data file is included in the repository. To update this data, click th
 ### 4. Explore the web application
 [Tutorial](streamlit_app.md)
 
-[Video demo]()
+[Video demo](https://drive.google.com/file/d/1jhcOcOz5kY4p_G4Doxj_RliTtoBupCMR/view?usp=drive_link)
 
 <a id="run-tests"></a>
 ### 5. Run unit tests

@@ -73,16 +73,20 @@ Use Cases:
 
         -   System: redirect user to job posting on third-party site
 
--   Access Model Accuracy (Jane)
+-   Update Job Titles to Scrape (Jane)
 
-    -   Objectives
+    -   Objective: update default job titles to use when updating job listing data
 
     -   Interactions:
 
-        -   User: Open log file
+        -   User: Refer to examples/scraper.md for instructions
 
-        -   System:
+        -   User: Navigate to opentowork/app.py or opentowork/scraper/job_listing_scraper.py to update job titles
 
-            -   Display the model accuracy
+        -   System: Saves updated defaults for use with update jobs button
 
-            -   Display the bug log -- involves command line
+        -   User: Tests update button on frontend to make sure changes are reflected
+
+        -   System: Runs job listing scraper script and outputs updated jobs to frontend
+
+        -   User: Verifies that functions work as designed

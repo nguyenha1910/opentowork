@@ -21,10 +21,14 @@ Note that the match score percentage will not change, as it is calculated using 
 ![alt text](images/image_2.png)
 
 ### Track Application Status
-After applying, click "I applied!" at the bottom of the listing box to add it to the Job Dashboard. The company name, position title, location, status, and application date will be added to the Job Dashboard. The Job Dashboard can be found under the Update Job Posting Data button. Click to expand and minimize.
+After applying, click "I applied!" at the bottom of the listing box to add it to the Job Dashboard. The company name, position title, location, status, and application date will be added to the Job Dashboard. The Job Dashboard can be found under the Update Job Posting Data button.
+Click to expand and minimize.
 
 ![alt text](images/image_4.png)
+
 ![alt text](images/image_5.png)
+
+This dashboard generates a csv file in [data/csvs](../data/csvs/) called "app_status.csv" for users to continue using even after exiting the application.
 
 ### Update Job Data
 *All [additional requirements](../README.md#data) needed for web scraping need to be met to perform this action.

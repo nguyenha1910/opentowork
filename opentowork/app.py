@@ -68,15 +68,18 @@ def app():
         if update_job_button:
             try:
                 job_listing_scraper.main()
+                st.session_state.pop('job_loaded')
             except Exception as exception:
                 st.error(f"An unexpected error occurred: {str(exception)}")
 
         _, last_scraped_dt = get_latest_csv_file()
         st.write(f"Job postings last updated: {last_scraped_dt}")
 
-        with st.expander("See Job Dashboard"):
+        with st.expander("See Applied Jobs"):
             if 'status' in st.session_state and st.session_state['status']:
                 status_df = pd.read_csv(config['status_csv_path'])
+                status_df = status_df.drop_duplicates(
+                    ['Company Name', 'Position Title','Location', 'Status'])
             else:
                 status_df = pd.DataFrame(
                         columns= ['Company Name', 'Position Title','Location', 'Status', 'Date'])
