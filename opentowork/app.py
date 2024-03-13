@@ -77,6 +77,8 @@ def app():
         with st.expander("See Applied Jobs"):
             if 'status' in st.session_state and st.session_state['status']:
                 status_df = pd.read_csv(config['status_csv_path'])
+                status_df = status_df.drop_duplicates(
+                    ['Company Name', 'Position Title','Location', 'Status'])
             else:
                 status_df = pd.DataFrame(
                         columns= ['Company Name', 'Position Title','Location', 'Status', 'Date'])
