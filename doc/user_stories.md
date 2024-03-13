@@ -4,12 +4,7 @@
     - Bob wants to be up-todate and get notification on jobs that match his profile.
     - Bob values accuracy.
     - Bob prefers visuals and simple interface.
-- User 2: Alice
-    - Alice is a hiring manager.
-    - Alice wants to check if job posts reach matching candidates, job post's reach/engagement.
-    - Alice prefers simple interface with report summary on the dashboard. 
-    - Alice doesn't need technical skills but she has knowledge of the company's domain.
-- User 3: Jane
+- User 2: Jane
     - Jane is the technician of the web application.
     - Jane needs access to back-end. 
     - Jane wants to update the model, codebase, test the app, 
