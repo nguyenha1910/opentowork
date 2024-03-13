@@ -1,4 +1,5 @@
 # pylint: disable=redundant-unittest-assert
+
 """
 Test the get_sim_score function in the opentowork module.
 """

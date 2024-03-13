@@ -1,7 +1,7 @@
 # pylint: disable=broad-exception-caught
 # disabled due to variability in scraping exceptions, no specific expected exception
 # pylint: disable=too-many-arguments
-# disabled due to all arguments necessary
+# disabled due to all arguments necessary (6/5)
 """
 Module retrieves job information from LinkedIn and Indeed using Selenium and BeautifulSoup.
 Returns a list of job information stores as dictionaries.
