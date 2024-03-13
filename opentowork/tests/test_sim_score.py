@@ -22,7 +22,7 @@ class TestSimScore(unittest.TestCase):
         """
         Test the get_sim_score function with a valid job description and resume.
         """
-        scraped_data_path = 'data/csvs/job_listings_new.csv'
+        scraped_data_path = 'data/csvs/job_listings_data_analyst_data_scientist_data_engineer_30_jobs_scraped_20240312_183404.csv'
         resume_path = "data/pdfs/sample_resume.pdf"
         job_posting = pd.read_csv(scraped_data_path).iloc[0]
         description = job_posting['description']
