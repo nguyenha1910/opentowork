@@ -1,6 +1,5 @@
-# pylint: disable=import-error
 # pylint: disable=too-many-arguments
-# pylint: disable=too-many-locals
+# disabled due to all arguments necessary (6/5)
 
 """
 This module represents the job list of the app.
@@ -40,9 +39,22 @@ def get_latest_csv_file():
     else:
         latest_csv_file = None
         last_scraped_dt = "no csv found in csvs folder"
-
     return latest_csv_file, last_scraped_dt
 
+
+def get_temp_path(data_path):
+    """
+    Function creates the temp path for sorting using the latest csv path
+    Args:
+        data_path (str): path of data csv file
+    Returns:
+        temp_data_path (str): path of temp data file
+    """
+    directory, filename = os.path.split(data_path)
+    name, extension = os.path.splitext(filename)
+    temp_name = f"{name}_temp{extension}"
+    temp_data_path = os.path.join(directory, temp_name)
+    return temp_data_path
 
 def job_item(data, skills_jd, skills_resume, jd_content, resume_content, key):
     """
@@ -94,9 +106,9 @@ def status_update(data):
     st.session_state['status'] = True
     st.toast("You Applied! Congrats")
     new_app = pd.DataFrame([{'Company Name': data['company'],
-                'Position Title': data['title'], 
-                'Location': data['location'], 
-                'Status': 'Applied', 
+                'Position Title': data['title'],
+                'Location': data['location'],
+                'Status': 'Applied',
                 'Date' : datetime.now()}])
     new_app.to_csv(
         config['status_csv_path'],
@@ -116,10 +128,7 @@ def app(skills_resume, resume_content):
     """
     data_path, _ = get_latest_csv_file()
     # Get temp data path
-    directory, filename = os.path.split(data_path)
-    name, extension = os.path.splitext(filename)
-    temp_name = f"{name}_temp{extension}"
-    temp_data_path = os.path.join(directory, temp_name)
+    temp_data_path = get_temp_path(data_path)
 
     if data_path is not None:
         data = pd.read_csv(data_path)
