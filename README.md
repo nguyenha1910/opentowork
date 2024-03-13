@@ -133,10 +133,24 @@ To update the job listing dataset, the following additional requirements are nee
 #### Google Chrome
 For MacOS/Windows: If not already installed, install Google Chrome [here](https://www.google.com/chrome/). Using the latest version of Google Chrome is recommended.
 
-For Linux: Run these commands to install or update to latest version:
+For Linux: Check if Google Chrome is installed:
+```bash
+google-chrome --version
+```
+If already installed, update using the following commands:
 ```bash
 sudo apt update
 sudo apt upgrade google-chrome-stable
+```
+If not, install Google Chrome using these commands:
+```bash
+wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+sudo dpkg -i google-chrome-stable_current_amd64.deb
+sudo apt install -f
+```
+Check that Google Chrome installed successfully:
+```bash
+google-chrome --version
 ```
 #### Chromedriver
 Chromedriver is necessary for running the scraping code and needs to match the Chrome version.
@@ -159,7 +173,10 @@ Chromedriver is necessary for running the scraping code and needs to match the C
 
     If it's not installed or does not match your Chrome version, follow the following instructions:
 
-    For Chrome versions 115 or newer, find the Chromedriver file URL [here](https://googlechromelabs.github.io/chrome-for-testing/) under one of the  Make sure the URL obtained is for the chromedriver binary of the platform and channel that matches your Chrome installation.
+    For Chrome versions 115 or newer, find the Chromedriver file URL [here](https://googlechromelabs.github.io/chrome-for-testing/).
+
+    Make sure to copy the URL for "chromedriver" and your platform:
+    ![alt text](examples/images/readme_1.png)
 
     For older Chrome versions, Chromedriver can be downloaded from [here](https://chromedriver.chromium.org/downloads).
 
