@@ -1,2 +1,3 @@
 pdf_dir: 'data/pdfs/'
 pattern_path: 'data/jz_skill_patterns.jsonl'
+status_csv_path: 'data/csvs/app_status.csv'

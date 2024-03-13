@@ -55,8 +55,8 @@ This repository hosts a comprehensive tool that helps job seekers in streamlinin
 |   └── csvs
 |       └── ...
 |   └── pdfs
-|       └── random_ds_resume.docx
-|       └── random_ds_resume.pdf
+|       └── sample_resume.docx
+|       └── sample_resume.pdf
 |   └── jz_skill_patterns.jsonl
 ├── doc
 |   └── DATA515 Technology Reviews.pptx
@@ -66,8 +66,11 @@ This repository hosts a comprehensive tool that helps job seekers in streamlinin
 |   └── milestones.md
 |   └── user_stories.md
 ├── examples
+|   └── images
+|       └── ...
 |   └── README.md
 |   └── scraper.md
+|   └── streamlit_app.md
 ├── opentowork
 |   └── pages
 |       └── __init__.py
