@@ -140,8 +140,12 @@ def app(skills_resume, resume_content):
             if os.path.exists(temp_data_path):
                 os.remove(temp_data_path)
             scores = []
+            progress_text = "Loading data"
+            progress_bar = st.progress(0, text=progress_text)
+            data_length = len(data.index)
             for idx, row in data.iterrows():
                 if not pd.isna(row['description']):
+                    progress_bar.progress(idx/data_length, text=progress_text)
                     skills_jd = get_job_description_skills(row['description'])
                     jd_content = row['description']
                     score = job_item(
@@ -150,9 +154,13 @@ def app(skills_resume, resume_content):
                     scores.append(score)
                 else:
                     scores.append(0)
+
+            #Save temporary data with the score
             data['score'] = scores
             sorted_data = data.sort_values(by='score', ascending=False)
             sorted_data.to_csv(temp_data_path)
+
+            progress_bar.progress(1.0, text='Done loading data')
             st.session_state['job_loaded'] = True
 
         elif 'job_loaded' in st.session_state and st.session_state['job_loaded']:
