@@ -23,9 +23,13 @@ Functions:
     test_find_listings_smoke_linkedin - smoke test for find_listings, linkedin
     test_find_listings_smoke_indeed - smoke test for find_listings, indeed
     test_get_details_smoke_linkedin - smoke test for get_details, linkedin
+    test_get_details_oneshot_linkedin - one-shot test for get_details, linkedin
     test_get_details_smoke_indeed - smoke test for get_details, indeed
+    test_get_details_oneshot_indeed - one-shot test for get_details, indeed
     test_get_description_smoke_linkedin - smoke test for get_description, linkedin
+    test_get_description_oneshot_linkedin - one-shot test for get_description, linkedin
     test_get_description_smoke_indeed - smoke test for get_description, indeed
+    test_get_description_oneshot_indeed -one-shot test for get_description, indeed
     test_scrape_listings_smoke - smoke test for scrape_listings
     test_scrape_search_output - tests output for scrape_search function
     test_scrape_search_job_title_type - edge test for scrape_search function
@@ -271,6 +275,37 @@ class TestGetJobs(unittest.TestCase):
         results = get_details(job, "LinkedIn")
         self.assertIsNotNone(results)
 
+    def test_get_details_oneshot_linkedin(self):
+        """
+        One-shot test for get_details function, LinkedIn.
+        """
+        html = '''
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Sample Job Card HTML</title>
+            </head>
+            <body>
+
+            <div class="base-search-card">
+                <h3 class="base-search-card__title">Software Engineer</h3>
+                <h4 class="base-search-card__subtitle">ABC Company</h4>
+                <span class="job-search-card__location">New York, NY</span>
+                <time class="job-search-card__listdate">Posted on January 15, 2023</time>
+                <a class="base-card__full-link" href="https://example.com/apply123">wa</a>
+            </div>
+
+            </body>
+            </html>
+        '''
+        job = BeautifulSoup(html, 'html.parser')
+        results = get_details(job, "LinkedIn")
+        expected = ['Software Engineer', 'ABC Company', 'New York, NY',
+                    'Posted on January 15, 2023', 'https://example.com/apply123']
+        self.assertEqual(results, expected)
+
     def test_get_details_smoke_indeed(self):
         """
         Smoke test for get_details function, Indeed.
@@ -300,6 +335,38 @@ class TestGetJobs(unittest.TestCase):
         job = BeautifulSoup(html, 'html.parser')
         results = get_details(job, "Indeed")
         self.assertIsNotNone(results)
+
+    def test_get_details_oneshot_indeed(self):
+        """
+        One-shot test for get_details function, Indeed.
+        """
+
+        html = '''
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Sample Job Details HTML</title>
+            </head>
+            <body>
+
+            <div class="job-details">
+                <span id="jobTitle">Software Engineer</span>
+                <div data-testid="company-name">ABC Company</div>
+                <div data-testid="text-location">New York, NY</div>
+                <div data-testid="myJobsStateDate">Posted 3 days ago</div>
+                <a class="jcs-JobTitle" href="/apply123">Apply through company site</a>
+            </div>
+
+            </body>
+            </html>
+            '''
+        job = BeautifulSoup(html, 'html.parser')
+        results = get_details(job, "Indeed")
+        expected = ['Software Engineer', 'ABC Company', 'New York, NY',
+                    'Posted 3 days ago', 'https://indeed.com/apply123']
+        self.assertEqual(results, expected)
 
     def test_get_description_smoke_linkedin(self):
         """
@@ -335,6 +402,41 @@ class TestGetJobs(unittest.TestCase):
         results = get_description(description_soup, "LinkedIn")
         self.assertIsNotNone(results)
 
+    def test_get_description_oneshot_linkedin(self):
+        """
+        One-shot test for get_description function, LinkedIn.
+        """
+        html = '''
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Sample Job Description HTML</title>
+            </head>
+            <body>
+
+            <div class="job-description">
+                <div class="description__text description__text--rich">
+                    <p>This is a sample job description for a Software
+                    Engineer position at ABC Company.</p>
+                    <p>Key responsibilities include:</p>
+                    <ul>
+                        <li>Developing software applications</li>
+                        <li>Collaborating with cross-functional teams</li>
+                        <li>Testing and debugging code</li>
+                    </ul>
+                </div>
+            </div>
+
+            </body>
+            </html>
+        '''
+        description_soup = BeautifulSoup(html, "html.parser")
+        results = get_description(description_soup, "LinkedIn")
+        self.assertTrue('This is a sample job description for a Software'
+                        in results)
+
     def test_get_description_smoke_indeed(self):
         """
         Smoke test for get_description function, Indeed.
@@ -368,6 +470,41 @@ class TestGetJobs(unittest.TestCase):
         description_soup = BeautifulSoup(html, "html.parser")
         results = get_description(description_soup, "Indeed")
         self.assertIsNotNone(results)
+
+    def test_get_description_oneshot_indeed(self):
+        """
+        One-shot test for get_description function, Indeed.
+        """
+        html = '''
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Sample Job Description HTML</title>
+            </head>
+            <body>
+
+            <div class="job-description">
+                <div id="jobDescriptionText">
+                    <p>This is a sample job description for a Software Engineer
+                    position at ABC Company.</p>
+                    <p>Key responsibilities include:</p>
+                    <ul>
+                        <li>Developing software applications</li>
+                        <li>Collaborating with cross-functional teams</li>
+                        <li>Testing and debugging code</li>
+                    </ul>
+                </div>
+            </div>
+
+            </body>
+            </html>
+        '''
+        description_soup = BeautifulSoup(html, "html.parser")
+        results = get_description(description_soup, "Indeed")
+        self.assertTrue('This is a sample job description for a Software'
+                        in results)
 
     def test_scrape_listings_smoke(self):
         """
