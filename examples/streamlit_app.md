@@ -15,7 +15,7 @@ Apply to a job listing by clicking on the "Apply" button on the right-hand side.
 ![alt text](images/image_3.png)
 
 ### Skill Analysis
-Explore skill match with job listings by adding or removing skills in the Skills box.
+Explore skill match with job listings by adding or removing skills in the Skills box. The skill match is shown under the match percentage in a "x of y skills are present in your resume" format.
 Note that the match score percentage will not change, as it is calculated using the job description and not skills.
 
 ![alt text](images/image_2.png)

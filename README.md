@@ -40,7 +40,7 @@ This repository hosts a comprehensive tool that helps job seekers in streamlinin
 
 **data**: All data used is accessible from the data folder. The job_listing_scraper.py writes out job posting data from LinkedIn and Indeed to a CSV file in the csvs folder. The pdfs folder stores resume PDFs uploaded by the user.
 
-**doc**: Documentation for the project is found in this folder. This includes the files such as technology review presentation, component design, functional specification, and user stories.
+**doc**: Documentation for the project is found in this folder. This includes the files such as the final presentation, technology review presentation, component design, functional specification, and user stories.
 
 **examples**: This folder contains documentation for the process of setting up, scraping data, and running the web app. A tutorial and a demo are also included.
 
@@ -60,6 +60,7 @@ This repository hosts a comprehensive tool that helps job seekers in streamlinin
 |   └── jz_skill_patterns.jsonl
 ├── doc
 |   └── DATA515 Technology Reviews.pptx
+|   └── Open to Work Final Presentation.pdf
 |   └── component_design.md
 |   └── functional_specification.markdown
 |   └── interaction_diagram.png
