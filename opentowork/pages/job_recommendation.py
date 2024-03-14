@@ -136,7 +136,7 @@ def app(skills_resume, resume_content):
         if len(data.dropna()) <= 1:
             st.write("Oops, no jobs were found. Please try again. 🥺")
 
-        if 'job_loaded' not in st.session_state:
+        if 'job_loaded' not in st.session_state or st.session_state['job_loaded'] == False:
             if os.path.exists(temp_data_path):
                 os.remove(temp_data_path)
             scores = []
