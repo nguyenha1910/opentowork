@@ -69,11 +69,12 @@ def app():
 
         update_job_button = st.button('Update Job Posting Data')
         if update_job_button:
-            try:
-                job_listing_scraper.main()
-                st.session_state['job_loaded'] = False
-            except Exception as exception:
-                st.error(f"An unexpected error occurred: {str(exception)}")
+            with st.spinner("Updating job postings..."):
+                try:
+                    job_listing_scraper.main()
+                    st.session_state['job_loaded'] = False
+                except Exception as exception:
+                    st.error(f"An unexpected error occurred: {str(exception)}")
 
         _, last_scraped_dt = get_latest_csv_file()
         st.write(f"Job postings last updated: {last_scraped_dt}")
