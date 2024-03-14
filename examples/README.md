@@ -56,4 +56,4 @@ conda activate opentowork
 python -m unittest discover
 ```
 
-Unit tests cover the skill analyzer, match score generator, scraper, and UI functionalities and may take about 15-20 minutes to run all of them.
+Unit tests cover the skill analyzer, match score generator, scraper, and UI functionalities. Tests may take about 15-20 minutes to run.
