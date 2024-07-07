@@ -1,5 +1,7 @@
 # pylint: disable=too-many-arguments
 # disabled due to all arguments necessary (6/5)
+# pylint: disable=import-error
+# disabled because this import format is needed for deployment
 
 """
 This module represents the job list of the app.
