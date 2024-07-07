@@ -5,8 +5,8 @@ skill_extraction function in the opentowork module.
 import os
 import unittest
 import yaml
-from opentowork.skill_extraction import get_resume_skills
-from opentowork.skill_extraction import get_job_description_skills
+from opentowork.model.skill_extraction import get_resume_skills
+from opentowork.model.skill_extraction import get_job_description_skills
 
 with open("config.yml", "r", encoding='UTF-8') as config_file:
     config = yaml.safe_load(config_file)
