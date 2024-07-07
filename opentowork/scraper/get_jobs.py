@@ -2,6 +2,8 @@
 # disabled due to variability in scraping exceptions, no specific expected exception
 # pylint: disable=too-many-arguments
 # disabled due to all arguments necessary (6/5)
+# pylint: disable=possibly-used-before-assignment
+
 """
 Module retrieves job information from LinkedIn and Indeed using Selenium and BeautifulSoup.
 Returns a list of job information stores as dictionaries.
@@ -92,7 +94,7 @@ def get_url(source, job_title_input, start_index):
     if source == "LinkedIn":
         base_url = "https://www.linkedin.com/jobs/search/?keywords="
         url = base_url + f"{job_title_input}&location=UnitedStates&start={start_index}"
-    if source == "Indeed":
+    elif source == "Indeed":
         url = f"https://www.indeed.com/jobs?q={job_title_input}&l=United+States&start={start_index}"
     return url
 
@@ -114,7 +116,7 @@ def get_details(job, source):
         posted_date = job.find("time", class_=lambda x: x and
                                 x.startswith("job-search-card__listdate")).text.strip()
         apply_link = job.find("a", class_="base-card__full-link")["href"]
-    if source == "Indeed":
+    elif source == "Indeed":
         job_title = job.find("span", id=lambda x: x and
                             x.startswith('jobTitle')).text.strip()
         job_company = job.find(attrs={'data-testid':'company-name'}).text.strip()
