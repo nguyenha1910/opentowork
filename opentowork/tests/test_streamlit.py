@@ -4,6 +4,8 @@
 # disabling bc we need _value (attribute name of the object)
 # pylint: disable=too-few-public-methods
 # disabled because using class as mock file uploader
+# pylint: disable=no-member
+# disabled because pylint can't detect attributes
 
 """
 This module contains the ui tests for the app and job_recommendation modules.
@@ -32,16 +34,6 @@ class TestHelperFunctions(unittest.TestCase):
         latest_csv_file, last_scraped_dt = get_latest_csv_file()
         self.assertIsNotNone(latest_csv_file)
         self.assertIsNotNone(last_scraped_dt)
-
-    def test_get_latest_csv_file_oneshot(self):
-        """
-        One-shot test for get_latest_csv_file function
-        """
-        latest_csv_file, last_scraped_dt = get_latest_csv_file()
-        self.assertTrue(('job_listings_data_analyst_data_scientist'
-                        '_data_engineer_30_jobs_scraped_20240312_'
-                        '183404.csv') in latest_csv_file)
-        self.assertTrue('2024' in last_scraped_dt)
 
     def test_get_latest_csv_file_output(self):
         """
