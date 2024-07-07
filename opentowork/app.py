@@ -10,10 +10,10 @@ import streamlit as st
 from streamlit_tags import st_tags
 import pandas as pd
 import fitz
-import opentowork.model.skill_extraction.get_resume_skills
-import opentowork.scraper.job_listing_scraper
-import opentowork.pages.job_recommendation.get_latest_csv_file
-import opentowork.pages.job_recommendation.app as job_recommendation_app
+from model.skill_extraction import get_resume_skills
+from scraper import job_listing_scraper
+from pages.job_recommendation import get_latest_csv_file
+from pages.job_recommendation import app as job_recommendation_app
 
 # Load config file
 with open("config.yml", "r", encoding='UTF-8') as config_file:
