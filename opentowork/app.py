@@ -1,5 +1,8 @@
 # pylint: disable=broad-exception-caught
 # disabled due to variability in scraping exceptions, no specific expected exception
+# pylint: disable=import-error
+# disabled because this import format is needed for deployment
+
 """
 This module represents the home page of the app.
 """
