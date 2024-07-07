@@ -7,6 +7,8 @@
 
 This repository hosts a comprehensive tool that helps job seekers in streamlining their job search process. The tool comprises a web application and data loader designed to provide job posting recommendations based on resume analysis, similarity scoring, and application status tracking.
 
+Public website: [opentowork.streamlit.app](https://opentowork.streamlit.app/)
+
 ## Table of Contents
 * [Introduction](#introduction)
 * [Key Features](#key-features)
