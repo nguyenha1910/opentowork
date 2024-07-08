@@ -13,7 +13,7 @@ import streamlit as st
 from streamlit_tags import st_tags
 import pandas as pd
 import fitz
-from model.skill_extraction import get_resume_skills
+from models.skill_extraction import get_resume_skills
 from scraper import job_listing_scraper
 from pages.job_recommendation import get_latest_csv_file
 from pages.job_recommendation import app as job_recommendation_app

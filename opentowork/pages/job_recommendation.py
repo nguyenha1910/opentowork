@@ -12,8 +12,8 @@ from datetime import datetime
 import streamlit as st
 import pandas as pd
 import yaml
-from model.skill_extraction import get_job_description_skills
-from model.sim_score import get_sim_score
+from models import skill_extraction
+from models import sim_score
 
 with open("config.yml", "r", encoding='UTF-8') as config_file:
     config = yaml.safe_load(config_file)
@@ -77,7 +77,7 @@ def job_item(data, skills_jd, skills_resume, jd_content, resume_content, key):
     if 'job_loaded' in st.session_state and st.session_state['job_loaded']:
         score = data['score']
     else:
-        score = get_sim_score(jd_content, resume_content)
+        score = sim_score.get_sim_score(jd_content, resume_content)
     job_skills_set = set(skills_jd)
     resume_skills_set = set(skills_resume)
     intersection = job_skills_set.intersection(resume_skills_set)
@@ -148,7 +148,7 @@ def app(skills_resume, resume_content):
             for idx, row in data.iterrows():
                 if not pd.isna(row['description']):
                     progress_bar.progress(idx/data_length, text=progress_text)
-                    skills_jd = get_job_description_skills(row['description'])
+                    skills_jd = skill_extraction.get_job_description_skills(row['description'])
                     jd_content = row['description']
                     score = job_item(
                         row, skills_jd, skills_resume, jd_content, resume_content, idx
@@ -169,7 +169,7 @@ def app(skills_resume, resume_content):
             sorted_data = pd.read_csv(temp_data_path)
             for idx, row in sorted_data.iterrows():
                 if not pd.isna(row['description']):
-                    skills_jd = get_job_description_skills(row['description'])
+                    skills_jd = skill_extraction.get_job_description_skills(row['description'])
                     jd_content = row['description']
                     score = job_item(
                         row, skills_jd, skills_resume, jd_content, resume_content, idx

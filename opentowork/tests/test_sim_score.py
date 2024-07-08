@@ -5,8 +5,8 @@ Test the get_sim_score function in the opentowork module.
 """
 import unittest
 import pandas as pd
-from opentowork.model.skill_extraction import get_resume_skills
-from opentowork.model.sim_score import get_sim_score
+from opentowork.models.skill_extraction import get_resume_skills
+from opentowork.models.sim_score import get_sim_score
 
 class TestSimScore(unittest.TestCase):
     """
