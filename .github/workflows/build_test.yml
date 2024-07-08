@@ -101,6 +101,7 @@ jobs:
       - name: Lint with pylint
         run: |
           pylint opentowork/*.py
+          pylint opentowork/models/*.py
           pylint opentowork/pages/*.py
           pylint opentowork/tests/*.py
           pylint opentowork/scraper/*.py

@@ -1,5 +1,8 @@
 # pylint: disable=broad-exception-caught
 # disabled due to variability in scraping exceptions, no specific expected exception
+# pylint: disable=import-error
+# disabled because this import format is needed for deployment
+
 """
 This module represents the home page of the app.
 """
@@ -10,10 +13,10 @@ import streamlit as st
 from streamlit_tags import st_tags
 import pandas as pd
 import fitz
-from opentowork.model.skill_extraction import get_resume_skills
-from opentowork.scraper import job_listing_scraper
-from opentowork.pages.job_recommendation import get_latest_csv_file
-from opentowork.pages.job_recommendation import app as job_recommendation_app
+from models.skill_extraction import get_resume_skills
+from scraper import job_listing_scraper
+from pages.job_recommendation import get_latest_csv_file
+from pages.job_recommendation import app as job_recommendation_app
 
 # Load config file
 with open("config.yml", "r", encoding='UTF-8') as config_file:
