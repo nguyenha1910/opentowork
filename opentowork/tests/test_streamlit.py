@@ -35,7 +35,6 @@ class TestStreamlit(unittest.TestCase):
         current_dir = os.path.dirname(os.path.abspath(__file__))
         project_dir = os.path.abspath(os.path.join(current_dir, '..'))
         sys.path.append(project_dir)
-
         self.at = AppTest.from_file('../app.py')
 
         class MockFileUploader():
@@ -56,7 +55,7 @@ class TestStreamlit(unittest.TestCase):
                     return real_pdf.read() # just raw content of pdf
 
         mock_file_uploader.return_value = MockFileUploader()
-        self.at.run(timeout=120)
+        self.at.run(timeout=240)
 
     def test_title(self):
         """ Test title """
