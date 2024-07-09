@@ -148,9 +148,10 @@ def main(job_titles = None, total_job_count = 30):
         total_job_count (int) - number of total jobs to scrape
     """
     if not check_chrome_driver():
+        os.write("Could not find chromedriver")
         raise Exception("Could not find chromedriver")
     else:
-        print("Found chromedriver")
+        os.write("Found chromedriver")
     if job_titles is None:
         job_titles = ['data analyst', 'data scientist', 'data engineer']
     scraped_data = scrape_jobs(job_titles, total_job_count)
