@@ -137,7 +137,7 @@ def check_chrome_driver():
                                         config['chrome_driver_version'], 
                                         "chromedriver")
         driver_dest_path = os.path.join(bin_path, "chromedriver")
-        shutil.copyfile(driver_src_path, driver_dest_path)
+        shutil.copy2(driver_src_path, driver_dest_path)
     if 'chromedriver' in os.listdir(bin_path):
         return True
     else:
