@@ -8,7 +8,7 @@ pyyaml
 beautifulsoup4
 pymupdf
 sentence-transformers==2.2.2
-streamlit_tags
+streamlit-tags
 selenium==4.17.2
 en_core_web_lg @ https://github.com/explosion/spacy-models/releases/download/en_core_web_lg-3.7.1/en_core_web_lg-3.7.1-py3-none-any.whl
 
