@@ -73,13 +73,21 @@ def app():
         update_job_button = st.button('Update Job Posting Data')
         if update_job_button:
             with st.spinner("Updating job postings..."):
+                bin_path = os.path.join(os.environ['CONDA_PREFIX'], "bin")
+                chrome_driver_path = os.path.join(
+                    config['chrome_driver_version'], "chromedriver")
+                if 'chromedriver' not in os.listdir(bin_path):
+                    st.error(f"Chrome driver not found")
+                else:
+                    st.success(f"Found chromedriver")
                 try:
                     job_listing_scraper.main()
                     st.session_state['job_loaded'] = False
                 except Exception as exception:
-                    st.error(f"An unexpected error occurred: {str(exception)}")
-                    os.write(exception)
                     st.write(exception)
+                    st.error(f"An unexpected error occurred: {exception}")
+                    os.write(1, exception)
+                    
 
         _, last_scraped_dt = get_latest_csv_file()
         st.write(f"Job postings last updated: {last_scraped_dt}")
