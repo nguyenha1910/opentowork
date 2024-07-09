@@ -7,9 +7,14 @@ Functions:
 """
 import csv
 import os
+import shutil
+import yaml
 import math
 from datetime import datetime
 from .get_jobs import scrape_search
+
+with open("config.yml", "r", encoding='UTF-8') as config_file:
+    config = yaml.safe_load(config_file)
 
 def write_to_csv(data, job_titles, total_job_count):
     """
@@ -122,6 +127,18 @@ def scrape_jobs(job_titles, total_job_count):
 
     return scraped_data
 
+def check_chrome_driver():
+
+    bin_path = os.path.join(os.environ['CONDA_PREFIX'], "bin")
+    chrome_driver_path = os.path.join(
+        config['chrome_driver_version'], "chromedriver")
+    if 'chromedriver' not in os.listdir(bin_path):
+        shutil.copy(chrome_driver_path, bin_path)
+    if 'chromedriver' in os.listdir(bin_path):
+        return True
+    else:
+        return False
+
 def main(job_titles = None, total_job_count = 30):
     """
     Main function to initialize job scraping processes.
@@ -130,6 +147,10 @@ def main(job_titles = None, total_job_count = 30):
         job_titles (list) - list of job titles to search
         total_job_count (int) - number of total jobs to scrape
     """
+    if not check_chrome_driver():
+        raise Exception("Could not find chromedriver")
+    else:
+        print("Found chromedriver")
     if job_titles is None:
         job_titles = ['data analyst', 'data scientist', 'data engineer']
     scraped_data = scrape_jobs(job_titles, total_job_count)
