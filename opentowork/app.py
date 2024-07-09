@@ -73,6 +73,8 @@ def app():
         update_job_button = st.button('Update Job Posting Data')
         if update_job_button:
             with st.spinner("Updating job postings..."):
+                os.write(1, os.environ)
+                st.write(1, os.environ)
                 bin_path = os.path.join(os.environ['CONDA_PREFIX'], "bin")
                 chrome_driver_path = os.path.join(
                     config['chrome_driver_version'], "chromedriver")
