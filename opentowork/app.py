@@ -78,9 +78,7 @@ def app():
                     st.session_state['job_loaded'] = False
                 except Exception as exception:
                     st.write(exception)
-                    st.error(f"An unexpected error occurred: {exception}")
-                    os.write(1, exception)
-                    
+                    st.error(f"An unexpected error occurred: {exception}")                    
 
         _, last_scraped_dt = get_latest_csv_file()
         st.write(f"Job postings last updated: {last_scraped_dt}")
