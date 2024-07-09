@@ -128,8 +128,10 @@ def scrape_jobs(job_titles, total_job_count):
     return scraped_data
 
 def check_chrome_driver():
-
-    bin_path = os.path.join(os.environ['CONDA_PREFIX'], "bin")
+    if 'CONDA_PREFIX' in os.environ:
+        bin_path = os.path.join(os.environ['CONDA_PREFIX'], "bin")
+    else:
+        bin_path = os.path.join('home',os.environ['SUDO_USER'],'.conda', "bin")
     chrome_driver_path = os.path.join(
         config['chrome_driver_version'], "chromedriver")
     if 'chromedriver' not in os.listdir(bin_path):
