@@ -7,7 +7,7 @@ Functions:
 """
 import csv
 import os
-import shutil
+import subprocess
 import yaml
 import math
 from datetime import datetime
@@ -136,8 +136,8 @@ def check_chrome_driver():
         driver_src_path = os.path.join( 'chromedriver',
                                         config['chrome_driver_version'], 
                                         "chromedriver")
-        driver_dest_path = os.path.join(bin_path, "chromedriver")
-        shutil.copy2(driver_src_path, driver_dest_path)
+        command = f"mv {driver_src_path} {bin_path}"
+        subprocess.run(command, shell=True, check=True)
     if 'chromedriver' in os.listdir(bin_path):
         return True
     else:
