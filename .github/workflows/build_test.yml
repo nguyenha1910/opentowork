@@ -12,7 +12,6 @@ on:
   push:
     branches:
       - main
-      - deploy/streamlit
   pull_request:
     # Configuring this means that your PRs will get a GitHub comment
     # from Coveralls with your coverage.
@@ -97,7 +96,6 @@ jobs:
           export DISPLAY=:99
           chromedriver --url-base=/wd/hub &
           sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 & # optional
-          sudo apt-get install -y chromium-browser
 
       # Next step: run pylint. Anything less than 10/10 will fail.
       - name: Lint with pylint
