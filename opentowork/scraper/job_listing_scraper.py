@@ -132,10 +132,12 @@ def check_chrome_driver():
         bin_path = os.path.join(os.environ['CONDA_PREFIX'], "bin")
     else:
         bin_path = os.path.join('/home',os.environ['SUDO_USER'],'.conda', "bin")
-    chrome_driver_path = os.path.join(
-        config['chrome_driver_version'], "chromedriver")
     if 'chromedriver' not in os.listdir(bin_path):
-        shutil.copy(chrome_driver_path, bin_path)
+        driver_src_path = os.path.join(
+                                        config['chrome_driver_version'], 
+                                        "chromedriver")
+        driver_dest_path = os.path.join(bin_path, "chromedriver")
+        shutil.copyfile(driver_src_path, driver_dest_path)
     if 'chromedriver' in os.listdir(bin_path):
         return True
     else:
